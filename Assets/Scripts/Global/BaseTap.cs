@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class BaseTap: MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Properties Tap")]
+    public GameObject resultPrefab;
+    public Transform resultSpawnPosition;
 }
