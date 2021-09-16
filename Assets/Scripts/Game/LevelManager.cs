@@ -15,4 +15,14 @@ public class LevelManager : Singleton<LevelManager>
 
     [Header("Debug")]
     public List<GlassRegistered> listGlassRegistered;
+
+    [ContextMenu("test")]
+    public void regist<T>(T _t)
+    {
+        T haha = _t;
+        if(_t is CoffeeMaker)
+        {
+            Debug.Log("is Cofee maker");
+        }
+    }
 }

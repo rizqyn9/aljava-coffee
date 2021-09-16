@@ -11,6 +11,7 @@ namespace Game
         public List<Transform> listPosSpawn;
 
         [Header("Debug")]
+        public List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
         [SerializeField] int cachedGlassCode = 0;
 
         public void Start()
@@ -19,6 +20,8 @@ namespace Game
         }
 
         public int getCode() => cachedGlassCode++;
+
+        public GlassRegistered findEmptyGlass() => glassRegistereds.Find(res => res.glass.lastIgrendients == enumIgrendients.NULL);
 
         public void updateSpawn()
         {
