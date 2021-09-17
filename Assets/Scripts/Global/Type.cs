@@ -113,3 +113,10 @@ public enum menuClassification
     LATTE,
     MILKSHAKE
 }
+
+public enum enumBuyerState
+{
+    ON_IDDLE,
+    ON_WAITING,
+    ON_DONE
+}

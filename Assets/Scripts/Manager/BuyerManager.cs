@@ -7,8 +7,10 @@ using Game;
 public struct buyerMenuPrototype
 {
     public int numberID;
+    public enumBuyerState buyerState;
     public BuyerType buyerType;
     public List<MenuType> menuTypes;
+    public Buyer buyer;
 }
 
 public class BuyerManager : Singleton<BuyerManager>
@@ -22,6 +24,7 @@ public class BuyerManager : Singleton<BuyerManager>
     public int buyerTotal;
 
     [Header("Debug")]
+    public List<SpawnHandler> spawnHandlers = new List<SpawnHandler>();
     public int buyerTypeCount;
     public int menuTypeCount;
     public List<BuyerType> buyerTypes = new List<BuyerType>();
@@ -41,6 +44,13 @@ public class BuyerManager : Singleton<BuyerManager>
             buyer.buyerMenuPrototype = buyerList[i];
             buyer.spawnChar();
         }
+
+        spawnLogic();
+    }
+
+    private void spawnLogic()
+    {
+        buyerDict[0].showToScene(listSpawnTransform[1].position);
     }
 
     public void generateBuyer(int _buyerTotal)
@@ -51,6 +61,7 @@ public class BuyerManager : Singleton<BuyerManager>
             prototype.numberID = i + 1;
             prototype.buyerType = findBuyerType();
             prototype.menuTypes = findMenuType(Random.Range(1,2));
+            prototype.buyerState = enumBuyerState.ON_IDDLE;
             buyerList.Add(prototype);
         }
     }
