@@ -21,7 +21,18 @@ namespace Game
 
         public int getCode() => cachedGlassCode++;
 
+        /// <summary>
+        /// Find empty glass
+        /// </summary>
+        /// <returns></returns>
         public GlassRegistered findEmptyGlass() => glassRegistereds.Find(res => res.glass.lastIgrendients == enumIgrendients.NULL);
+
+        /// <summary>
+        /// Find glass with multiple state
+        /// </summary>
+        /// <param name="_enumIgrendients"></param>
+        /// <returns></returns>
+        public GlassRegistered findGlassWithState(List<enumIgrendients> _enumIgrendients) => glassRegistereds.Find(res => _enumIgrendients.Contains(res.glass.lastIgrendients));
 
         public void updateSpawn()
         {
