@@ -14,6 +14,7 @@ namespace Game
 
         [Header("Debug")]
         public List<GameObject> listIgrendientsGO = new List<GameObject>();
+        public GameObject GO;
 
         private void Start()
         {
@@ -28,10 +29,18 @@ namespace Game
 
         public void addIgredients(GameObject _prefab, enumIgrendients _igrendient)
         {
-            GameObject GO = Instantiate(_prefab, igrendientTransform);
+            GO = Instantiate(_prefab, igrendientTransform);
             listIgrendientsGO.Add(GO);
             lastIgrendients = _igrendient;
             igrendients.Add(_igrendient);
+        }
+
+        public void changeSpriteIgrendients(Sprite _sprite, enumIgrendients _igrendients)
+        {
+            SpriteRenderer renderer = GO.GetComponent<SpriteRenderer>();
+            igrendients.Add(_igrendients);
+            lastIgrendients = _igrendients;
+            renderer.sprite = _sprite;
         }
     }
 }

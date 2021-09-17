@@ -6,10 +6,14 @@ namespace Game
 {
     public class CoffeeManager : Singleton<CoffeeManager>
     {
-        public List<CoffeeMaker> coffeeMakers = new List<CoffeeMaker>();
-        public List<BeansMachine> beansMachines = new List<BeansMachine>();
+        [Header("Properties")]
         public GameObject arabicaBeansPrefab;
         public GameObject robustaBeansPrefab;
+
+        [Header("Debug")]
+        public List<CoffeeMaker> coffeeMakers = new List<CoffeeMaker>();
+        public List<BeansMachine> beansMachines = new List<BeansMachine>();
+        public MilkSteam milkSteam;
 
         public bool isAcceptabble(enumIgrendients _enumIgrendients)
         {

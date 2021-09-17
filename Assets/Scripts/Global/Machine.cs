@@ -21,4 +21,6 @@ public abstract class Machine : MonoBehaviour
 
     public abstract void RegistToManager();
 
+    
+
 }

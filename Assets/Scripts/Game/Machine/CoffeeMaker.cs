@@ -35,12 +35,13 @@ namespace Game
                 glassTarget = GlassContainer.Instance.findEmptyGlass();
                 glassTarget.glass.addIgredients(enumIgrendients == enumIgrendients.BEANS_ARABICA ? prefabArabica : prefabRobusta, enumIgrendients);
                 Destroy(resultGO);
-                enumMachineState = enumMachineState.ON_IDDLE;
+                resetState();
             }
         }
 
         private void resetState()
         {
+                enumMachineState = enumMachineState.ON_IDDLE;
             
         }
     }

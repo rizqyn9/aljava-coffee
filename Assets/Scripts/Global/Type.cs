@@ -66,6 +66,8 @@ public enum enumIgrendients : int
 /// </summary>
 public enum menuListName : int
 {
+    ARABICA_COFFEE_LATTE,
+    ROBUSTA_COFFEE_LATTE,
     LATTE_MATCHA,
     LATTE_RED_VELVET,
     LATTE_TARO,
@@ -89,4 +91,25 @@ public enum menuListName : int
     ARABICA_FILTER,
     ROBUSTA_FILTER
 
+}
+
+public enum enumBuyerType
+{
+    COWOK,
+    CEWEK,
+    INDIE,
+    OJOL_KANTORAN,
+    OJOL
+}
+
+
+/// <summary>
+/// List menu classification
+/// </summary>
+public enum menuClassification
+{
+    COFFEE,
+    SQUASH,
+    LATTE,
+    MILKSHAKE
 }
