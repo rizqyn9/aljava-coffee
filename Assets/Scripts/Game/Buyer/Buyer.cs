@@ -6,14 +6,14 @@ namespace Game
 {
     public class Buyer : MonoBehaviour
     {
-        public BuyerType buyerType;
+        public buyerMenuPrototype buyerMenuPrototype;
         public Transform charPrefabTransform;
         public Bubble bubbleController;
 
 
         public void spawnChar()
         {
-            GameObject GO = Instantiate(buyerType.buyerPrefab, charPrefabTransform);
+            GameObject GO = Instantiate(buyerMenuPrototype.buyerType.buyerPrefab, charPrefabTransform);
         }
     }
 }

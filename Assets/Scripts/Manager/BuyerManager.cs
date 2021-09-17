@@ -15,6 +15,7 @@ public class BuyerManager : Singleton<BuyerManager>
 {
     [Header("Properties")]
     public List<Transform> listSpawnTransform = new List<Transform>();
+    public List<Transform> listStartTransform = new List<Transform>();
     public GameObject buyerPrefab;
 
     [Header("Demo")]
@@ -32,12 +33,12 @@ public class BuyerManager : Singleton<BuyerManager>
         buyerTypeCount = ResourceManager.Instance.BuyerTypes.Count;
         menuTypeCount = ResourceManager.Instance.MenuTypes.Count;
         generateBuyer(buyerTotal);
-        for(int i = 0; i < buyerTypes.Count; i++)
+        for(int i = 0; i < buyerList.Count; i++)
         {
-            GameObject GO = Instantiate(buyerPrefab, listSpawnTransform[i]);
+            GameObject GO = Instantiate(buyerPrefab, listStartTransform[Random.Range(0, 2)]);
             Buyer buyer = GO.GetComponent<Buyer>();
             buyerDict.Add(i, buyer);
-            buyer.buyerType = buyerTypes[i];
+            buyer.buyerMenuPrototype = buyerList[i];
             buyer.spawnChar();
         }
     }
