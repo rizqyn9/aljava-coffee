@@ -64,8 +64,9 @@ public enum enumIgrendients : int
 /// <summary>
 /// List menu registered
 /// </summary>
-public enum menuListName : int
+public enum menuListName : byte
 {
+    NOT_VALID,
     ARABICA_COFFEE_LATTE,
     ROBUSTA_COFFEE_LATTE,
     LATTE_MATCHA,
@@ -114,7 +115,7 @@ public enum menuClassification
     MILKSHAKE
 }
 
-public enum enumBuyerState
+public enum buyerState
 {
     ON_IDDLE,
     ON_WAITING,

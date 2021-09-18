@@ -9,6 +9,7 @@ namespace Game
     {
         [Header("Properties")]
         public Sprite sprite;
+        public enumIgrendients resultIgrendients = enumIgrendients.MILK_STEAMMED;
 
         [Header("Debug")]
         public GlassRegistered glassTarget;
@@ -41,7 +42,7 @@ namespace Game
                 glassTarget = GlassContainer.Instance.findGlassWithState(new List<enumIgrendients> { enumIgrendients.BEANS_ARABICA, enumIgrendients.BEANS_ROBUSTA });
                 if (glassTarget.glassCode == null) Debug.Log("Gk nemu");
 
-                glassTarget.glass.changeSpriteIgrendients(sprite, enumIgrendients.MILK_STEAMMED);
+                glassTarget.glass.changeSpriteIgrendients(sprite, resultIgrendients);
                 Destroy(resultGO);
                 spawnResult();
             }

@@ -10,6 +10,7 @@ namespace Game
         [Header("Properties")]
         public GameObject prefabArabica;
         public GameObject prefabRobusta;
+        public enumIgrendients resultIgrendients = enumIgrendients.COFEE_MAKER;
 
         [Header("Debug")]
         [SerializeField] GlassRegistered glassTarget;
@@ -33,7 +34,7 @@ namespace Game
             if(resultSpawnPosition.childCount != 0)
             {
                 glassTarget = GlassContainer.Instance.findEmptyGlass();
-                glassTarget.glass.addIgredients(enumIgrendients == enumIgrendients.BEANS_ARABICA ? prefabArabica : prefabRobusta, enumIgrendients);
+                glassTarget.glass.addMultipleIgrendients(enumIgrendients == enumIgrendients.BEANS_ARABICA ? prefabArabica : prefabRobusta, new List<enumIgrendients> { enumIgrendients, resultIgrendients} ,enumIgrendients);
                 Destroy(resultGO);
                 resetState();
             }
@@ -41,7 +42,7 @@ namespace Game
 
         private void resetState()
         {
-                enumMachineState = enumMachineState.ON_IDDLE;
+            enumMachineState = enumMachineState.ON_IDDLE;
             
         }
     }
