@@ -30,7 +30,7 @@ namespace Game
 
         private void checkedMenu()
         {
-            isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, getMenuState);
+            isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
         }
 
         public List<GameObject> listIgrendientsGO = new List<GameObject>();

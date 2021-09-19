@@ -43,7 +43,7 @@ public class ResourceManager : Singleton<ResourceManager>
     /// For validate and finding menu result from data list igrendients
     /// </summary>
     /// <param name="_igrendients"></param>
-    public bool igrendientsToMenuChecker(List<enumIgrendients> _igrendients, MenuType resultMenu)
+    public bool igrendientsToMenuChecker(List<enumIgrendients> _igrendients, out MenuType resultMenu)
     {
         Debug.Log("igrendientsToMenuChecker on trigger");
         bool res = false;
