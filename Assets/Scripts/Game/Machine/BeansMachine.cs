@@ -29,7 +29,7 @@ namespace Game
         private void spawnResult()
         {
             resultGO = Instantiate(machineType == enumMachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab, resultSpawnPosition);
-            resultGO.transform.LeanScale(new Vector2(.5f, .5f), .2f);
+            resultGO.transform.LeanScale(new Vector2(1f, 1f), .2f);
         }
     }
 }

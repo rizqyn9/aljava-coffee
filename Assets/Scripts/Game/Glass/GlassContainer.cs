@@ -9,10 +9,10 @@ namespace Game
         [Header("Properties")]
         public GameObject glassPrefab;
         public List<Transform> listPosSpawn;
+        int delay = 2;
 
         [Header("Debug")]
         public List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
-        public bool canSpawn = false;
         [SerializeField] int cachedGlassCode = 0;
 
         public void Start()
@@ -20,12 +20,9 @@ namespace Game
             updateSpawn();
         }
 
-        private void LateUpdate()
+        public void respawn()
         {
-            if (canSpawn)
-            {
-                updateSpawn();
-            }
+            StartCoroutine(spawnGlass());
         }
 
         public int getCode() => cachedGlassCode++;
@@ -57,6 +54,12 @@ namespace Game
                     Instantiate(glassPrefab, _transform);
                 }
             }
+        }
+
+        IEnumerator spawnGlass()
+        {
+            yield return new WaitForSeconds(delay);
+            updateSpawn();
         }
     }
 }

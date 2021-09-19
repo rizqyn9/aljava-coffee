@@ -47,6 +47,7 @@ namespace Game
         private void resetState()
         {
             enumMachineState = enumMachineState.ON_IDDLE;
+            igrendientsList = new List<enumIgrendients>();
             
         }
     }

@@ -15,7 +15,7 @@ namespace Game
 
         [Header("Debug")]
         public string glassCode;
-        public List<enumIgrendients> igrendients;
+        public List<enumIgrendients> igrendients = new List<enumIgrendients>();
         public MenuType getMenuState;
         public bool isValidMenu = false;
         [SerializeField] SpriteRenderer debugIgrendientsGO;
@@ -121,7 +121,7 @@ namespace Game
                 Debug.Log("Find customer menu");
                 targetBuyer.customerHandler.onServeMenu(getMenuState.menuListName);
 
-                GlassContainer.Instance.canSpawn = true;
+                GlassContainer.Instance.respawn();
                 GlassContainer.Instance.glassOnDestroy(glassRegistered);
                 Destroy(gameObject);
             }
