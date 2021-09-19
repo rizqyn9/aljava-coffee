@@ -12,6 +12,7 @@ namespace Game
 
         [Header("Debug")]
         public List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
+        public bool canSpawn = false;
         [SerializeField] int cachedGlassCode = 0;
 
         public void Start()
@@ -19,7 +20,20 @@ namespace Game
             updateSpawn();
         }
 
+        private void LateUpdate()
+        {
+            if (canSpawn)
+            {
+                updateSpawn();
+            }
+        }
+
         public int getCode() => cachedGlassCode++;
+
+        public void glassOnDestroy(GlassRegistered _glassRegistered)
+        {
+            //glassRegistereds
+        }
 
         /// <summary>
         /// Find empty glass

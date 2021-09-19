@@ -511,9 +511,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2045552be1b81487898bce00b386994d, type: 2}
   - {fileID: 11400000, guid: 7c141ea21b8b4463bb3e4bd3f17d0048, type: 2}
   MenuTypes:
-  - {fileID: 11400000, guid: 692ee45f4b66b4cd9897952c8c795e81, type: 2}
-  - {fileID: 11400000, guid: 405e5426b445f4c0f923bf5bdf000cbc, type: 2}
-  notValidMenu: {fileID: 0}
+  - {fileID: 11400000, guid: b0c1730a951874c0ab70f6493e52f7de, type: 2}
+  notValidMenu: {fileID: 11400000, guid: 405e5426b445f4c0f923bf5bdf000cbc, type: 2}
 --- !u!1 &882630724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,6 +1694,9 @@ MonoBehaviour:
   resultGO: {fileID: 0}
   sprite: {fileID: 21300000, guid: 6327f091d072e4af19584d4e3a331fcc, type: 3}
   resultIgrendients: 6
+  colorResult:
+  - {r: 0.8679245, g: 0.53879017, b: 0.31523672, a: 0}
+  - {r: 0.4528302, g: 0.286323, b: 0.091847636, a: 0}
   glassTarget:
     glassCode: 
     glass: {fileID: 0}
@@ -2249,11 +2251,12 @@ MonoBehaviour:
   resultGO: {fileID: 2547080873137925463, guid: 67d405e30af6e4443bebc4de58f5ed40, type: 3}
   prefabArabica: {fileID: 5749968723761549481, guid: 04bbd605e47d14f93b2a859ecf9aa549, type: 3}
   prefabRobusta: {fileID: 5102769439927785725, guid: 95dc40812b7b8473c80dd02ad8e96340, type: 3}
+  colorIgrendientsOutput: {r: 0.3773585, g: 0.1745283, b: 0, a: 0}
   resultIgrendients: 1
   glassTarget:
     glassCode: 
     glass: {fileID: 0}
-  enumIgrendients: 0
+  igrendientsList: 
 --- !u!4 &1886016294
 Transform:
   m_ObjectHideFlags: 0
@@ -2464,6 +2467,7 @@ MonoBehaviour:
   - {fileID: 1648981622}
   - {fileID: 1218113620}
   glassRegistereds: []
+  canSpawn: 0
   cachedGlassCode: 0
 --- !u!1 &2070079574
 GameObject:

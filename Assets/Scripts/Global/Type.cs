@@ -1,3 +1,11 @@
+using UnityEngine;
+
+public struct SpriteColorCustom
+{
+    public string target;
+    public Color color;
+}
+
 public enum enumMachineState : byte
 {
     ON_IDDLE,    // OUTPUT EMPTY

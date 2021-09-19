@@ -51,6 +51,7 @@ public class ResourceManager : Singleton<ResourceManager>
         for(int i = 0; i < MenuTypes.Count; i++)
         {
             res = MenuTypes[i].recipe.SequenceEqual(_igrendients);
+            Debug.Log(res);
             if (res) {
                 resultMenu = MenuTypes[i];
                 Debug.Log("Found Menu Result");

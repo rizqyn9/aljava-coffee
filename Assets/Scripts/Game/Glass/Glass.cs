@@ -8,14 +8,20 @@ namespace Game
     public class Glass : MonoBehaviour
     {
         [Header("Properties")]
-        public string glassCode;
         public Transform igrendientTransform;
-        public List<enumIgrendients> igrendients;
+        public GameObject baseIgrendientsGO;
+        public GameObject winPrefab;
+        public GameObject loosePrefab;
 
         [Header("Debug")]
+        public string glassCode;
+        public List<enumIgrendients> igrendients;
         public MenuType getMenuState;
         public bool isValidMenu = false;
-        private enumIgrendients _lastIgrendients = enumIgrendients.NULL;
+        [SerializeField] SpriteRenderer debugIgrendientsGO;
+        [SerializeField] enumIgrendients _lastIgrendients = enumIgrendients.NULL;
+        [SerializeField] BuyerPrototype targetBuyer;
+        [SerializeField] GlassRegistered glassRegistered;
         public enumIgrendients lastIgrendients
         {
             get => _lastIgrendients;
@@ -27,6 +33,16 @@ namespace Game
         }
         [SerializeField] float doubleClickTimeLimit = 0.1f;
 
+        [ContextMenu("Win")]
+        public void winCondition()
+        {
+            Instantiate(winPrefab);
+        }
+        [ContextMenu("Loose")]
+        public void looseCondition()
+        {
+            Instantiate(loosePrefab);
+        }
 
         private void checkedMenu()
         {
@@ -48,39 +64,26 @@ namespace Game
 
             glassCode = generateUniqueCode();
             gameObject.name = glassCode;
-            GlassRegistered glassRegistered = new GlassRegistered() { glassCode = glassCode, glass = this };
+
+            glassRegistered = new GlassRegistered() { glassCode = glassCode, glass = this };
             LevelManager.Instance.listGlassRegistered.Add(glassRegistered);
             GlassContainer.Instance.glassRegistereds.Add(glassRegistered);
         }
 
-        private string generateUniqueCode() => $"--Glass{GlassContainer.Instance.getCode()}";
+        private string generateUniqueCode() => $"--Glass-{GlassContainer.Instance.getCode()}";
 
-        public void addIgredients(GameObject _prefab, enumIgrendients _igrendient)
+        public void changeSpriteAddIgrendients(Color _color, List<enumIgrendients> _listIgrendients)
         {
-            GO = Instantiate(_prefab, igrendientTransform);
-            listIgrendientsGO.Add(GO);
-            lastIgrendients = _igrendient;
-            igrendients.Add(_igrendient);
-        }
-
-        public void addMultipleIgrendients(GameObject _prefab, List<enumIgrendients> _igrendients, enumIgrendients _setLastIgrendient)
-        {
-            GO = Instantiate(_prefab, igrendientTransform);
-            listIgrendientsGO.Add(GO);
-            lastIgrendients = _setLastIgrendient;
-            foreach(enumIgrendients _igrendient in _igrendients)
+            if (!debugIgrendientsGO)
             {
-                igrendients.Add(_igrendient);
+                debugIgrendientsGO = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
             }
+            igrendients.AddRange(_listIgrendients);
+            setLastIgrendients(_listIgrendients[_listIgrendients.Count - 1]);
+            debugIgrendientsGO.color = new Color(_color.r, _color.g, _color.b, 1);
         }
 
-        public void changeSpriteIgrendients(Sprite _sprite, enumIgrendients _igrendients)
-        {
-            SpriteRenderer renderer = GO.GetComponent<SpriteRenderer>();
-            igrendients.Add(_igrendients);
-            lastIgrendients = _igrendients;
-            renderer.sprite = _sprite;
-        }
+        void setLastIgrendients(enumIgrendients _lastIgrendients) => lastIgrendients = _lastIgrendients;
 
         private IEnumerator InputListener()
         {
@@ -113,9 +116,14 @@ namespace Game
 
         private void OnMouseDown()
         {
-            if (isValidMenu)
+            if (isValidMenu && MainController.Instance.isExistQueue(getMenuState.menuListName, out targetBuyer))
             {
                 Debug.Log("Find customer menu");
+                targetBuyer.customerHandler.onServeMenu(getMenuState.menuListName);
+
+                GlassContainer.Instance.canSpawn = true;
+                GlassContainer.Instance.glassOnDestroy(glassRegistered);
+                Destroy(gameObject);
             }
             
         }

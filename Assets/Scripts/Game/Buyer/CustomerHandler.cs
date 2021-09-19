@@ -75,6 +75,11 @@ namespace Game
             orderItemHandlers.Add(itemHandler);
         }
 
+        public void onServeMenu(menuListName _menu)
+        {
+            orderItemHandlers.Find(val => val.menu == _menu).itemGO.SetActive(false);
+        }
+
         IEnumerator startCustomer(int _duration)
         {
             gameObject.transform.LeanMove(buyerPrototype.seatDestination.position, _duration);

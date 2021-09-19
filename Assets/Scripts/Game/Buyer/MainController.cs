@@ -128,5 +128,25 @@ namespace Game
             if (freeSeatDataIndex.Count == 0) return false;
             else return true;
         }
+
+        public bool isExistQueue(menuListName _menuName, out BuyerPrototype _buyerPrototype)
+        {
+            _buyerPrototype = new BuyerPrototype();
+            try
+            {
+                for(int i =0; i<deliveryQueueMenu.Count; i++)
+                {
+                    if (deliveryQueueMenu[i].menuListNames.Contains(_menuName))
+                    {
+                        _buyerPrototype = deliveryQueueMenu[i];
+                        return true;
+                    }
+                }
+                throw new System.Exception();
+            } catch
+            {
+                return false;
+            }
+        }
     }
 }

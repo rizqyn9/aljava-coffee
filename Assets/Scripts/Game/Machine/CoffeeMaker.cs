@@ -10,11 +10,12 @@ namespace Game
         [Header("Properties")]
         public GameObject prefabArabica;
         public GameObject prefabRobusta;
+        public Color colorIgrendientsOutput;
         public enumIgrendients resultIgrendients = enumIgrendients.COFEE_MAKER;
 
         [Header("Debug")]
         [SerializeField] GlassRegistered glassTarget;
-        [SerializeField] enumIgrendients enumIgrendients;
+        [SerializeField] List<enumIgrendients> igrendientsList;
 
         public override void RegistToManager()
         {
@@ -23,7 +24,7 @@ namespace Game
 
         public void spawnRes(enumIgrendients _enumIgrendients)
         {
-            enumIgrendients = _enumIgrendients;
+            igrendientsList.Add(_enumIgrendients);
             enumMachineState = enumMachineState.ON_PROCESS;
             resultGO = Instantiate(resultPrefab, resultSpawnPosition);
             enumMachineState = enumMachineState.ON_DONE;
@@ -34,7 +35,10 @@ namespace Game
             if(resultSpawnPosition.childCount != 0)
             {
                 glassTarget = GlassContainer.Instance.findEmptyGlass();
-                glassTarget.glass.addMultipleIgrendients(enumIgrendients == enumIgrendients.BEANS_ARABICA ? prefabArabica : prefabRobusta, new List<enumIgrendients> { enumIgrendients, resultIgrendients} ,enumIgrendients);
+                //glassTarget.glass.addMultipleIgrendients(enumIgrendients == enumIgrendients.BEANS_ARABICA ? prefabArabica : prefabRobusta, new List<enumIgrendients> { enumIgrendients, resultIgrendients} ,enumIgrendients);
+                //use new method
+                igrendientsList.Add(resultIgrendients);
+                glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, igrendientsList);
                 Destroy(resultGO);
                 resetState();
             }

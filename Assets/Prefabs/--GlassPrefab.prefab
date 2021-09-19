@@ -132,6 +132,7 @@ MonoBehaviour:
   glassCode: 
   igrendientTransform: {fileID: 5550873257776790427}
   igrendients: 
+  baseIgrendientsGO: {fileID: 7872203161730326916, guid: 0000527f98c7d43f38c7c7ec2d1eb06b, type: 3}
   getMenuState: {fileID: 0}
   isValidMenu: 0
   doubleClickTimeLimit: 0.1
@@ -265,10 +266,10 @@ SpriteMask:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0edcde4d1d10247feb7a2f0bbadb0bc0, type: 3}
-  m_MaskAlphaCutoff: 0.2
-  m_FrontSortingLayerID: 0
+  m_MaskAlphaCutoff: 0.272
+  m_FrontSortingLayerID: 153253199
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 0
+  m_FrontSortingLayer: 1
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 0
   m_BackSortingOrder: 0
