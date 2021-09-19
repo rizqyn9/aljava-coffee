@@ -79,23 +79,16 @@ namespace Game
             buyerPrototype.customerCode = $"Customer-{customerCounter++}";
             buyerPrototype.seatDestination = seatDataTransform[_seatIndex].transform;
             buyerPrototype.menuListNames = generateMenu(Random.Range(1,2));
-            
+
+            // reference buyer
             customer.initBuyer(buyerPrototype);
-
-        }
-
-        [ContextMenu("test")]
-        public void test()
-        {
-            CustomerHandler handler;
-            findMenu(menuListName.ARABICA_COFFEE_LATTE, out handler);
         }
 
         public bool findMenu(menuListName _menu, out CustomerHandler _customerHandler)
         {
             bool res = false;
             _customerHandler = null;
-            for(int i= 0; i<deliveryQueueMenu.Count; i++)
+            for(int i= 0; i< deliveryQueueMenu.Count; i++)
             {
                 res = deliveryQueueMenu[i].menuListNames.Contains(_menu);
                 if (res)

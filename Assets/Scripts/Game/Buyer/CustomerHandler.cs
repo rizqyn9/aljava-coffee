@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,31 +16,72 @@ namespace Game
         public CustomerHandler customerHandler;
     }
 
+    [System.Serializable]
+    public struct buyerOrderItemHandler
+    {
+        public menuListName menu;
+        public GameObject itemGO;
+    }
+
     public class CustomerHandler : MonoBehaviour
     {
         public Transform spawnCharTransform;
         public GameObject bubbles;
+        public SpriteRenderer[] menuSpawnRenderer;
+        public SpriteRenderer singleMenuSpawnRenderer;
 
         [Header("Debug")]
         [SerializeField] BuyerPrototype buyerPrototype;
-        public Transform destinationSeat;
-        [SerializeField] int seatIndex;
+        [SerializeField] List<buyerOrderItemHandler> orderItemHandlers;
+        [SerializeField] Transform destinationSeat;
 
         public void initBuyer(BuyerPrototype _buyerPrototype)
         {
             buyerPrototype = _buyerPrototype;
             gameObject.name = _buyerPrototype.customerCode;
-            Instantiate(_buyerPrototype.buyerType.buyerPrefab, spawnCharTransform);
+
+            GameObject charSpawn = Instantiate(_buyerPrototype.buyerType.buyerPrefab, spawnCharTransform);
+
+            renderMenu();
+
             buyerPrototype.customerHandler = this;
 
             StartCoroutine(startCustomer(1));
         }
 
+        private void renderMenu()
+        {
+            if(buyerPrototype.menuListNames.Count == 1)
+            {
+                createMenuhandler(singleMenuSpawnRenderer, buyerPrototype.menuListNames[0]);
+            } else
+            {
+                for(int i =0; i< buyerPrototype.menuListNames.Count; i++)
+                {
+                    createMenuhandler(menuSpawnRenderer[i], buyerPrototype.menuListNames[i]);
+                }
+            }
+        }
+
+        void createMenuhandler(SpriteRenderer _renderer, menuListName _menuName)
+        {
+            _renderer.sprite = ResourceManager.Instance.MenuTypes.Find(val => val.menuListName == _menuName).menuSprite;
+            _renderer.enabled = true;
+
+            buyerOrderItemHandler itemHandler = new buyerOrderItemHandler();
+            itemHandler.itemGO = _renderer.gameObject;
+            itemHandler.menu = _menuName;
+
+            orderItemHandlers.Add(itemHandler);
+        }
+
         IEnumerator startCustomer(int _duration)
         {
             gameObject.transform.LeanMove(buyerPrototype.seatDestination.position, _duration);
-            new WaitForSeconds(_duration);
+            yield return new WaitForSeconds(_duration);
             MainController.Instance.deliveryQueueMenu.Add(buyerPrototype);
+            yield return new WaitForSeconds(_duration/2);
+            bubbles.SetActive(true);
             yield break;
 
             // Animate when Customer already spawned

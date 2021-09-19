@@ -40,8 +40,11 @@ namespace Game
             } else
             {
                 glassTarget = GlassContainer.Instance.findGlassWithState(new List<enumIgrendients> { enumIgrendients.BEANS_ARABICA, enumIgrendients.BEANS_ROBUSTA });
-                if (glassTarget.glassCode == null) Debug.Log("Gk nemu");
-
+                if (glassTarget.glassCode == null)
+                {
+                    Debug.Log("Gk nemu");
+                    return;
+                }
                 glassTarget.glass.changeSpriteIgrendients(sprite, resultIgrendients);
                 Destroy(resultGO);
                 spawnResult();
