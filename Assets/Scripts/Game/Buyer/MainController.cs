@@ -18,6 +18,8 @@ namespace Game
         public Transform[] startSpawnTransform;
         public int delay = 10;
         public GameObject tempCustomer;
+        public int targetCustomer = 5;
+        public GameObject winPrefab;
 
         [Header("Debug")]
         public List<BuyerPrototype> deliveryQueueMenu = new List<BuyerPrototype>();
@@ -29,6 +31,7 @@ namespace Game
         [SerializeField] int buyerAssetCount;
         [SerializeField] int menuAssetCount;
         [SerializeField] int customerCounter = 1;
+        [SerializeField] bool isGameEnd = false;
 
         public void Start()
         {
@@ -47,6 +50,19 @@ namespace Game
         }
         private void Update()
         {
+            isGameFinished = deliveryQueueMenu.Count == targetCustomer;
+            if (isGameFinished && !isGameEnd)
+            {
+                monitorAvaibleSeat();
+                if(freeSeatDataIndex.Count == seatDataTransform.Length)
+                {
+                    Debug.Log("asdsad");
+                    StartCoroutine(gameFinished());
+                    return;
+
+                }
+            }
+
             if (deliveryQueueMenu.Count >= maxSlotOrder)
                 isDeliveryFull = true;
             else
@@ -54,7 +70,7 @@ namespace Game
 
             if(canCreateCustomer && !isGameFinished)
             {
-                if (monitorAvaibleSeat())
+                if (monitorAvaibleSeat() && !isGameFinished)
                 {
                     createNewCustomer(freeSeatDataIndex[Random.Range(0, freeSeatDataIndex.Count)]);
                 }
@@ -63,6 +79,14 @@ namespace Game
                     return;
                 }
             }
+        }
+
+        IEnumerator gameFinished()
+        {
+            new WaitForSeconds(4);
+            winPrefab.SetActive(true);
+            isGameEnd = true;
+            yield break;
         }
 
         private void createNewCustomer(int _seatIndex)

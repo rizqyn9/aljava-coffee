@@ -1482,7 +1482,7 @@ MonoBehaviour:
   startSpawnTransform:
   - {fileID: 403457505}
   - {fileID: 1684176195}
-  delay: 10
+  delay: 2
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   deliveryQueueMenu: []
   maxSlotOrder: 0
@@ -1574,6 +1574,7 @@ MonoBehaviour:
   coffeeMakers: []
   beansMachines: []
   milkSteam: {fileID: 0}
+  test: 0
 --- !u!1 &1544391364
 GameObject:
   m_ObjectHideFlags: 0
@@ -2467,7 +2468,6 @@ MonoBehaviour:
   - {fileID: 1648981622}
   - {fileID: 1218113620}
   glassRegistereds: []
-  canSpawn: 0
   cachedGlassCode: 0
 --- !u!1 &2070079574
 GameObject:
