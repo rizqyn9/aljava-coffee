@@ -77,7 +77,7 @@ namespace Game
             BuyerPrototype buyerPrototype = new BuyerPrototype();
             buyerPrototype.buyerType = ResourceManager.Instance.BuyerTypes[Random.Range(0, buyerAssetCount)];
             buyerPrototype.customerCode = $"Customer-{customerCounter++}";
-            buyerPrototype.seatDestination = seatDataTransform[_seatIndex].transform;
+            buyerPrototype.seatIndex = _seatIndex;
             buyerPrototype.menuListNames = generateMenu(Random.Range(1,2));
 
             // reference buyer
@@ -139,6 +139,13 @@ namespace Game
                     if (deliveryQueueMenu[i].menuListNames.Contains(_menuName))
                     {
                         _buyerPrototype = deliveryQueueMenu[i];
+                        _buyerPrototype.menuListNames.Remove(_menuName);
+                        if(_buyerPrototype.menuListNames.Count < 1)
+                        {
+                            Debug.Log("Clear");
+                            _buyerPrototype.customerHandler.onMenusDone();
+                        }
+                        clearQueue(deliveryQueueMenu[i]);
                         return true;
                     }
                 }
@@ -147,6 +154,11 @@ namespace Game
             {
                 return false;
             }
+        }
+
+        private void clearQueue(BuyerPrototype _buyerPrototype)
+        {
+            
         }
     }
 }

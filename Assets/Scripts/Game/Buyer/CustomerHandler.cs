@@ -11,7 +11,7 @@ namespace Game
         public string customerCode;
         public BuyerType buyerType;
         public buyerState buyerState;
-        public Transform seatDestination;
+        public int seatIndex;
         public List<menuListName> menuListNames;
         public CustomerHandler customerHandler;
     }
@@ -80,9 +80,15 @@ namespace Game
             orderItemHandlers.Find(val => val.menu == _menu).itemGO.SetActive(false);
         }
 
+        public void onMenusDone()
+        {
+            MainController.Instance.seatDataTransform[buyerPrototype.seatIndex].isSeatAvaible = true;
+            Destroy(gameObject);
+        }
+
         IEnumerator startCustomer(int _duration)
         {
-            gameObject.transform.LeanMove(buyerPrototype.seatDestination.position, _duration);
+            gameObject.transform.LeanMove(MainController.Instance.seatDataTransform[buyerPrototype.seatIndex].transform.position, _duration);
             yield return new WaitForSeconds(_duration);
             MainController.Instance.deliveryQueueMenu.Add(buyerPrototype);
             yield return new WaitForSeconds(_duration/2);
