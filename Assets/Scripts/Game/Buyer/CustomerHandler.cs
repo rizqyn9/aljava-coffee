@@ -83,6 +83,7 @@ namespace Game
         public void onMenusDone()
         {
             MainController.Instance.seatDataTransform[buyerPrototype.seatIndex].isSeatAvaible = true;
+            GameUIController.Instance.asOrderCount();
             Destroy(gameObject);
         }
 

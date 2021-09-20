@@ -26,6 +26,7 @@ namespace Game
         public int maxSlotOrder;
         public bool isDeliveryFull = false;
         public bool isGameFinished = false;
+        public bool isGameTimeOut = false;
         public bool canCreateCustomer = false;
         public List<int> freeSeatDataIndex = new List<int>();
         [SerializeField] int buyerAssetCount;
@@ -40,6 +41,8 @@ namespace Game
             buyerAssetCount = ResourceManager.Instance.BuyerTypes.Count;
             menuAssetCount = ResourceManager.Instance.MenuTypes.Count;
             maxSlotOrder = seatDataTransform.Length;
+
+            GameUIController.Instance.timerIsRunning = true;
             StartCoroutine(onStart());
         }
 
@@ -50,6 +53,11 @@ namespace Game
         }
         private void Update()
         {
+            if (isGameTimeOut)
+            {
+                StartCoroutine(gameFinished());
+                return;
+            }
             isGameFinished = deliveryQueueMenu.Count == targetCustomer;
             if (isGameFinished && !isGameEnd)
             {
