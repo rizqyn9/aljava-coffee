@@ -11,5 +11,6 @@ public class MenuType : ScriptableObject
     public GameObject menuPrefab;
     public Sprite menuSprite;
     public List<enumIgrendients> recipe;
-    public int difficulty;
+    public int price;
+    public int pointInGame;
 }
