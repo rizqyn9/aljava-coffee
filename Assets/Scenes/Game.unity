@@ -2177,7 +2177,7 @@ MonoBehaviour:
   - {fileID: 1684176195}
   delay: 3
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
-  targetCustomer: 15
+  targetCustomer: 10
   deliveryQueueMenu: []
   maxSlotOrder: 0
   isDeliveryFull: 0
