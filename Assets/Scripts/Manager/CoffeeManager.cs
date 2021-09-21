@@ -19,12 +19,12 @@ namespace Game
         {
             return findCoffeeMaker(_enumIgrendients);
         }
-
+        public enumIgrendients test;
         public bool findCoffeeMaker(enumIgrendients _enumIgrendients)
         {
             CoffeeMaker coffeeMaker = coffeeMakers.Find(res => res.enumMachineState == enumMachineState.ON_IDDLE);
             if (!coffeeMaker) return false;
-
+            test = _enumIgrendients;
             coffeeMaker.spawnRes(_enumIgrendients);
             return true;
         }

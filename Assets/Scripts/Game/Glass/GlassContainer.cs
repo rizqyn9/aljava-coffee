@@ -9,6 +9,7 @@ namespace Game
         [Header("Properties")]
         public GameObject glassPrefab;
         public List<Transform> listPosSpawn;
+        int delay = 2;
 
         [Header("Debug")]
         public List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
@@ -19,7 +20,17 @@ namespace Game
             updateSpawn();
         }
 
+        public void respawn()
+        {
+            StartCoroutine(spawnGlass());
+        }
+
         public int getCode() => cachedGlassCode++;
+
+        public void glassOnDestroy(GlassRegistered _glassRegistered)
+        {
+            //glassRegistereds
+        }
 
         /// <summary>
         /// Find empty glass
@@ -43,6 +54,12 @@ namespace Game
                     Instantiate(glassPrefab, _transform);
                 }
             }
+        }
+
+        IEnumerator spawnGlass()
+        {
+            yield return new WaitForSeconds(delay);
+            updateSpawn();
         }
     }
 }
