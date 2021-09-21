@@ -248,6 +248,8 @@ MonoBehaviour:
   countDown: 120
   timerIsRunning: 0
   timeOut: 0
+  winPrefab: {fileID: 6850502691753989276}
+  losePrefab: {fileID: 2021053844}
   _counter: 0
 --- !u!1 &106033020
 GameObject:
@@ -2151,8 +2153,7 @@ MonoBehaviour:
   - {fileID: 1684176195}
   delay: 2
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
-  targetCustomer: 5
-  winPrefab: {fileID: 6850502691753989276}
+  targetCustomer: 2
   deliveryQueueMenu: []
   maxSlotOrder: 0
   isDeliveryFull: 0
@@ -2164,6 +2165,7 @@ MonoBehaviour:
   menuAssetCount: 0
   customerCounter: 1
   isGameEnd: 0
+  isWin: 0
 --- !u!4 &1532892880
 Transform:
   m_ObjectHideFlags: 0
@@ -3926,7 +3928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2021053845
 RectTransform:
   m_ObjectHideFlags: 0

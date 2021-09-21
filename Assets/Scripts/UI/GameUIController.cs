@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 namespace Game
 {
@@ -12,6 +13,9 @@ namespace Game
         public float countDown = 120;
         public bool timerIsRunning = false;
         public bool timeOut = false;
+        public GameObject winPrefab;
+        public GameObject losePrefab;
+
 
         private void Update()
         {
@@ -28,6 +32,22 @@ namespace Game
 
                 }
             }
+        }
+
+        public void finalize(bool _isWin)
+        {
+            if (_isWin) instanceWin();
+            else instanceLose();
+        }
+
+        private void instanceLose()
+        {
+            losePrefab.SetActive(true);
+        }
+
+        private void instanceWin()
+        {
+            winPrefab.SetActive(true);
         }
 
         private void Start()

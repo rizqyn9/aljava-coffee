@@ -19,7 +19,6 @@ namespace Game
         public int delay = 10;
         public GameObject tempCustomer;
         public int targetCustomer = 5;
-        public GameObject winPrefab;
 
         [Header("Debug")]
         public List<BuyerPrototype> deliveryQueueMenu = new List<BuyerPrototype>();
@@ -33,6 +32,7 @@ namespace Game
         [SerializeField] int menuAssetCount;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
+        [SerializeField] bool isWin;
 
         public void Start()
         {
@@ -55,6 +55,8 @@ namespace Game
         {
             if (isGameTimeOut)
             {
+                isGameFinished = true;
+                isWin = false;
                 StartCoroutine(gameFinished());
                 return;
             }
@@ -65,6 +67,7 @@ namespace Game
                 if(freeSeatDataIndex.Count == seatDataTransform.Length)
                 {
                     Debug.Log("asdsad");
+                    isWin = true;
                     StartCoroutine(gameFinished());
                     return;
 
@@ -92,7 +95,7 @@ namespace Game
         IEnumerator gameFinished()
         {
             new WaitForSeconds(4);
-            winPrefab.SetActive(true);
+            GameUIController.Instance.finalize(isWin);
             isGameEnd = true;
             yield break;
         }
