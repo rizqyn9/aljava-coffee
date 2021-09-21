@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 568094292837649490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.05, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 5777245014998221701}
   m_RootOrder: 1
@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 1473854813228492298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.05, y: -0.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 5777245014998221701}
   m_RootOrder: 3
@@ -272,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 4281515021935385780}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.05, y: 0.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 5777245014998221701}
   m_RootOrder: 2
@@ -439,7 +439,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnCharTransform: {fileID: 1902277018623575573}
   bubbles: {fileID: 5376542571190793433}
-  menuItemTemp: {fileID: 0}
   menuSpawnRenderer:
   - {fileID: 8950110672030764466}
   - {fileID: 2772763501108575429}
@@ -448,9 +447,8 @@ MonoBehaviour:
     customerCode: 
     buyerType: {fileID: 0}
     buyerState: 0
-    seatDestination: {fileID: 0}
+    seatIndex: 0
     menuListNames: 
     customerHandler: {fileID: 0}
   orderItemHandlers: []
   destinationSeat: {fileID: 0}
-  seatIndex: 0

@@ -16,6 +16,6 @@ MonoBehaviour:
   menuName: 
   menuDesc: 
   menuPrefab: {fileID: 0}
-  menuSprite: {fileID: 21300000, guid: 810a8ff2413824780815f9ec12698547, type: 3}
+  menuSprite: {fileID: 21300000, guid: 5e5554901971f46f38adbe0a7f974852, type: 3}
   recipe: 040000000100000006000000
   difficulty: 0
