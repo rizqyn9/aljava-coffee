@@ -48,7 +48,7 @@ namespace Game
 
         IEnumerator onStart()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             canCreateCustomer = true;
         }
         private void Update()

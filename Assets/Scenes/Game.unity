@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressHandler: {fileID: 580109022}
   timeUI: {fileID: 1660174399}
-  countDown: 120
+  countDown: 60
   timerIsRunning: 0
   timeOut: 0
   winPrefab: {fileID: 6850502691753989276}
@@ -806,7 +806,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 485388942}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 100782316}
+        m_TargetAssemblyTypeName: Game.GameUIController, Assembly-CSharp
+        m_MethodName: GameMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &485388942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,7 +1102,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 701424041}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 100782316}
+        m_TargetAssemblyTypeName: Game.GameUIController, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &701424041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2151,9 +2175,9 @@ MonoBehaviour:
   startSpawnTransform:
   - {fileID: 403457505}
   - {fileID: 1684176195}
-  delay: 2
+  delay: 3
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
-  targetCustomer: 2
+  targetCustomer: 15
   deliveryQueueMenu: []
   maxSlotOrder: 0
   isDeliveryFull: 0
@@ -3585,7 +3609,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1908501346}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 100782316}
+        m_TargetAssemblyTypeName: Game.GameUIController, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1908501346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4033,7 +4069,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2032077716}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 100782316}
+        m_TargetAssemblyTypeName: Game.GameUIController, Assembly-CSharp
+        m_MethodName: GameMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2032077716
 MonoBehaviour:
   m_ObjectHideFlags: 0

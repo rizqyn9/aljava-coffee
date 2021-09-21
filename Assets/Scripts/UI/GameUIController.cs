@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -36,7 +36,11 @@ namespace Game
 
         public void finalize(bool _isWin)
         {
-            if (_isWin) instanceWin();
+            if (_isWin)
+            {
+                timerIsRunning = false;
+                instanceWin();
+            }
             else instanceLose();
         }
 
@@ -63,5 +67,15 @@ namespace Game
             _counter = _counter += 1;
         }
 
+        public void Restart()
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        public void GameMenu()
+        {
+            SceneManager.LoadScene(1);
+
+        }
     }
 }
