@@ -44,7 +44,10 @@ namespace Game
             bool isArabica = glassTarget.glass.igrendients.Contains(enumIgrendients.BEANS_ARABICA);
             SpriteColorCustom _sprite = colorResult.Find(val => val.targetIgrendients == (isArabica ? enumIgrendients.BEANS_ARABICA : enumIgrendients.BEANS_ROBUSTA));
             glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, resultIgrendients);
+            glassTarget.glass.process();
+
             StartCoroutine(IDestroy());
+
         }
 
         IEnumerator ISpawn()
@@ -55,8 +58,8 @@ namespace Game
             resultGO.LeanScale(new Vector2(1, 1), delay);
 
             yield return new WaitForSeconds(delay);
-            MachineState = MachineState.ON_DONE;
 
+            MachineState = MachineState.ON_DONE;
             yield break;
         }
 
