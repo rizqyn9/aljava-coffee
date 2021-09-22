@@ -48,7 +48,7 @@ namespace Game
             resultGO = Instantiate(machineType == MachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab, resultSpawnPosition);
             resultGO.transform.LeanScale(new Vector2(1f, 1f), .2f);
 
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.2f);
 
             MachineState = MachineState.ON_DONE;
             yield break;
@@ -58,8 +58,8 @@ namespace Game
         {
             MachineState = MachineState.ON_PROCESS;
 
-            resultGO.transform.LeanScale(new Vector2(0f, 0f), 1);
-            yield return new WaitForSeconds(1);
+            resultGO.transform.LeanScale(new Vector2(0f, 0f), .2f);
+            yield return new WaitForSeconds(.2f);
             Destroy(resultGO);
 
             coffeeMaker.reqInput(resultIgrendients);

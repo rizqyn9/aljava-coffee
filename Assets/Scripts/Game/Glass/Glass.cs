@@ -29,7 +29,6 @@ namespace Game
                 _lastIgrendients = value;
             }
         }
-        public GameObject GO;
         private BoxCollider2D boxCollider2D;
         [SerializeField] float doubleClickTimeLimit = 0.1f;
 

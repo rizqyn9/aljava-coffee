@@ -34,8 +34,8 @@ namespace Game
             MachineState = MachineState.ON_PROCESS;
 
             resultGO = Instantiate(resultPrefab, resultSpawnPosition);
-            resultGO.LeanScale(new Vector2(1f, 1f), 2);
-            yield return new WaitForSeconds(2);
+            resultGO.LeanScale(new Vector2(1f, 1f), .8f);
+            yield return new WaitForSeconds(.8f);
 
             MachineState = MachineState.ON_DONE;
             yield break;
@@ -45,6 +45,7 @@ namespace Game
         {
             if (resultSpawnPosition.childCount > 0
                 && isGlassAvaible()
+                && MachineState != MachineState.ON_PROCESS
                 )
             {
                 StartCoroutine(IDestroy());
@@ -58,12 +59,13 @@ namespace Game
             glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, _multipleIgrendients: igrendientsList);
             glassTarget.glass.process();
 
-            resultGO.LeanScale(new Vector2(0, 0), 2);
-            yield return new WaitForSeconds(2);
+            resultGO.LeanScale(new Vector2(0, 0), .2f);
+            yield return new WaitForSeconds(.2f);
 
             Destroy(resultGO);
 
             InitStart();
+            yield break;
         }
 
         bool isGlassAvaible()
