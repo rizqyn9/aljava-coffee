@@ -16,9 +16,9 @@ namespace Game
         public List<enumIgrendients> igrendients = new List<enumIgrendients>();
         public MenuType getMenuState;
         public bool isValidMenu = false;
+        public GlassRegistered glassRegistered;
         [SerializeField] SpriteRenderer igrendientRenderer;
         [SerializeField] BuyerPrototype targetBuyer;
-        [SerializeField] GlassRegistered glassRegistered;
         [SerializeField] enumIgrendients _lastIgrendients = enumIgrendients.NULL;
         public enumIgrendients lastIgrendients
         {
@@ -33,12 +33,6 @@ namespace Game
         private BoxCollider2D boxCollider2D;
         [SerializeField] float doubleClickTimeLimit = 0.1f;
 
-
-        private void checkedMenu()
-        {
-            isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
-        }
-
         private void Awake()
         {
             boxCollider2D = GetComponent<BoxCollider2D>();
@@ -49,17 +43,35 @@ namespace Game
             StartCoroutine(InputListener());
 
             glassState = GlassState.EMPTY;
-
-            string glassCode = generateUniqueCode();
-            gameObject.name = glassCode;
-
-            glassRegistered = new GlassRegistered() { glassCode = glassCode, glass = this };
-            LevelManager.Instance.listGlassRegistered.Add(glassRegistered);
-            GlassContainer.Instance.glassRegistereds.Add(glassRegistered);
         }
 
-        private string generateUniqueCode() => $"--Glass-{GlassContainer.Instance.getCode()}";
+        private void checkedMenu() => isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
 
+        private void OnMouseDown()
+        {
+            if (isValidMenu && MainController.Instance.isExistQueue(getMenuState.menuListName, out targetBuyer))
+            {
+                Debug.Log("Find customer menu");
+                targetBuyer.customerHandler.onServeMenu(getMenuState.menuListName);
+
+                GlassContainer.Instance.glassOnDestroy(glassRegistered);
+                StartCoroutine(IDestroy());
+            }
+
+        }
+
+        IEnumerator IDestroy()
+        {
+            gameObject.LeanScale(Vector2.zero, .5f);
+            yield return new WaitForSeconds(1f);
+
+            GlassContainer.Instance.reqGlassSpawn(glassRegistered.seatIndex);
+
+            Destroy(gameObject);
+            yield break;
+        }
+
+        #region Depends
         /// <summary>
         /// Add Igrendients and rendering Sprite result
         /// _igrendiets automatically set as lastIgrendients
@@ -129,20 +141,6 @@ namespace Game
             SingleClick();
         }
 
-        private void OnMouseDown()
-        {
-            if (isValidMenu && MainController.Instance.isExistQueue(getMenuState.menuListName, out targetBuyer))
-            {
-                Debug.Log("Find customer menu");
-                targetBuyer.customerHandler.onServeMenu(getMenuState.menuListName);
-
-                GlassContainer.Instance.respawn();
-                GlassContainer.Instance.glassOnDestroy(glassRegistered);
-                Destroy(gameObject);
-            }
-            
-        }
-
         private void SingleClick()
         {
         }
@@ -151,5 +149,7 @@ namespace Game
         {
             Debug.Log("Double Click");
         }
+
+        #endregion
     }
 }

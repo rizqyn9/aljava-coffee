@@ -37,7 +37,6 @@ namespace Game
             resultGO.LeanScale(new Vector2(1f, 1f), 2);
             yield return new WaitForSeconds(2);
 
-
             MachineState = MachineState.ON_DONE;
             yield break;
         }

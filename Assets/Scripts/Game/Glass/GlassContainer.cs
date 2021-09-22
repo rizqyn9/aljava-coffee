@@ -9,6 +9,7 @@ namespace Game
     {
         public string glassCode;
         public Glass glass;
+        public int seatIndex;
     }
 
     public class GlassContainer : Singleton<GlassContainer>
@@ -16,28 +17,51 @@ namespace Game
         [Header("Properties")]
         public GameObject glassPrefab;
         public List<Transform> listPosSpawn;
-        int delay = 2;
+        public float delay = .2f;
 
         [Header("Debug")]
-        public List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
+        [SerializeField] List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
         [SerializeField] int cachedGlassCode = 0;
 
         public void Start()
         {
-            updateSpawn();
+            for(int i = 0; i < listPosSpawn.Count; i++)
+            {
+                reqGlassSpawn(i);
+            }
         }
-
-        public void respawn()
-        {
-            StartCoroutine(spawnGlass());
-        }
-
-        public int getCode() => cachedGlassCode++;
 
         public void glassOnDestroy(GlassRegistered _glassRegistered)
         {
             //glassRegistereds
         }
+
+        public void reqGlassSpawn(int _seat)
+        {
+            Glass _spawn = Instantiate(glassPrefab, listPosSpawn[_seat]).GetComponent<Glass>();
+
+            GlassRegistered _registGlass = new GlassRegistered()
+            {
+                glass = _spawn,
+                glassCode = generateUniqueCode(),
+                seatIndex = _seat
+            };
+            StartCoroutine(spawnGlass(_spawn.gameObject));
+            glassRegistereds.Add(_registGlass);
+            _spawn.glassRegistered = _registGlass;
+        }
+
+        IEnumerator spawnGlass(GameObject _glass)
+        {
+            _glass.transform.localScale = Vector2.zero;
+            _glass.LeanScale(new Vector2(2f, 2f), delay).setEaseInBounce();
+            yield break;
+
+        }
+
+        #region Depends
+
+        public string generateUniqueCode() => $"Glass-{cachedGlassCode++}";
 
         /// <summary>
         /// Find last igrendients from param,
@@ -53,21 +77,6 @@ namespace Game
         /// <returns></returns>
         public GlassRegistered findGlassWithState(List<enumIgrendients> _enumIgrendients) => glassRegistereds.Find(res => _enumIgrendients.Contains(res.glass.lastIgrendients));
 
-        public void updateSpawn()
-        {
-            foreach (Transform _transform in listPosSpawn)
-            {
-                if(_transform.childCount == 0)
-                {
-                    Instantiate(glassPrefab, _transform);
-                }
-            }
-        }
-
-        IEnumerator spawnGlass()
-        {
-            yield return new WaitForSeconds(delay);
-            updateSpawn();
-        }
+        #endregion
     }
 }
