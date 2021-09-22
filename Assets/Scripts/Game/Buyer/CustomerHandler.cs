@@ -89,11 +89,15 @@ namespace Game
 
         IEnumerator startCustomer(int _duration)
         {
-            gameObject.transform.LeanMove(MainController.Instance.seatDataTransform[buyerPrototype.seatIndex].transform.position, _duration);
+            gameObject.transform.LeanMove(MainController.Instance.seatDataTransform[buyerPrototype.seatIndex].transform.position, _duration).setEaseInBounce();
             yield return new WaitForSeconds(_duration);
             MainController.Instance.deliveryQueueMenu.Add(buyerPrototype);
             yield return new WaitForSeconds(_duration/2);
             bubbles.SetActive(true);
+
+            Vector2 defScale = bubbles.transform.localScale;
+            bubbles.transform.localScale = Vector2.zero;
+            bubbles.LeanScale(defScale, .5f).setEaseInBounce();
             yield break;
 
             // Animate when Customer already spawned

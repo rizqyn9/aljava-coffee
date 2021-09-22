@@ -93,10 +93,8 @@ namespace Game
                 monitorAvaibleSeat();
                 if(freeSeatDataIndex.Count == seatDataTransform.Length)
                 {
-                    Debug.Log("asdsad");
                     StartCoroutine(gameFinished());
                     return;
-
                 }
             }
 
