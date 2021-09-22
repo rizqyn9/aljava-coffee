@@ -10,18 +10,16 @@ namespace Game
         [Header("Properties")]
         public Transform igrendientTransform;
         public GameObject baseIgrendientsGO;
-        public GameObject winPrefab;
-        public GameObject loosePrefab;
 
         [Header("Debug")]
-        public string glassCode;
+        public GlassState glassState;
         public List<enumIgrendients> igrendients = new List<enumIgrendients>();
         public MenuType getMenuState;
         public bool isValidMenu = false;
-        [SerializeField] SpriteRenderer debugIgrendientsGO;
-        [SerializeField] enumIgrendients _lastIgrendients = enumIgrendients.NULL;
+        [SerializeField] SpriteRenderer igrendientRenderer;
         [SerializeField] BuyerPrototype targetBuyer;
         [SerializeField] GlassRegistered glassRegistered;
+        [SerializeField] enumIgrendients _lastIgrendients = enumIgrendients.NULL;
         public enumIgrendients lastIgrendients
         {
             get => _lastIgrendients;
@@ -31,27 +29,15 @@ namespace Game
                 _lastIgrendients = value;
             }
         }
+        public GameObject GO;
+        private BoxCollider2D boxCollider2D;
         [SerializeField] float doubleClickTimeLimit = 0.1f;
 
-        [ContextMenu("Win")]
-        public void winCondition()
-        {
-            Instantiate(winPrefab);
-        }
-        [ContextMenu("Loose")]
-        public void looseCondition()
-        {
-            Instantiate(loosePrefab);
-        }
 
         private void checkedMenu()
         {
             isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
         }
-
-        public List<GameObject> listIgrendientsGO = new List<GameObject>();
-        public GameObject GO;
-        private BoxCollider2D boxCollider2D;
 
         private void Awake()
         {
@@ -62,7 +48,9 @@ namespace Game
         {
             StartCoroutine(InputListener());
 
-            glassCode = generateUniqueCode();
+            glassState = GlassState.EMPTY;
+
+            string glassCode = generateUniqueCode();
             gameObject.name = glassCode;
 
             glassRegistered = new GlassRegistered() { glassCode = glassCode, glass = this };
@@ -72,18 +60,45 @@ namespace Game
 
         private string generateUniqueCode() => $"--Glass-{GlassContainer.Instance.getCode()}";
 
-        public void changeSpriteAddIgrendients(Color _color, List<enumIgrendients> _listIgrendients)
+        /// <summary>
+        /// Add Igrendients and rendering Sprite result
+        /// _igrendiets automatically set as lastIgrendients
+        /// </summary>
+        /// <param name="_color"></param>
+        /// <param name="_igrendients (optional)"></param>
+        /// <param name="_multipleIgrendients (optional)"></param>
+        public void changeSpriteAddIgrendients(Color _color, enumIgrendients _igrendients = enumIgrendients.NULL, List<enumIgrendients> _multipleIgrendients = null)
         {
-            if (!debugIgrendientsGO)
+            if (!igrendientRenderer) igrendientRenderer = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
+            if (_multipleIgrendients != null)
             {
-                debugIgrendientsGO = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
+                igrendients.AddRange(_multipleIgrendients);
+                lastIgrendients = _multipleIgrendients[_multipleIgrendients.Count - 1];
             }
-            igrendients.AddRange(_listIgrendients);
-            setLastIgrendients(_listIgrendients[_listIgrendients.Count - 1]);
-            debugIgrendientsGO.color = new Color(_color.r, _color.g, _color.b, 1);
+            if(_igrendients != enumIgrendients.NULL)
+            {
+                igrendients.Add(_igrendients);
+                lastIgrendients = _igrendients;
+            }
+
+            igrendientRenderer.color = new Color(_color.r, _color.g, _color.b, 1);
         }
 
-        void setLastIgrendients(enumIgrendients _lastIgrendients) => lastIgrendients = _lastIgrendients;
+        public void process()
+        {
+            StartCoroutine(IProcess());
+        }
+
+        IEnumerator IProcess()
+        {
+            glassState = GlassState.PROCESS;
+            animateGlass();
+
+            yield return new WaitForSeconds(1);
+            glassState = GlassState.FILLED;
+        }
+
+        private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(2.5f, 2.5f), .3f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
 
         private IEnumerator InputListener()
         {

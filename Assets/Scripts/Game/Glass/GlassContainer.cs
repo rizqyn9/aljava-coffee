@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace Game
 {
+    [System.Serializable]
+    public struct GlassRegistered
+    {
+        public string glassCode;
+        public Glass glass;
+    }
+
     public class GlassContainer : Singleton<GlassContainer>
     {
         [Header("Properties")]
@@ -33,10 +40,11 @@ namespace Game
         }
 
         /// <summary>
-        /// Find empty glass
+        /// Find last igrendients from param,
+        /// Find Glass State not equals Glass.OnProcess
         /// </summary>
         /// <returns></returns>
-        public GlassRegistered findEmptyGlass() => glassRegistereds.Find(res => res.glass.lastIgrendients == enumIgrendients.NULL);
+        public GlassRegistered findGlassLastState(enumIgrendients _lastIgrendient) => glassRegistereds.Find(res => res.glass.lastIgrendients == _lastIgrendient && res.glass.glassState != GlassState.PROCESS);
 
         /// <summary>
         /// Find glass with multiple state

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -19,38 +20,66 @@ namespace Game
         public int delay = 10;
         public GameObject tempCustomer;
         public int targetCustomer = 5;
-        public GameObject winPrefab;
 
         [Header("Debug")]
         public List<BuyerPrototype> deliveryQueueMenu = new List<BuyerPrototype>();
         public int maxSlotOrder;
         public bool isDeliveryFull = false;
+        public bool isGameStarted = false;
         public bool isGameFinished = false;
         public bool isGameTimeOut = false;
         public bool canCreateCustomer = false;
         public List<int> freeSeatDataIndex = new List<int>();
-        [SerializeField] int buyerAssetCount;
-        [SerializeField] int menuAssetCount;
+        [SerializeField] ResourceData ResourceData;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
+        [SerializeField] List<Machine> Machines = new List<Machine>();
 
         public void Start()
         {
             Application.targetFrameRate = 60; // Optional platform
 
-            buyerAssetCount = ResourceManager.Instance.BuyerTypes.Count;
-            menuAssetCount = ResourceManager.Instance.MenuTypes.Count;
+            ResourceData = ResourceManager.Instance.resourceData;
+
             maxSlotOrder = seatDataTransform.Length;
+
+            Machines = FindObjectsOfType<Machine>().ToList();
+
+            initMachine();
 
             GameUIController.Instance.timerIsRunning = true;
             StartCoroutine(onStart());
         }
 
+        private void initMachine()
+        {
+            foreach(Machine _ in Machines)
+            {
+                _.isGameStarted = true;
+                _.startMachine();
+            }
+        }
+
         IEnumerator onStart()
         {
             yield return new WaitForSeconds(1);
+
+            isGameStarted = true;
             canCreateCustomer = true;
         }
+
+        /// <summary>
+        /// finding Machine target, with out Machine
+        /// </summary>
+        /// <param name="_machine"></param>
+        /// <param name="_">out, bring out Machine class</param>
+        /// <returns></returns>
+        public bool isMachineAvaible(MachineType _machine, out Machine _)
+        {
+            _ = Machines.Find(val => val.machineType == _machine && val.MachineState == MachineState.ON_IDDLE);
+            return _;
+        }
+
         private void Update()
         {
             if (isGameTimeOut)
@@ -92,7 +121,6 @@ namespace Game
         IEnumerator gameFinished()
         {
             new WaitForSeconds(4);
-            winPrefab.SetActive(true);
             isGameEnd = true;
             yield break;
         }
@@ -107,7 +135,7 @@ namespace Game
             CustomerHandler customer = GO.GetComponent<CustomerHandler>();
 
             BuyerPrototype buyerPrototype = new BuyerPrototype();
-            buyerPrototype.buyerType = ResourceManager.Instance.BuyerTypes[Random.Range(0, buyerAssetCount)];
+            buyerPrototype.buyerType = ResourceManager.Instance.BuyerTypes[Random.Range(0, ResourceData.buyerTypeCount)];
             buyerPrototype.customerCode = $"Customer-{customerCounter++}";
             buyerPrototype.seatIndex = _seatIndex;
             buyerPrototype.menuListNames = generateMenu(Random.Range(1,2));
@@ -138,7 +166,7 @@ namespace Game
             List<menuListName> res = new List<menuListName>();
             for(int i =0; i< _total; i++)
             {
-                res.Add(ResourceManager.Instance.MenuTypes[Random.Range(0, menuAssetCount)].menuListName);
+                res.Add(ResourceManager.Instance.MenuTypes[Random.Range(0, ResourceData.menuTypeCount)].menuListName);
             }
             return res;
         }

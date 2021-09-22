@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,30 +7,73 @@ namespace Game
 {
     public class BeansMachine : Machine
     {
-        //[Header("Properties")]
+        [Header("Debug")]
+        public CoffeeMaker coffeeMaker;
 
-        public override void RegistToManager()
+        public override void RegistToManager() => CoffeeManager.Instance.beansMachines.Add(this);
+
+        public override void InitStart()
         {
-            CoffeeManager.Instance.beansMachines.Add(this);
+            MachineState = MachineState.ON_IDDLE;
         }
 
         public void OnMouseDown()
         {
-            if(resultSpawnPosition.childCount == 0)
+            if (!isGameStarted || MachineState == MachineState.ON_PROCESS) return;
+
+            validate();
+        }
+
+        private void validate()
+        {
+            coffeeMaker = null;
+            switch (MachineState)
             {
-                spawnResult();
-            }
-            else if (resultGO && CoffeeManager.Instance.isAcceptabble(machineType == enumMachineType.BEANS_ARABICA ? enumIgrendients.BEANS_ARABICA : enumIgrendients.BEANS_ROBUSTA))
-            {
-                resultGO.transform.LeanScale(new Vector2(.5f, .5f), .2f);
-                Destroy(resultGO);
+                case MachineState.ON_IDDLE:
+                    StartCoroutine(ISpawn());
+                    break;
+                case MachineState.ON_DONE:
+                    if (isCoffeeMakerIddle() && coffeeMaker)
+                    {
+                        StartCoroutine(IDestroy());
+                    }
+                    break;
             }
         }
 
-        private void spawnResult()
+        IEnumerator ISpawn()
         {
-            resultGO = Instantiate(machineType == enumMachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab, resultSpawnPosition);
+            MachineState = MachineState.ON_PROCESS;
+
+            resultGO = Instantiate(machineType == MachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab, resultSpawnPosition);
             resultGO.transform.LeanScale(new Vector2(1f, 1f), .2f);
+
+            yield return new WaitForSeconds(.5f);
+
+            MachineState = MachineState.ON_DONE;
+            yield break;
+        }
+
+        IEnumerator IDestroy()
+        {
+            MachineState = MachineState.ON_PROCESS;
+
+            resultGO.transform.LeanScale(new Vector2(0f, 0f), 1);
+            yield return new WaitForSeconds(1);
+            Destroy(resultGO);
+
+            coffeeMaker.reqInput(resultIgrendients);
+
+            Debug.Log("Send To Coffee Maker");
+            MachineState = MachineState.ON_IDDLE;
+        }
+
+        bool isCoffeeMakerIddle()
+        {
+            bool res = MainController.Instance.isMachineAvaible(nextTargetMachine, out Machine _machine);
+            coffeeMaker = _machine as CoffeeMaker;
+
+            return res;
         }
     }
 }

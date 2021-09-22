@@ -645,7 +645,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &882610063
 MonoBehaviour:
@@ -668,6 +668,9 @@ MonoBehaviour:
   MenuTypes:
   - {fileID: 11400000, guid: b0c1730a951874c0ab70f6493e52f7de, type: 2}
   notValidMenu: {fileID: 11400000, guid: 405e5426b445f4c0f923bf5bdf000cbc, type: 2}
+  resourceData:
+    buyerTypeCount: 0
+    menuTypeCount: 0
 --- !u!1 &882630724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,18 +1644,20 @@ MonoBehaviour:
   delay: 2
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   targetCustomer: 5
-  winPrefab: {fileID: 6850502691753989276}
   deliveryQueueMenu: []
   maxSlotOrder: 0
   isDeliveryFull: 0
+  isGameStarted: 0
   isGameFinished: 0
   isGameTimeOut: 0
   canCreateCustomer: 0
   freeSeatDataIndex: 
-  buyerAssetCount: 0
-  menuAssetCount: 0
+  ResourceData:
+    buyerTypeCount: 0
+    menuTypeCount: 0
   customerCounter: 1
   isGameEnd: 0
+  Machines: []
 --- !u!4 &1532892880
 Transform:
   m_ObjectHideFlags: 0
@@ -1670,7 +1675,7 @@ Transform:
   - {fileID: 403457505}
   - {fileID: 1684176195}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1542206364
 GameObject:
@@ -1682,7 +1687,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1542206366}
   - component: {fileID: 1542206365}
-  - component: {fileID: 1542206367}
   m_Layer: 0
   m_Name: --LevelManager
   m_TagString: Untagged
@@ -1715,26 +1719,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1542206367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542206364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 429c74c2b0b414d6d9fa6b4eb3b254b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arabicaBeansPrefab: {fileID: 3704801023082429980, guid: de620c6f76bf842818e965070b272ffb, type: 3}
-  robustaBeansPrefab: {fileID: 88366317604857609, guid: d5892459899124394877b5cf74f7b230, type: 3}
-  coffeeMakers: []
-  beansMachines: []
-  milkSteam: {fileID: 0}
-  test: 0
 --- !u!1 &1544391364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,13 +1837,20 @@ MonoBehaviour:
   resultSpawnPosition: {fileID: 2128812462}
   machineType: 5
   nextTargetMachine: 20
-  enumMachineState: 0
-  resultGO: {fileID: 0}
-  sprite: {fileID: 21300000, guid: 6327f091d072e4af19584d4e3a331fcc, type: 3}
   resultIgrendients: 6
+  spawnOnStart: 0
+  MachineState: 0
+  isGameStarted: 0
+  resultGO: {fileID: 0}
+  boxCollider2D: {fileID: 0}
   colorResult:
-  - {r: 0.8679245, g: 0.53879017, b: 0.31523672, a: 0}
-  - {r: 0.4528302, g: 0.286323, b: 0.091847636, a: 0}
+  - target: 
+    targetIgrendients: 3
+    color: {r: 0.4433962, g: 0.22611092, b: 0.102483094, a: 1}
+  - target: 
+    targetIgrendients: 4
+    color: {r: 0.6886792, g: 0.3713127, b: 0.24363652, a: 1}
+  delay: 2
   glassTarget:
     glassCode: 
     glass: {fileID: 0}
@@ -1963,8 +1956,13 @@ MonoBehaviour:
   resultSpawnPosition: {fileID: 1754900199}
   machineType: 3
   nextTargetMachine: 0
-  enumMachineState: 0
+  resultIgrendients: 4
+  spawnOnStart: 0
+  MachineState: 0
+  isGameStarted: 0
   resultGO: {fileID: 0}
+  boxCollider2D: {fileID: 0}
+  coffeeMaker: {fileID: 0}
 --- !u!4 &1594293091
 Transform:
   m_ObjectHideFlags: 0
@@ -2364,7 +2362,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1753756768
 AudioSource:
@@ -2586,8 +2584,13 @@ MonoBehaviour:
   resultSpawnPosition: {fileID: 1149877793}
   machineType: 2
   nextTargetMachine: 0
-  enumMachineState: 0
+  resultIgrendients: 0
+  spawnOnStart: 0
+  MachineState: 0
+  isGameStarted: 0
   resultGO: {fileID: 0}
+  boxCollider2D: {fileID: 0}
+  coffeeMaker: {fileID: 0}
 --- !u!4 &1786839922
 Transform:
   m_ObjectHideFlags: 0
@@ -2712,6 +2715,54 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1798850427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1798850429}
+  - component: {fileID: 1798850428}
+  m_Layer: 0
+  m_Name: --CoffeeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1798850428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798850427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 429c74c2b0b414d6d9fa6b4eb3b254b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arabicaBeansPrefab: {fileID: 88366317604857609, guid: d5892459899124394877b5cf74f7b230, type: 3}
+  robustaBeansPrefab: {fileID: 3704801023082429980, guid: de620c6f76bf842818e965070b272ffb, type: 3}
+  coffeeMakers: []
+  beansMachines: []
+  milkSteam: {fileID: 0}
+--- !u!4 &1798850429
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798850427}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1804226145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,12 +2840,13 @@ MonoBehaviour:
   resultSpawnPosition: {fileID: 1781664304}
   machineType: 0
   nextTargetMachine: 20
-  enumMachineState: 0
-  resultGO: {fileID: 2547080873137925463, guid: 67d405e30af6e4443bebc4de58f5ed40, type: 3}
-  prefabArabica: {fileID: 5749968723761549481, guid: 04bbd605e47d14f93b2a859ecf9aa549, type: 3}
-  prefabRobusta: {fileID: 5102769439927785725, guid: 95dc40812b7b8473c80dd02ad8e96340, type: 3}
-  colorIgrendientsOutput: {r: 0.3773585, g: 0.1745283, b: 0, a: 0}
   resultIgrendients: 1
+  spawnOnStart: 0
+  MachineState: 0
+  isGameStarted: 0
+  resultGO: {fileID: 2547080873137925463, guid: 67d405e30af6e4443bebc4de58f5ed40, type: 3}
+  boxCollider2D: {fileID: 0}
+  colorIgrendientsOutput: {r: 0.3773585, g: 0.1745283, b: 0, a: 0}
   glassTarget:
     glassCode: 
     glass: {fileID: 0}
@@ -2954,7 +3006,7 @@ Transform:
   - {fileID: 2019888367}
   - {fileID: 304431523}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2019888366
 GameObject:

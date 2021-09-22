@@ -5,15 +5,27 @@ using System.Linq;
 
 public class ResourceManager : Singleton<ResourceManager>
 {
+    [Header("Properties")]
     public List<BuyerType> BuyerTypes = new List<BuyerType>();
     public List<MenuType> MenuTypes = new List<MenuType>();
     public MenuType notValidMenu;
+    public ResourceData resourceData;
+
+    private void validateResourceData()
+    {
+        resourceData = new ResourceData()
+        {
+            buyerTypeCount = BuyerTypes.Count,
+            menuTypeCount = MenuTypes.Count
+        };
+    }
 
     [ContextMenu("Validate All")]
     public void validateAll()
     {
         Debug.Log("Validate all reources");
         validateBuyer();
+        validateResourceData();
     }
 
     [ContextMenu("Validate Buyer")]

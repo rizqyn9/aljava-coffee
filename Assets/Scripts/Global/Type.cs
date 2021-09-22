@@ -1,19 +1,43 @@
 using UnityEngine;
 
+[System.Serializable]
+public struct GameOptions
+{
+    public int level;
+}
+
+[System.Serializable]
 public struct SpriteColorCustom
 {
     public string target;
+    public enumIgrendients targetIgrendients;
     public Color color;
 }
 
-public enum enumMachineState : byte
+
+[System.Serializable]
+public struct ResourceData
+{
+    public int buyerTypeCount;
+    public int menuTypeCount;
+}
+
+public enum GlassState : byte
+{
+    EMPTY,              // glass empty no igrendients
+    FILLED,             // glass have once/some igrendients
+    PROCESS,            // glass on process, any request will be reject
+    VALIDMENU           // glass have igrendients and return a valid Menu Type
+}
+
+public enum MachineState : byte
 {
     ON_IDDLE,    // OUTPUT EMPTY
     ON_PROCESS,  // MACHINE GOING PROCESS
     ON_DONE,     // PROCESSING DONE, BUT OUTPUT NOT EQUALS NULL
 }
 
-public enum enumMachineType : byte
+public enum MachineType : byte
 {
     COFEE_MAKER,
     COFFEE_FILTERED,

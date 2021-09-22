@@ -6,6 +6,11 @@ namespace Game
 {
     public class FreshMilk : Machine
     {
+        public override void InitStart()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void RegistToManager()
         {
         }
