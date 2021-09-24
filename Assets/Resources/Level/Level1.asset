@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   gameMode: 2
-  menuTypeUnlock: 02
-  buyerTypeUnlock: 0000000002000000
+  MenuClassifications: 00000000
+  MenuTypeUnlock: 02
+  BuyerTypeUnlock: 0000000001000000
   gameDuration: 120
-  minPoint: 0
-  minOrder: 0
-  minBuyer: 0
+  minPoint: 10
+  minOrder: 10
+  minBuyer: 10

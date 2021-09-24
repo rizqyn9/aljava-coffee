@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MachineData
   m_EditorClassIdentifier: 
   MachineType: 0
-  PrefabManager: {fileID: 0}
+  PrefabManager: {fileID: 7760089305693355570, guid: 44d05987e971a4dd4ba43ba3d84b7158, type: 3}

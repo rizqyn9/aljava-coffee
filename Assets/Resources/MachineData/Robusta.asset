@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c27a4871cd45a687e186f86879fcd, type: 3}
   m_Name: Robusta
   m_EditorClassIdentifier: 
-  MachineType: 0
-  PrefabManager: {fileID: 0}
+  MachineType: 2
+  PrefabManager: {fileID: 1468853309064358762, guid: 09b90e592b15f4fe58f9fba768f140e8, type: 3}
