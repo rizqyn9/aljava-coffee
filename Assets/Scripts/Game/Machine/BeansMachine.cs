@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class BeansMachine : Machine
+    public class BeansMachine : Machine, IEnv
     {
         [Header("Debug")]
         public CoffeeMaker coffeeMaker;
@@ -17,29 +17,29 @@ namespace Game
             MachineState = MachineState.ON_IDDLE;
         }
 
-        public void OnMouseDown()
-        {
-            if (!isGameStarted || MachineState == MachineState.ON_PROCESS) return;
+        //public void OnMouseDown()
+        //{
+        //    if (!isGameStarted || MachineState == MachineState.ON_PROCESS) return;
 
-            validate();
-        }
+        //    validate();
+        //}
 
-        private void validate()
-        {
-            coffeeMaker = null;
-            switch (MachineState)
-            {
-                case MachineState.ON_IDDLE:
-                    StartCoroutine(ISpawn());
-                    break;
-                case MachineState.ON_DONE:
-                    if (isCoffeeMakerIddle() && coffeeMaker)
-                    {
-                        StartCoroutine(IDestroy());
-                    }
-                    break;
-            }
-        }
+        //private void validate()
+        //{
+        //    coffeeMaker = null;
+        //    switch (MachineState)
+        //    {
+        //        case MachineState.ON_IDDLE:
+        //            StartCoroutine(ISpawn());
+        //            break;
+        //        case MachineState.ON_DONE:
+        //            if (isCoffeeMakerIddle() && coffeeMaker)
+        //            {
+        //                StartCoroutine(IDestroy());
+        //            }
+        //            break;
+        //    }
+        //}
 
         IEnumerator ISpawn()
         {
@@ -68,12 +68,19 @@ namespace Game
             MachineState = MachineState.ON_IDDLE;
         }
 
-        bool isCoffeeMakerIddle()
-        {
-            bool res = MainController.Instance.isMachineAvaible(nextTargetMachine, out Machine _machine);
-            coffeeMaker = _machine as CoffeeMaker;
+        //bool isCoffeeMakerIddle()
+        //{
+        //    bool res = MainController.Instance.isMachineAvaible(nextTargetMachine, out Machine _machine);
+        //    coffeeMaker = _machine as CoffeeMaker;
 
-            return res;
+        //    return res;
+        //}
+
+        public void EnvInstance()
+        {
+            print("spawn");
+            gameObject.LeanMoveLocalY(-1f, 1f);
+            gameObject.LeanAlpha(1, 1f);
         }
     }
 }

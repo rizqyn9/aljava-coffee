@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public struct GameOptions
@@ -14,6 +15,21 @@ public struct SpriteColorCustom
     public Color color;
 }
 
+public enum GameState
+{
+    IDDLE,          // STATE BEFORE INITIALIZE GAME
+    PLAY,           // GAME ALREADY TO PLAYING
+    PAUSE,          // GAME ON PAUSE TRIGGER
+    STOP,           // GAME STOPPED, CRASH, FINISH 
+    FINISH          // GAME FINISHED
+}
+
+public enum GameMode
+{
+    POINT,
+    TIME,
+    ORDER
+}
 
 [System.Serializable]
 public struct ResourceData
@@ -37,10 +53,17 @@ public enum MachineState : byte
     ON_DONE,     // PROCESSING DONE, BUT OUTPUT NOT EQUALS NULL
 }
 
+public enum MenuClassification
+{
+    COFFEE,
+    LATTE,
+    MILKSHAKE,
+    SQUASH
+}
+
 public enum MachineType : byte
 {
     COFEE_MAKER,
-    COFFEE_FILTERED,
     BEANS_ARABICA,
     BEANS_ROBUSTA,
     FRESHMILK,
@@ -66,7 +89,7 @@ public enum MachineType : byte
 /// <summary>
 /// List for igrendients menu
 /// </summary>
-public enum enumIgrendients : int
+public enum enumIgrendients : byte
 {
     NULL,
     COFEE_MAKER,
@@ -147,7 +170,7 @@ public enum menuClassification
     MILKSHAKE
 }
 
-public enum buyerState
+public enum BuyerState
 {
     ON_IDDLE,
     ON_WAITING,

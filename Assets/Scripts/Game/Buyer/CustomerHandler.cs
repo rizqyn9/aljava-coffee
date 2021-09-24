@@ -10,7 +10,7 @@ namespace Game
     {
         public string customerCode;
         public BuyerType buyerType;
-        public buyerState buyerState;
+        public BuyerState buyerState;
         public int seatIndex;
         public List<menuListName> menuListNames;
         public CustomerHandler customerHandler;

@@ -22,6 +22,9 @@ namespace Game
         public int targetCustomer = 5;
 
         [Header("Debug")]
+        [SerializeField]
+        LevelBase levelBase;
+        string haha;
         public List<BuyerPrototype> deliveryQueueMenu = new List<BuyerPrototype>();
         public int maxSlotOrder;
         public bool isDeliveryFull = false;
@@ -33,7 +36,10 @@ namespace Game
         [SerializeField] ResourceData ResourceData;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
-        [SerializeField] List<Machine> Machines = new List<Machine>();
+        //[SerializeField] List<Machine> Machines = new List<Machine>();
+
+
+        public LevelBase LevelBase { get => levelBase; set => levelBase = value; }
 
         public void Start()
         {
@@ -43,26 +49,25 @@ namespace Game
 
             maxSlotOrder = seatDataTransform.Length;
 
-            Machines = FindObjectsOfType<Machine>().ToList();
+            EnvManager.Instance.Init();
 
-            initMachine();
-
-            GameUIController.Instance.timerIsRunning = true;
-            StartCoroutine(onStart());
+            //initMachine();
+            //GameUIController.Instance.timerIsRunning = true;
+            //StartCoroutine(onStart());
         }
 
-        private void initMachine()
-        {
-            foreach(Machine _ in Machines)
-            {
-                _.isGameStarted = true;
-                _.startMachine();
-            }
-        }
+        //private void initMachine()
+        //{
+        //    foreach(Machine _ in Machines)
+        //    {
+        //        _.isGameStarted = true;
+        //        _.startMachine();
+        //    }
+        //}
 
         IEnumerator onStart()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(4);
 
             isGameStarted = true;
             canCreateCustomer = true;
@@ -74,11 +79,11 @@ namespace Game
         /// <param name="_machine"></param>
         /// <param name="_">out, bring out Machine class</param>
         /// <returns></returns>
-        public bool isMachineAvaible(MachineType _machine, out Machine _)
-        {
-            _ = Machines.Find(val => val.machineType == _machine && val.MachineState == MachineState.ON_IDDLE);
-            return _;
-        }
+        //public bool isMachineAvaible(MachineType _machine, out Machine _)
+        //{
+        //    _ = Machines.Find(val => val.machineType == _machine && val.MachineState == MachineState.ON_IDDLE);
+        //    return _;
+        //}
 
         private void Update()
         {
