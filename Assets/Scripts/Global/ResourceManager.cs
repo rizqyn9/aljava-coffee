@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+using UnityEditor;
+#if !UNITY_EDITOR
+#endif
+
 public class ResourceManager : Singleton<ResourceManager>
 {
     [Header("Properties")]
     public List<BuyerType> BuyerTypes = new List<BuyerType>();
     public List<MenuType> MenuTypes = new List<MenuType>();
+    public List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
+    public List<MachineData> MachineDatas = new List<MachineData>();
     public MenuType notValidMenu;
     public ResourceData resourceData;
 
-    private void validateResourceData()
-    {
-        resourceData = new ResourceData()
-        {
-            buyerTypeCount = BuyerTypes.Count,
-            menuTypeCount = MenuTypes.Count
-        };
-    }
-
+    #region CONTEXT MENU
     [ContextMenu("Validate All")]
     public void validateAll()
     {
         Debug.Log("Validate all reources");
         validateBuyer();
         validateResourceData();
+        ValidateMenuClassification();
+        ValidateMachineData();
     }
 
     [ContextMenu("Validate Buyer")]
@@ -33,9 +33,9 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         Debug.Log("Validating Buyer");
         BuyerTypes = Resources.LoadAll<BuyerType>("Buyer").ToList();
-        foreach(BuyerType _buyerType in BuyerTypes)
+        foreach (BuyerType _buyerType in BuyerTypes)
         {
-            if(BuyerTypes.FindAll(val => val.enumBuyerType == _buyerType.enumBuyerType).Count > 1)
+            if (BuyerTypes.FindAll(val => val.enumBuyerType == _buyerType.enumBuyerType).Count > 1)
             {
                 Debug.LogError("Duplicated");
                 break;
@@ -46,10 +46,30 @@ public class ResourceManager : Singleton<ResourceManager>
     }
 
     [ContextMenu("Validate Menu")]
-    public void validateMenu()
+    public void validateMenu() => MenuTypes = Resources.LoadAll<MenuType>("Menu").ToList();
+
+    [ContextMenu("Validate Menu Classification")]
+    public void ValidateMenuClassification() => MenuClassificationDatas = GetTypeData<MenuClassificationData>("MenuClassification");
+
+    [ContextMenu("Validate Machine")]
+    public void ValidateMachineData() => MachineDatas = GetTypeData<MachineData>("MachineData");
+
+    #endregion
+
+    private void validateResourceData()
     {
-        MenuTypes = Resources.LoadAll<MenuType>("Menu").ToList();
+        resourceData = new ResourceData()
+        {
+            buyerTypeCount = BuyerTypes.Count,
+            menuTypeCount = MenuTypes.Count
+        };
     }
+
+
+
+    public List<T> GetTypeData<T>(string _path) where T : ScriptableObject => Resources.LoadAll<T>(_path).ToList();
+
+    
 
     /// <summary>
     /// For validate and finding menu result from data list igrendients
