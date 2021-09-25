@@ -14,8 +14,11 @@ namespace Game
         [Header("Debug")]
         public GlassRegistered glassTarget;
 
-        public override void RegistToManager() => CoffeeManager.Instance.milkSteam = this;
-       
+        public override void RegistToManager()
+            {
+            //CoffeeManager.Instance.milkSteam = this;
+            }
+
         public override void InitStart()
         {
             MachineState = MachineState.ON_IDDLE;

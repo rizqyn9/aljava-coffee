@@ -1,6 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public interface IMenuClassManager
+{
+    MachineClass GetMachineClass();
+    void InstanceMachine(List<MachineData> _machineDatas);
+}
+
 [System.Serializable]
 public struct GameOptions
 {
@@ -13,6 +19,22 @@ public struct SpriteColorCustom
     public string target;
     public enumIgrendients targetIgrendients;
     public Color color;
+}
+
+public enum MachineClass
+{
+    COFFEE,
+    LATTEE,
+    ADDITIONAL
+}
+
+public enum MenuClassification
+{
+    COFFEE,
+    LATTE,
+    MILKSHAKE,
+    SQUASH,
+    ADDITIONAL
 }
 
 public enum GameState
@@ -53,14 +75,6 @@ public enum MachineState : byte
     ON_DONE,     // PROCESSING DONE, BUT OUTPUT NOT EQUALS NULL
 }
 
-public enum MenuClassification
-{
-    COFFEE,
-    LATTE,
-    MILKSHAKE,
-    SQUASH
-}
-
 public enum MachineType : byte
 {
     COFEE_MAKER,
@@ -87,6 +101,7 @@ public enum MachineType : byte
 
 
 /// <summary>
+/// Depreceated
 /// List for igrendients menu
 /// </summary>
 public enum enumIgrendients : byte
@@ -124,6 +139,7 @@ public enum menuListName : byte
     NOT_VALID,
     ARABICA_COFFEE_LATTE,
     ROBUSTA_COFFEE_LATTE,
+    ROBUSTA_ORIGINAL,
     LATTE_MATCHA,
     LATTE_RED_VELVET,
     LATTE_TARO,
@@ -156,18 +172,6 @@ public enum enumBuyerType
     INDIE,
     OJOL_KANTORAN,
     OJOL
-}
-
-
-/// <summary>
-/// List menu classification
-/// </summary>
-public enum menuClassification
-{
-    COFFEE,
-    SQUASH,
-    LATTE,
-    MILKSHAKE
 }
 
 public enum BuyerState

@@ -14,7 +14,7 @@ namespace Game
         [SerializeField] GlassRegistered glassTarget;
         [SerializeField] List<enumIgrendients> igrendientsList;
 
-        public override void RegistToManager() => CoffeeManager.Instance.coffeeMakers.Add(this);
+        public override void RegistToManager() {}
 
         public override void InitStart()
         {

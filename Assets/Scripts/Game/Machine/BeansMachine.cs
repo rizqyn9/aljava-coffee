@@ -5,12 +5,15 @@ using UnityEngine;
 
 namespace Game
 {
-    public class BeansMachine : Machine, IEnv
+    public class BeansMachine : Machine, IEnv, IMenuClassManager
     {
         [Header("Debug")]
         public CoffeeMaker coffeeMaker;
 
-        public override void RegistToManager() => CoffeeManager.Instance.beansMachines.Add(this);
+        public override void RegistToManager()
+        {
+
+        }
 
         public override void InitStart()
         {
@@ -81,6 +84,16 @@ namespace Game
             print("spawn");
             gameObject.LeanMoveLocalY(-1f, 1f);
             gameObject.LeanAlpha(1, 1f);
+        }
+
+        public MachineClass GetMachineClass()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InstanceMachine(List<MachineData> _machineDatas)
+        {
+            throw new NotImplementedException();
         }
     }
 }

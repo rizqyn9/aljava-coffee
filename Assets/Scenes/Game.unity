@@ -667,6 +667,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7c141ea21b8b4463bb3e4bd3f17d0048, type: 2}
   MenuTypes:
   - {fileID: 11400000, guid: b0c1730a951874c0ab70f6493e52f7de, type: 2}
+  MenuClassificationDatas:
+  - {fileID: 11400000, guid: 90ef8a2c7db504c4b809f651cd21b24e, type: 2}
+  MachineDatas:
+  - {fileID: 11400000, guid: 0bbaeff3c5e074130ba13148febf1b23, type: 2}
+  - {fileID: 11400000, guid: 814f20114da6a4208a0be029dcd71816, type: 2}
+  - {fileID: 11400000, guid: 49864379ba3ca46e9912a46322148841, type: 2}
   notValidMenu: {fileID: 11400000, guid: 405e5426b445f4c0f923bf5bdf000cbc, type: 2}
   resourceData:
     buyerTypeCount: 5
@@ -2209,54 +2215,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1532892880}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1798850427
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1798850429}
-  - component: {fileID: 1798850428}
-  m_Layer: 0
-  m_Name: --CoffeeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1798850428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798850427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 429c74c2b0b414d6d9fa6b4eb3b254b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arabicaBeansPrefab: {fileID: 88366317604857609, guid: d5892459899124394877b5cf74f7b230, type: 3}
-  robustaBeansPrefab: {fileID: 3704801023082429980, guid: de620c6f76bf842818e965070b272ffb, type: 3}
-  coffeeMakers: []
-  beansMachines: []
-  milkSteam: {fileID: 0}
---- !u!4 &1798850429
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798850427}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1804226145
 GameObject:

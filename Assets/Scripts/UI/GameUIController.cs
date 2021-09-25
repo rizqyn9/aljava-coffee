@@ -30,10 +30,10 @@ namespace Game
             }
         }
 
-        private void Start()
-        {
-            asOrderCount();
-        }
+        //private void Start()
+        //{
+        //    asOrderCount();
+        //}
 
         [SerializeField] int _counter = 0;
         public void asOrderCount()

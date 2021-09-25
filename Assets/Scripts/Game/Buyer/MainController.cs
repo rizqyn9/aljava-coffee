@@ -23,8 +23,7 @@ namespace Game
 
         [Header("Debug")]
         [SerializeField]
-        LevelBase levelBase;
-        string haha;
+        LevelBase _levelBase;
         public List<BuyerPrototype> deliveryQueueMenu = new List<BuyerPrototype>();
         public int maxSlotOrder;
         public bool isDeliveryFull = false;
@@ -39,7 +38,7 @@ namespace Game
         //[SerializeField] List<Machine> Machines = new List<Machine>();
 
 
-        public LevelBase LevelBase { get => levelBase; set => levelBase = value; }
+        public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
 
         public void Start()
         {
@@ -49,7 +48,7 @@ namespace Game
 
             maxSlotOrder = seatDataTransform.Length;
 
-            EnvManager.Instance.Init();
+            //EnvManager.Instance.Init(_levelBase);
 
             //initMachine();
             //GameUIController.Instance.timerIsRunning = true;

@@ -6,5 +6,6 @@ using UnityEngine;
 public class MachineData : ScriptableObject
 {
     public MachineType MachineType;
+    public MachineClass MachineClass;
     public GameObject PrefabManager;
 }

@@ -10,6 +10,7 @@ public class MenuType : ScriptableObject
     public string menuDesc;
     public GameObject menuPrefab;
     public Sprite menuSprite;
+    public List<MachineType> Igrendients;
     public List<enumIgrendients> recipe;
     public int price;
     public int pointInGame;

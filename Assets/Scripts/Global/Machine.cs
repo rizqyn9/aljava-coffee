@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Game;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour

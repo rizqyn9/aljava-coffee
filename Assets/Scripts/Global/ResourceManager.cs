@@ -46,7 +46,16 @@ public class ResourceManager : Singleton<ResourceManager>
     }
 
     [ContextMenu("Validate Menu")]
-    public void validateMenu() => MenuTypes = Resources.LoadAll<MenuType>("Menu").ToList();
+    public void validateMenu()
+    {
+        MenuTypes = Resources.LoadAll<MenuType>("Menu").ToList();
+        MenuType _notValid = MenuTypes.Find(val => val.menuListName == menuListName.NOT_VALID);
+        if (_notValid)
+        {
+            MenuTypes.Remove(_notValid);
+            notValidMenu = _notValid;
+        }
+    }
 
     [ContextMenu("Validate Menu Classification")]
     public void ValidateMenuClassification() => MenuClassificationDatas = GetTypeData<MenuClassificationData>("MenuClassification");

@@ -6,7 +6,8 @@ public class LevelBase : ScriptableObject
 {
     public int level;
     public GameMode gameMode;
-    public List<menuClassification> MenuClassifications;
+    //[Tooltip("")]
+    public List<MenuClassification> MenuClassifications;
     public List<menuListName> MenuTypeUnlock;
     public List<enumBuyerType> BuyerTypeUnlock;
 
