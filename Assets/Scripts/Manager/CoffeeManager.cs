@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ namespace Game
         void Init();
     }
 
-    public class CoffeeManager : Singleton<CoffeeManager>,IEnv, IMenuClassManager
+    public class CoffeeManager : Singleton<CoffeeManager>, IMenuClassManager
     {
         [Header("Properties")]
         public MachineClass MachineClass = MachineClass.COFFEE;
@@ -30,6 +28,7 @@ namespace Game
 
         private void renderMachines()
         {
+            print("Render Machine in Coffee Manager");
             foreach(MachineData _machine in MachineDatas)
             {
                 GameObject go = Instantiate(_machine.PrefabManager, transform);
@@ -43,11 +42,6 @@ namespace Game
         private void Start()
         {
             name = "--CoffeeManager";
-        }
-
-        public void EnvInstance()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

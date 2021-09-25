@@ -1,4 +1,5 @@
 using UnityEngine;
+using Game;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour
@@ -24,10 +25,12 @@ public abstract class Machine : MonoBehaviour
 
     private void Start()
     {
+        // regist to env manager
+        EnvManager.Instance.RegistMachine(this);
         RegistToManager();
     }
 
-    public void startMachine() => InitStart();
+    public void StartMachine() => InitStart();
 
     public abstract void RegistToManager();
 

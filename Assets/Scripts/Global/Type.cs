@@ -1,6 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Behaviour for class manager
+/// <list type="bullet">
+/// Coffee Manager
+/// </list>
+/// </summary>
 public interface IMenuClassManager
 {
     MachineClass GetMachineClass();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 namespace Game
 {
@@ -43,5 +44,9 @@ namespace Game
             _counter = _counter += 1;
         }
 
+        internal void Init()
+        {
+            
+        }
     }
 }

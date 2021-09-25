@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f7c27a4871cd45a687e186f86879fcd, type: 3}
-  m_Name: MachineData
+  m_Name: Coffee_CoffeeMaker
   m_EditorClassIdentifier: 
   MachineType: 0
+  MachineClass: 0
   PrefabManager: {fileID: 7760089305693355570, guid: 44d05987e971a4dd4ba43ba3d84b7158, type: 3}

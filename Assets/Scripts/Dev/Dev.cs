@@ -11,5 +11,6 @@ public class Dev : MonoBehaviour
     {
         if (!isDevMode) return;
         LevelManager.Instance.LevelBase = levelBase;
+        LevelManager.Instance.Init();
     }
 }

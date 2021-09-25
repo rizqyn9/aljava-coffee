@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game;
+using System;
 
 [System.Serializable]
 public struct CoffeeProperties
@@ -23,15 +24,10 @@ public class LevelManager : Singleton<LevelManager>
     public List<BuyerType> BuyerTypes = new List<BuyerType>();
     public List<MachineData> MachineDatas = new List<MachineData>();
     public List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
-    //public List<MachineType> MachineTypes;
 
     public LevelBase LevelBase {
         get => _levelBase;
-        set
-        {
-            _levelBase = value;
-            setData();
-        }
+        set { _levelBase = value; setData(); }
     }
 
     private void setData()
@@ -39,9 +35,13 @@ public class LevelManager : Singleton<LevelManager>
         MenuTypes = ResourceManager.Instance.MenuTypes.FindAll(val => _levelBase.MenuTypeUnlock.Contains(val.menuListName));
         BuyerTypes = ResourceManager.Instance.BuyerTypes.FindAll(val => _levelBase.BuyerTypeUnlock.Contains(val.enumBuyerType));
         MenuClassificationDatas = ResourceManager.Instance.MenuClassificationDatas.FindAll(val => _levelBase.MenuClassifications.Contains(val.MenuClassification));
-        GetMachineMustSpawn();
 
-        EnvManager.Instance.Init();
+        GetMachineMustSpawn();
+    }
+
+    internal void Init()
+    {
+        MainController.Instance.Init();
     }
 
     private void GetMachineMustSpawn()

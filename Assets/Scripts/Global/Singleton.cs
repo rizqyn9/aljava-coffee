@@ -7,6 +7,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
     /// </summary>
     //public abstract bool isDestroyed();
 
+    [Header("Singleton Properties")]
+    public bool isDDOL = false;
+
     private static T _instance;
     public static T Instance
     {
@@ -28,5 +31,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
     protected virtual void Awake()
     {
         _instance = this as T;
+        if (isDDOL)
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 }

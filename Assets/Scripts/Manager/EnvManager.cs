@@ -18,28 +18,21 @@ namespace Game
         public Transform additionalContainer;
         public GlassContainer glassContainer;
 
-        //public List<GameObject> prefabList = new List<GameObject>();
-
         [Header("Debug")]
         LevelBase levelBase = null;
         [SerializeField] List<GameObject> resGO = new List<GameObject>();
         [SerializeField] List<IEnv> IEnvs = new List<IEnv>();
         [SerializeField] List<IMenuClassManager> IMenuClassManagers = new List<IMenuClassManager>();
+        [SerializeField] List<Machine> Machines = new List<Machine>();
 
         public void Init()
         {
+            print("Init on Env Manager");
             initMachineManager();
             spawnMachine();
-            //spawnManagerClassificationMenu();
-            //print(IEnvs.Count);
-            //spawnMachine();
-
-            //foreach (IEnv _env in IEnvs)
-            //{
-            //    _env.EnvInstance();
-            //}
         }
 
+        public void RegistMachine(Machine _machine) => Machines.Add(_machine);
 
         /// <summary>
         /// Spawn class menu manager
@@ -71,23 +64,6 @@ namespace Game
             (_machineClass == MachineClass.COFFEE) ? mainContainer :
             (_machineClass == MachineClass.ADDITIONAL) ? additionalContainer :
             flavourContainer;
-
-        //public void Spawn()
-        //{
-        //    for (int i = 0; i < transforms.Count; i++)
-        //    {
-        //        GameObject go = Instantiate(prefabList[i], transforms[i]);
-        //        go.LeanAlpha(0, 0);
-        //        go.LeanMoveLocalY(1, 0);
-        //        IEnv env = GetOutType<IEnv>(go);
-        //        if (env != null)
-        //        {
-        //            IEnvs.Add(env);
-        //        }
-        //    }
-        //}
-
-
 
         public static T GetOutType<T>(GameObject _go)
         {

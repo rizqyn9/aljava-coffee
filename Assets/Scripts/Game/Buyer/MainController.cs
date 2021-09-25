@@ -22,8 +22,8 @@ namespace Game
         public int targetCustomer = 5;
 
         [Header("Debug")]
-        [SerializeField]
-        LevelBase _levelBase;
+        private GameState _gameState;
+        [SerializeField] LevelBase _levelBase;
         public List<BuyerPrototype> deliveryQueueMenu = new List<BuyerPrototype>();
         public int maxSlotOrder;
         public bool isDeliveryFull = false;
@@ -35,16 +35,32 @@ namespace Game
         [SerializeField] ResourceData ResourceData;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
-        //[SerializeField] List<Machine> Machines = new List<Machine>();
-
+        [SerializeField] List<Machine> Machines = new List<Machine>();
 
         public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
+        public GameState GameState { get => _gameState; set => _gameState = value; }
+
+        /// <summary>
+        /// Init all
+        /// <list type="bullet">
+        /// <item>Game UI</item>
+        /// <item>Game Envi</item>
+        /// <item>Buyer Controller</item>
+        /// <item>WIn Lose Controller</item>
+        /// </list>
+        /// </summary>
+        public void Init()
+        {
+            print("<color=green>Init in Main Controller</color>");
+            EnvManager.Instance.Init();
+            GameUIController.Instance.Init();
+        }
 
         public void Start()
         {
             Application.targetFrameRate = 60; // Optional platform
 
-            ResourceData = ResourceManager.Instance.resourceData;
+            GameState = GameState.IDDLE;
 
             maxSlotOrder = seatDataTransform.Length;
 
