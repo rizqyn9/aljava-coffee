@@ -14,9 +14,15 @@ public abstract class Machine : MonoBehaviour
 
     [Header("Debug")]
     public MachineState MachineState;
-    public bool isGameStarted = false;
+    [SerializeField] GameState _gameState;
     [SerializeField] protected GameObject resultGO;
     [SerializeField] protected BoxCollider2D boxCollider2D;
+
+    public GameState GameState
+    {
+        get => _gameState;
+        set => _gameState = value;
+    }
 
     private void Awake()
     {

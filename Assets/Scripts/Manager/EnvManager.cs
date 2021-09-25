@@ -60,6 +60,17 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// Turn on all machine
+        /// </summary>
+        internal void StartMachine()
+        {
+            foreach(Machine _machine in Machines)
+            {
+                _machine.InitStart();
+            }
+        }
+
         Transform getTransform(MachineClass _machineClass) =>
             (_machineClass == MachineClass.COFFEE) ? mainContainer :
             (_machineClass == MachineClass.ADDITIONAL) ? additionalContainer :

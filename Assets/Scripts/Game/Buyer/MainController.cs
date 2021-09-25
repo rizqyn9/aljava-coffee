@@ -35,10 +35,21 @@ namespace Game
         [SerializeField] ResourceData ResourceData;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
-        [SerializeField] List<Machine> Machines = new List<Machine>();
 
         public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
-        public GameState GameState { get => _gameState; set => _gameState = value; }
+        public GameState GameState {
+            get => _gameState;
+            set
+            {
+                GameStateChanged(_gameState, value);
+                _gameState = value;
+            }
+        }
+
+        private void GameStateChanged(GameState _old, GameState _new)
+        {
+            print("Game state Changed");
+        }
 
         /// <summary>
         /// Init all
@@ -54,6 +65,18 @@ namespace Game
             print("<color=green>Init in Main Controller</color>");
             EnvManager.Instance.Init();
             GameUIController.Instance.Init();
+
+            StartCoroutine(StartGame());
+        }
+
+        IEnumerator StartGame()
+        {
+            print("Game Started");
+            GameState = GameState.PLAY;
+
+            EnvManager.Instance.StartMachine();
+            GameUIController.Instance.StartUI();
+            yield return 0;
         }
 
         public void Start()

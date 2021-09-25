@@ -20,6 +20,10 @@ namespace Game
             MachineState = MachineState.ON_IDDLE;
         }
 
+        public void OnMouseDown()
+        {
+            print("Hi i'm touched");
+        }
         //public void OnMouseDown()
         //{
         //    if (!isGameStarted || MachineState == MachineState.ON_PROCESS) return;

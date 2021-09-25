@@ -48,5 +48,9 @@ namespace Game
         {
             
         }
+
+        internal void StartUI()
+        {
+        }
     }
 }
