@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Lintang Studio
 
 You can use the [editor on GitHub](https://github.com/rizqyn9/aljava-coffee/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
