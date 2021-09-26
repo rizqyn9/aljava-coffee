@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using UnityEngine;
 
 namespace Game
 {
-    public interface IController
+    public interface IGameState
     {
-        public void GameStateChanged(GameState _old, GameState _new);
+        public void OnGameStateChanged();
+        public GameState GameState { get; set; }
     }
 
     public class MainController : Singleton<MainController>
@@ -31,7 +34,7 @@ namespace Game
         public bool canCreateCustomer = false;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
-        [SerializeField] List<IController> Controllers = new List<IController>();
+        [SerializeField] ObservableCollection<IGameState> ListenGameState = new ObservableCollection<IGameState>();
 
         public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
 
@@ -49,9 +52,9 @@ namespace Game
         {
             if (_old == _new) return;
             print("Game state Changed");
-            foreach(IController _controller in Controllers)
+            foreach(IGameState _state in ListenGameState)
             {
-                _controller.GameStateChanged(_old, _new);
+                _state.GameState = _new;
             }
         }
 
@@ -59,6 +62,8 @@ namespace Game
 
         public void Init()
         {
+            ListenGameState.CollectionChanged += notifyGameState;
+
             GameState = GameState.IDDLE;
             print("<color=green>Init in Main Controller</color>");
 
@@ -72,12 +77,9 @@ namespace Game
             StartCoroutine(IStartGame());
         }
 
-        [SerializeField] int controllerCount;
-        public void AddController(IController _controller)
-        {
-            Controllers.Add(_controller);
-            controllerCount = Controllers.Count;
-        }
+        [SerializeField] int countIGameState;
+        private void notifyGameState(object sender, NotifyCollectionChangedEventArgs e) => countIGameState = ListenGameState.Count;
+        public void RegistGameState(IGameState _) => ListenGameState.Add(_);
 
         IEnumerator IStartGame()
         {

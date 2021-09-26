@@ -11,10 +11,6 @@ namespace Game
             throw new System.NotImplementedException();
         }
 
-        public override void RegistToManager()
-        {
-        }
-
         // Start is called before the first frame update
         void Start()
         {

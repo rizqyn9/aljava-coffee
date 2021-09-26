@@ -23,7 +23,7 @@ public struct ResourceCount
 /// Menu Unlock
 /// </list>
 /// </summary>
-public class LevelController : Singleton<LevelController>, IController
+public class LevelController : Singleton<LevelController>, IGameState
 {
     [Header("Debug")]
     [SerializeField] LevelBase _levelBase;
@@ -32,13 +32,21 @@ public class LevelController : Singleton<LevelController>, IController
     public List<MachineData> MachineDatas = new List<MachineData>();
     public List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
     public ResourceCount ResourceCount;
+    [SerializeField] GameState _gameState;
+    public GameState GameState
+    {
+        get => _gameState;
+        set
+        {
+            _gameState = value;
+        }
+    }
+    public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
 
     public LevelBase LevelBase {
         get => _levelBase;
         set { _levelBase = value; setData(); }
     }
-
-    public GameState GameState { get ; set ; }
 
     private void setData()
     {
@@ -57,7 +65,7 @@ public class LevelController : Singleton<LevelController>, IController
 
     internal void Init()
     {
-        MainController.Instance.AddController(this);
+        MainController.Instance.RegistGameState(this);
     }
 
     private void GetMachineMustSpawn()

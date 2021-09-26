@@ -2,7 +2,7 @@ using UnityEngine;
 using Game;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public abstract class Machine : MonoBehaviour
+public abstract class Machine : MonoBehaviour, IEnv, IGameState
 {
     [Header("Propertie Machine")]
     public GameObject resultPrefab;
@@ -13,15 +13,31 @@ public abstract class Machine : MonoBehaviour
     public bool spawnOnStart;
 
     [Header("Debug")]
-    public MachineState MachineState;
+    [SerializeField] MachineState _machineState;
     [SerializeField] GameState _gameState;
     [SerializeField] protected GameObject resultGO;
     [SerializeField] protected BoxCollider2D boxCollider2D;
 
+    public MachineState MachineState
+    {
+        get => _machineState;
+        set
+        {
+            if (_machineState == value) return;
+            OnMachineStateChanged(_machineState, value);
+            _machineState = value;
+        }
+    }
+
     public GameState GameState
     {
         get => _gameState;
-        set => _gameState = value;
+        set
+        {
+            if (_gameState == value) return;
+            OnGameStateChanged(_gameState, value);
+            _gameState = value;
+        }
     }
 
     private void Awake()
@@ -32,13 +48,25 @@ public abstract class Machine : MonoBehaviour
     private void Start()
     {
         // regist to env manager
+        MainController.Instance.RegistGameState(this);
+
+        MachineState = MachineState.OFF;
+
         EnvController.Instance.RegistMachine(this);
-        RegistToManager();
     }
 
     public void StartMachine() => InitStart();
 
-    public abstract void RegistToManager();
-
     public abstract void InitStart();
+
+    public virtual void EnvInstance()
+    {
+
+    }
+
+    public virtual void OnGameStateChanged(GameState _old, GameState _new) { }
+
+    public virtual void OnMachineStateChanged(MachineState _old, MachineState _new) { }
+
+    public void OnGameStateChanged() { }
 }

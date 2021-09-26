@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Game
 {
     [RequireComponent(typeof(OrderController))]
-    public class CustomerController : Singleton<CustomerController>, IController
+    public class CustomerController : Singleton<CustomerController>, IGameState
     {
         [Header("Properties")]
         public transformSeatData[] TransformSeatDatas;
@@ -25,13 +25,20 @@ namespace Game
 
         [SerializeField]
         private GameState _gameState;
-        public GameState GameState { get => _gameState; set => _gameState = value; }
-        public void GameStateChanged(GameState _old, GameState _new) => GameState = _new;
+        public GameState GameState
+        {
+            get => _gameState;
+            set
+            {
+                _gameState = value;
+            }
+        }
+        public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
 
 
         internal void Init()
         {
-            MainController.Instance.AddController(this);
+            MainController.Instance.RegistGameState(this);
             OrderController = OrderController.Instance;
 
             print("Buyer Init");
@@ -126,6 +133,5 @@ namespace Game
             }
             return res;
         }
-
     }
 }

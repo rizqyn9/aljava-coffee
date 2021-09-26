@@ -1,16 +1,19 @@
 using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Specialized;
 
 namespace Game
 {
     public interface IEnv
     {
         void EnvInstance();
+        public GameState GameState { get; set; }
     }
 
-    public class EnvController : Singleton<EnvController>, IController
+    public class EnvController : Singleton<EnvController>, IGameState
     {
         [Header("Properties")]
         public Transform mainContainer;
@@ -19,22 +22,38 @@ namespace Game
         public GlassContainer glassContainer;
 
         [Header("Debug")]
-        LevelBase levelBase = null;
-        [SerializeField] List<GameObject> resGO = new List<GameObject>();
-        [SerializeField] List<IEnv> IEnvs = new List<IEnv>();
+        [SerializeField] ObservableCollection<IEnv> IEnvs = new ObservableCollection<IEnv>();
         [SerializeField] List<IMenuClassManager> IMenuClassManagers = new List<IMenuClassManager>();
         [SerializeField] List<Machine> Machines = new List<Machine>();
         [SerializeField] GameState _gameState;
+        public GameState GameState
+        {
+            get => _gameState;
+            set
+            {
+                _gameState = value;
+            }
+        }
+        public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
 
         public void Init()
         {
-            MainController.Instance.AddController(this);
+            MainController.Instance.RegistGameState(this);
+
+            IEnvs.CollectionChanged += updateListEnv;
             print("Init on Env Manager");
             initMachineManager();
             spawnMachine();
         }
 
-        public void RegistMachine(Machine _machine) => Machines.Add(_machine);
+        [SerializeField] int IEnvRegistered;
+        private void updateListEnv(object sender, NotifyCollectionChangedEventArgs e) => IEnvRegistered = IEnvs.Count;
+
+        public void RegistMachine(Machine _machine)
+        {
+            Machines.Add(_machine);
+            if(_machine is IEnv) IEnvs.Add(_machine);   // Register machine as ienv is avaible
+        }
 
         /// <summary>
         /// Spawn class menu manager
@@ -82,10 +101,6 @@ namespace Game
         {
             T _out = _go.GetComponent<T>();
             return _out;
-        }
-
-        public void GameStateChanged(GameState _old, GameState _new)
-        {
         }
     }
 }

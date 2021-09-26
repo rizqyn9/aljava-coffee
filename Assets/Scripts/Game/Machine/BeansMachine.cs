@@ -5,15 +5,10 @@ using UnityEngine;
 
 namespace Game
 {
-    public class BeansMachine : Machine, IEnv, IMenuClassManager
+    public class BeansMachine : Machine, IEnv
     {
         [Header("Debug")]
         public CoffeeMaker coffeeMaker;
-
-        public override void RegistToManager()
-        {
-
-        }
 
         public override void InitStart()
         {
@@ -22,7 +17,7 @@ namespace Game
 
         public void OnMouseDown()
         {
-            print("Hi i'm touched");
+
         }
         //public void OnMouseDown()
         //{
@@ -89,16 +84,6 @@ namespace Game
             print("spawn");
             gameObject.LeanMoveLocalY(-1f, 1f);
             gameObject.LeanAlpha(1, 1f);
-        }
-
-        public MachineClass GetMachineClass()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InstanceMachine(List<MachineData> _machineDatas)
-        {
-            throw new NotImplementedException();
         }
     }
 }
