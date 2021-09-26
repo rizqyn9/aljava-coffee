@@ -38,7 +38,7 @@ namespace Game
 
         [SerializeField] int _counter = 0;
 
-        public GameState GameState => throw new NotImplementedException();
+        public GameState GameState { get ; set ; }
 
         public void asOrderCount()
         {

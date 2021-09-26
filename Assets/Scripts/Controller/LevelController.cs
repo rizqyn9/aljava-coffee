@@ -1,12 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game;
-using System;
 
 [System.Serializable]
 public struct CoffeeProperties
 {
     public int delayBeansMachine;
+}
+
+[System.Serializable]
+public struct ResourceCount
+{
+    public int MenuCount;
+    public int BuyerCount;
+    public int MachineCount;
 }
 
 /// <summary>
@@ -24,19 +31,26 @@ public class LevelController : Singleton<LevelController>, IController
     public List<BuyerType> BuyerTypes = new List<BuyerType>();
     public List<MachineData> MachineDatas = new List<MachineData>();
     public List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
+    public ResourceCount ResourceCount;
 
     public LevelBase LevelBase {
         get => _levelBase;
         set { _levelBase = value; setData(); }
     }
 
-    public GameState GameState => throw new NotImplementedException();
+    public GameState GameState { get ; set ; }
 
     private void setData()
     {
         MenuTypes = ResourceManager.Instance.MenuTypes.FindAll(val => _levelBase.MenuTypeUnlock.Contains(val.menuListName));
         BuyerTypes = ResourceManager.Instance.BuyerTypes.FindAll(val => _levelBase.BuyerTypeUnlock.Contains(val.enumBuyerType));
         MenuClassificationDatas = ResourceManager.Instance.MenuClassificationDatas.FindAll(val => _levelBase.MenuClassifications.Contains(val.MenuClassification));
+
+        ResourceCount = new ResourceCount()
+        {
+            BuyerCount = BuyerTypes.Count,
+            MenuCount = MenuTypes.Count
+        };
 
         GetMachineMustSpawn();
     }

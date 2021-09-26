@@ -7,6 +7,7 @@ namespace Game
 {
     public interface IController
     {
+        public GameState GameState { get; set; }
     }
 
     public class MainController : Singleton<MainController>
@@ -19,7 +20,7 @@ namespace Game
         public int targetCustomer = 5;
 
         [Header("Debug")]
-        private GameState _gameState;
+        [SerializeField] GameState _gameState;
         [SerializeField] LevelBase _levelBase;
         public List<BuyerPrototype> deliveryQueueMenu = new List<BuyerPrototype>();
         public int maxSlotOrder;
@@ -49,12 +50,17 @@ namespace Game
         private void GameStateChanged(GameState _old, GameState _new)
         {
             print("Game state Changed");
+            foreach(IController _controller in Controllers)
+            {
+                _controller.GameState = _new;
+            }
         }
 
         #endregion
 
         public void Init()
         {
+            GameState = GameState.IDDLE;
             print("<color=green>Init in Main Controller</color>");
 
             LevelController.Instance.LevelBase = LevelBase;
@@ -84,6 +90,7 @@ namespace Game
             yield return new WaitForSeconds(1);
 
             CustomerControler.Instance.StartCustomer();
+            yield break;
         }
 
         public void Start()
@@ -108,13 +115,15 @@ namespace Game
         //    }
         //}
 
-        IEnumerator onStart()
-        {
-            yield return new WaitForSeconds(4);
+        #region DEPRECEATED
+        //IEnumerator onStart()
+        //{
+        //    yield return new WaitForSeconds(4);
 
-            isGameStarted = true;
-            canCreateCustomer = true;
-        }
+        //    isGameStarted = true;
+        //    canCreateCustomer = true;
+        //}
+        #endregion
 
         /// <summary>
         /// finding Machine target, with out Machine

@@ -26,7 +26,7 @@ namespace Game
         [SerializeField] List<Machine> Machines = new List<Machine>();
         [SerializeField] GameState _gameState;
 
-        public GameState GameState => throw new NotImplementedException();
+        public GameState GameState { get; set; }
 
         public void Init()
         {
