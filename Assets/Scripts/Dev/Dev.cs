@@ -11,7 +11,6 @@ public class Dev : MonoBehaviour
     public void Start()
     {
         if (!isDevMode) return;
-        LevelController.Instance.LevelBase = levelBase;
         MainController.Instance.LevelBase = levelBase;
         MainController.Instance.Init();
     }

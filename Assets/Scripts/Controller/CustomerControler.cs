@@ -76,5 +76,8 @@ namespace Game
             LevelBase = LevelController.Instance.LevelBase;
             delayCustomer = LevelBase.delayPerCustomer;
         }
+
+        public void AddController() => MainController.Instance.AddController(this);
+
     }
 }

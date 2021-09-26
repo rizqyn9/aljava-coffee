@@ -43,7 +43,7 @@ public class LevelController : Singleton<LevelController>, IController
 
     internal void Init()
     {
-        
+        MainController.Instance.AddController(this);
     }
 
     private void GetMachineMustSpawn()
@@ -64,6 +64,7 @@ public class LevelController : Singleton<LevelController>, IController
     }
 
     public List<GlassRegistered> listGlassRegistered;
+    public void AddController() => MainController.Instance.AddController(this);
 
 
 

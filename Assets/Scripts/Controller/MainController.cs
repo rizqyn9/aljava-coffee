@@ -7,7 +7,6 @@ namespace Game
 {
     public interface IController
     {
-           
     }
 
     public class MainController : Singleton<MainController>
@@ -58,6 +57,9 @@ namespace Game
         {
             print("<color=green>Init in Main Controller</color>");
 
+            LevelController.Instance.LevelBase = LevelBase;
+
+            LevelController.Instance.Init();
             EnvController.Instance.Init();
             GameUIController.Instance.Init();
             CustomerControler.Instance.Init();

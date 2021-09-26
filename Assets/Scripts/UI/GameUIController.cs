@@ -65,5 +65,8 @@ namespace Game
         {
             throw new NotImplementedException();
         }
+
+        public void AddController() => MainController.Instance.AddController(this);
+
     }
 }
