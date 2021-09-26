@@ -68,5 +68,11 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
 
     public virtual void OnMachineStateChanged(MachineState _old, MachineState _new) { }
 
-    public void OnGameStateChanged() { }
+    public void OnGameStateChanged()
+    {
+        if(GameState == GameState.IDDLE)
+        {
+            boxCollider2D.enabled = false;
+        }
+    }
 }

@@ -17,7 +17,7 @@ namespace Game
 
         public void OnMouseDown()
         {
-
+            print("Dont touch me unch");
         }
         //public void OnMouseDown()
         //{

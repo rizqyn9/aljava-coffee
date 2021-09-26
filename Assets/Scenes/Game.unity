@@ -281,6 +281,7 @@ MonoBehaviour:
   timerIsRunning: 0
   timeOut: 0
   _counter: 0
+  _gameState: 0
 --- !u!1 &135687793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,7 +1447,7 @@ MonoBehaviour:
   canCreateCustomer: 0
   customerCounter: 1
   isGameEnd: 0
-  controllerCount: 0
+  countIGameState: 0
 --- !u!4 &1532892880
 Transform:
   m_ObjectHideFlags: 0
@@ -1505,6 +1506,7 @@ MonoBehaviour:
     MenuCount: 0
     BuyerCount: 0
     MachineCount: 0
+  _gameState: 0
   listGlassRegistered: []
 --- !u!4 &1542206366
 Transform:
@@ -2211,9 +2213,9 @@ MonoBehaviour:
   flavourContainer: {fileID: 1040080109}
   additionalContainer: {fileID: 82718092}
   glassContainer: {fileID: 2019888368}
-  resGO: []
   Machines: []
   _gameState: 0
+  IEnvRegistered: 0
 --- !u!1 &2019888366
 GameObject:
   m_ObjectHideFlags: 0
