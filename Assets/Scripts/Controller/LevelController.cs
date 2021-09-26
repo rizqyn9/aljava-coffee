@@ -77,5 +77,9 @@ public class LevelController : Singleton<LevelController>, IController
         }
     }
 
+    public void GameStateChanged(GameState _old, GameState _new)
+    {
+    }
+
     public List<GlassRegistered> listGlassRegistered;
 }

@@ -5,24 +5,6 @@ using UnityEngine;
 
 namespace Game
 {
-    [System.Serializable]
-    public struct BuyerPrototype
-    {
-        public string customerCode;
-        public BuyerType buyerType;
-        public BuyerState buyerState;
-        public int seatIndex;
-        public List<menuListName> menuListNames;
-        public CustomerHandler customerHandler;
-    }
-
-    [System.Serializable]
-    public struct buyerOrderItemHandler
-    {
-        public menuListName menu;
-        public GameObject itemGO;
-    }
-
     public class CustomerHandler : MonoBehaviour
     {
         public Transform spawnCharTransform;
@@ -63,9 +45,9 @@ namespace Game
             }
         }
 
-        void createMenuhandler(SpriteRenderer _renderer, menuListName _menuName)
+        void createMenuhandler(SpriteRenderer _renderer, MenuType _menuName)
         {
-            _renderer.sprite = ResourceManager.Instance.MenuTypes.Find(val => val.menuListName == _menuName).menuSprite;
+            _renderer.sprite = _menuName.menuSprite;
             _renderer.enabled = true;
 
             buyerOrderItemHandler itemHandler = new buyerOrderItemHandler();
@@ -75,7 +57,7 @@ namespace Game
             orderItemHandlers.Add(itemHandler);
         }
 
-        public void onServeMenu(menuListName _menu)
+        public void onServeMenu(MenuType _menu)
         {
             orderItemHandlers.Find(val => val.menu == _menu).itemGO.SetActive(false);
         }

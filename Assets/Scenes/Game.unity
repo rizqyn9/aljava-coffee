@@ -1444,7 +1444,6 @@ MonoBehaviour:
   isGameFinished: 0
   isGameTimeOut: 0
   canCreateCustomer: 0
-  freeSeatDataIndex: 
   customerCounter: 1
   isGameEnd: 0
   controllerCount: 0
@@ -2169,7 +2168,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2016407341}
   - component: {fileID: 2016407342}
-  - component: {fileID: 2016407343}
   m_Layer: 0
   m_Name: --Envi
   m_TagString: Untagged
@@ -2216,18 +2214,6 @@ MonoBehaviour:
   resGO: []
   Machines: []
   _gameState: 0
---- !u!114 &2016407343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016407340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1905e4cdd259a4bab8553f9b016bf6df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2019888366
 GameObject:
   m_ObjectHideFlags: 0
@@ -2398,6 +2384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2113947054}
+  - component: {fileID: 2113947056}
   - component: {fileID: 2113947055}
   m_Layer: 0
   m_Name: --CustomerController
@@ -2445,6 +2432,7 @@ MonoBehaviour:
     transform: {fileID: 2061301118}
   spawnPos: []
   tempCustomerPrefab: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
+  OrderController: {fileID: 0}
   LevelBase: {fileID: 0}
   BuyerTypes: []
   MenuTypes: []
@@ -2458,6 +2446,21 @@ MonoBehaviour:
   customerCounter: 0
   _gameState: 0
   seatIndex: 
+--- !u!114 &2113947056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113947053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b66fd9740766f45b59a01b1c0832ff44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDDOL: 0
+  deliveryQueueMenu: []
+  CustomerController: {fileID: 0}
 --- !u!222 &5488736148779487645
 CanvasRenderer:
   m_ObjectHideFlags: 0

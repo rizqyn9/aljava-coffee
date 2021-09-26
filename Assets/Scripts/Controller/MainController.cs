@@ -7,7 +7,7 @@ namespace Game
 {
     public interface IController
     {
-        public GameState GameState { get; set; }
+        public void GameStateChanged(GameState _old, GameState _new);
     }
 
     public class MainController : Singleton<MainController>
@@ -29,7 +29,6 @@ namespace Game
         public bool isGameFinished = false;
         public bool isGameTimeOut = false;
         public bool canCreateCustomer = false;
-        public List<int> freeSeatDataIndex = new List<int>();
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
         [SerializeField] List<IController> Controllers = new List<IController>();
@@ -48,10 +47,11 @@ namespace Game
 
         private void GameStateChanged(GameState _old, GameState _new)
         {
+            if (_old == _new) return;
             print("Game state Changed");
             foreach(IController _controller in Controllers)
             {
-                _controller.GameState = _new;
+                _controller.GameStateChanged(_old, _new);
             }
         }
 
@@ -67,8 +67,9 @@ namespace Game
             LevelController.Instance.Init();
             EnvController.Instance.Init();
             GameUIController.Instance.Init();
-            CustomerControler.Instance.Init();
-            StartCoroutine(StartGame());
+            CustomerController.Instance.Init();
+
+            StartCoroutine(IStartGame());
         }
 
         [SerializeField] int controllerCount;
@@ -78,17 +79,17 @@ namespace Game
             controllerCount = Controllers.Count;
         }
 
-        IEnumerator StartGame()
+        IEnumerator IStartGame()
         {
             print("Game Started");
             GameState = GameState.PLAY;
 
-            EnvController.Instance.StartMachine();
             GameUIController.Instance.StartUI();
+            EnvController.Instance.StartMachine();
 
             yield return new WaitForSeconds(1);
 
-            CustomerControler.Instance.StartCustomer();
+            CustomerController.Instance.StartCustomer();
             yield break;
         }
 
@@ -146,11 +147,11 @@ namespace Game
             isGameFinished = deliveryQueueMenu.Count == targetCustomer;
             if (isGameFinished && !isGameEnd)
             {
-                if(freeSeatDataIndex.Count == seatDataTransform.Length)
-                {
-                    StartCoroutine(gameFinished());
-                    return;
-                }
+                //if(freeSeatDataIndex.Count == seatDataTransform.Length)
+                //{
+                //    StartCoroutine(gameFinished());
+                //    return;
+                //}
             }
 
             if (deliveryQueueMenu.Count >= maxSlotOrder)
@@ -166,7 +167,7 @@ namespace Game
             yield break;
         }
 
-        public bool findMenu(menuListName _menu, out CustomerHandler _customerHandler)
+        public bool findMenu(MenuType _menu, out CustomerHandler _customerHandler)
         {
             bool res = false;
             _customerHandler = null;
@@ -183,7 +184,7 @@ namespace Game
             return res;
         }
 
-        public bool isExistQueue(menuListName _menuName, out BuyerPrototype _buyerPrototype)
+        public bool isExistQueue(MenuType _menuName, out BuyerPrototype _buyerPrototype)
         {
             _buyerPrototype = new BuyerPrototype();
             try

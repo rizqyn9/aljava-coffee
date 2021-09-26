@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Game;
 
 /// <summary>
 /// Behaviour for class manager
@@ -74,6 +75,24 @@ public enum SpawnerState
     CAN_CREATE,
     MAX_SEAT,
     MAX_ORDER
+}
+
+[System.Serializable]
+public struct BuyerPrototype
+{
+    public string customerCode;
+    public BuyerType buyerType;
+    public BuyerState buyerState;
+    public int seatIndex;
+    public List<MenuType> menuListNames;
+    public CustomerHandler customerHandler;
+}
+
+[System.Serializable]
+public struct buyerOrderItemHandler
+{
+    public MenuType menu;
+    public GameObject itemGO;
 }
 
 public enum GlassState : byte

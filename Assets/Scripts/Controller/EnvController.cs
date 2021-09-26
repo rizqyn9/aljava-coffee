@@ -26,8 +26,6 @@ namespace Game
         [SerializeField] List<Machine> Machines = new List<Machine>();
         [SerializeField] GameState _gameState;
 
-        public GameState GameState { get; set; }
-
         public void Init()
         {
             MainController.Instance.AddController(this);
@@ -84,6 +82,10 @@ namespace Game
         {
             T _out = _go.GetComponent<T>();
             return _out;
+        }
+
+        public void GameStateChanged(GameState _old, GameState _new)
+        {
         }
     }
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace Game
 {
-    public class CustomerControler : Singleton<CustomerControler>, IController
+    [RequireComponent(typeof(OrderController))]
+    public class CustomerController : Singleton<CustomerController>, IController
     {
         [Header("Properties")]
         public transformSeatData[] TransformSeatDatas;
@@ -12,6 +13,7 @@ namespace Game
         public GameObject tempCustomerPrefab;
 
         [Header("Debug")]
+        [SerializeField] OrderController OrderController;
         [SerializeField] LevelBase LevelBase = null;
         [SerializeField] List<BuyerType> BuyerTypes = new List<BuyerType>();
         [SerializeField] List<MenuType> MenuTypes = new List<MenuType>();
@@ -24,12 +26,13 @@ namespace Game
         [SerializeField]
         private GameState _gameState;
         public GameState GameState { get => _gameState; set => _gameState = value; }
+        public void GameStateChanged(GameState _old, GameState _new) => GameState = _new;
 
-        public void UpdateGameState(GameState _old, GameState _new) => GameState = _new;
 
         internal void Init()
         {
             MainController.Instance.AddController(this);
+            OrderController = OrderController.Instance;
 
             print("Buyer Init");
             getDepends();
@@ -55,18 +58,21 @@ namespace Game
             }
         }
 
+        Vector2[] spawnPosTemp = { new Vector2(-8.11999989f, 0), new Vector2(12.4099998f, 0) };
         private void createCustomer(int _seatIndex)
         {
             TransformSeatDatas[_seatIndex].isSeatAvaible = false;
 
-            GameObject custGO = Instantiate(tempCustomerPrefab, transform);
+            GameObject custGO = Instantiate(tempCustomerPrefab, spawnPosTemp[Random.Range(0, 2)], Quaternion.identity, transform);
             CustomerHandler customer = custGO.GetComponent<CustomerHandler>();
 
-            BuyerPrototype buyerPrototype = new BuyerPrototype();
-            buyerPrototype.buyerType = BuyerTypes[Random.Range(0, ResourceCount.BuyerCount)];
-            buyerPrototype.customerCode = $"Customer-{customerCounter++}";
-            buyerPrototype.seatIndex = _seatIndex;
-            buyerPrototype.menuListNames = generateMenu(Random.Range(1, 2));
+            BuyerPrototype buyerPrototype = new BuyerPrototype()
+            {
+                buyerType       = BuyerTypes[Random.Range(0, ResourceCount.BuyerCount)],
+                customerCode    = $"Customer-{customerCounter++}",
+                seatIndex       = _seatIndex,
+                menuListNames   = getMenuTypes(Random.Range(1, 2))
+            };
 
             // reference buyer
             customer.initBuyer(buyerPrototype);
@@ -101,14 +107,25 @@ namespace Game
             return seatIndex.Count > 0 ? true : false;
         }
 
-        List<menuListName> generateMenu(int _total)
+        //List<menuListName> generateMenu(int _total)
+        //{
+        //    List<menuListName> res = new List<menuListName>();
+        //    for (int i = 0; i < _total; i++)
+        //    {
+        //        res.Add(MenuTypes[Random.Range(0, ResourceCount.MenuCount)].menuListName);
+        //    }
+        //    return res;
+        //}
+        
+        List<MenuType> getMenuTypes(int _total)
         {
-            List<menuListName> res = new List<menuListName>();
+            List<MenuType> res = new List<MenuType>();
             for (int i = 0; i < _total; i++)
             {
-                res.Add(MenuTypes[Random.Range(0, ResourceCount.MenuCount)].menuListName);
+                res.Add(MenuTypes[Random.Range(0, ResourceCount.MenuCount)]);
             }
             return res;
         }
+
     }
 }

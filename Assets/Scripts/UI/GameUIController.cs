@@ -38,8 +38,6 @@ namespace Game
 
         [SerializeField] int _counter = 0;
 
-        public GameState GameState { get ; set ; }
-
         public void asOrderCount()
         {
             Debug.Log("asd");
@@ -68,5 +66,9 @@ namespace Game
 
         public void AddController() => MainController.Instance.AddController(this);
 
+        public void GameStateChanged(GameState _old, GameState _new)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

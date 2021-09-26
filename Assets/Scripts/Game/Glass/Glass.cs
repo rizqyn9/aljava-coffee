@@ -48,10 +48,10 @@ namespace Game
 
         private void OnMouseDown()
         {
-            if (isValidMenu && MainController.Instance.isExistQueue(getMenuState.menuListName, out targetBuyer))
+            if (isValidMenu && MainController.Instance.isExistQueue(getMenuState, out targetBuyer))
             {
                 Debug.Log("Find customer menu");
-                targetBuyer.customerHandler.onServeMenu(getMenuState.menuListName);
+                targetBuyer.customerHandler.onServeMenu(getMenuState);
 
                 GlassContainer.Instance.glassOnDestroy(glassRegistered);
                 StartCoroutine(IDestroy());
