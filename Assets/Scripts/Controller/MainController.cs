@@ -30,7 +30,6 @@ namespace Game
         public bool isGameTimeOut = false;
         public bool canCreateCustomer = false;
         public List<int> freeSeatDataIndex = new List<int>();
-        [SerializeField] ResourceData ResourceData;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
         [SerializeField] List<IController> Controllers = new List<IController>();
@@ -147,7 +146,6 @@ namespace Game
             isGameFinished = deliveryQueueMenu.Count == targetCustomer;
             if (isGameFinished && !isGameEnd)
             {
-                monitorAvaibleSeat();
                 if(freeSeatDataIndex.Count == seatDataTransform.Length)
                 {
                     StartCoroutine(gameFinished());
@@ -159,18 +157,6 @@ namespace Game
                 isDeliveryFull = true;
             else
                 isDeliveryFull = false;
-
-            if(canCreateCustomer && !isGameFinished)
-            {
-                if (monitorAvaibleSeat() && !isGameFinished)
-                {
-                    createNewCustomer(freeSeatDataIndex[Random.Range(0, freeSeatDataIndex.Count)]);
-                }
-                else
-                {
-                    return;
-                }
-            }
         }
 
         IEnumerator gameFinished()
@@ -178,25 +164,6 @@ namespace Game
             new WaitForSeconds(4);
             isGameEnd = true;
             yield break;
-        }
-
-        private void createNewCustomer(int _seatIndex)
-        {
-            canCreateCustomer = false;
-            StartCoroutine(reactiveCustomerCreation());
-            seatDataTransform[_seatIndex].isSeatAvaible = false;
-
-            GameObject GO = Instantiate(tempCustomer, startSpawnTransform[Random.Range(0,2)]);
-            CustomerHandler customer = GO.GetComponent<CustomerHandler>();
-
-            BuyerPrototype buyerPrototype = new BuyerPrototype();
-            buyerPrototype.buyerType = ResourceManager.Instance.BuyerTypes[Random.Range(0, ResourceData.buyerTypeCount)];
-            buyerPrototype.customerCode = $"Customer-{customerCounter++}";
-            buyerPrototype.seatIndex = _seatIndex;
-            buyerPrototype.menuListNames = generateMenu(Random.Range(1,2));
-
-            // reference buyer
-            customer.initBuyer(buyerPrototype);
         }
 
         public bool findMenu(menuListName _menu, out CustomerHandler _customerHandler)
@@ -214,34 +181,6 @@ namespace Game
                 }
             }
             return res;
-        }
-
-        List<menuListName> generateMenu(int _total)
-        {
-            List<menuListName> res = new List<menuListName>();
-            for(int i =0; i< _total; i++)
-            {
-                res.Add(ResourceManager.Instance.MenuTypes[Random.Range(0, ResourceData.menuTypeCount)].menuListName);
-            }
-            return res;
-        }
-
-        IEnumerator reactiveCustomerCreation()
-        {
-            yield return new WaitForSeconds(delay);
-            canCreateCustomer = true;
-            yield break;
-        }
-
-        bool monitorAvaibleSeat()
-        {
-            freeSeatDataIndex = new List<int>();
-            for(int i = 0; i < seatDataTransform.Length; i++)
-            {
-                if (seatDataTransform[i].isSeatAvaible) freeSeatDataIndex.Add(i);
-            }
-            if (freeSeatDataIndex.Count == 0) return false;
-            else return true;
         }
 
         public bool isExistQueue(menuListName _menuName, out BuyerPrototype _buyerPrototype)

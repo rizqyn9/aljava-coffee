@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-using UnityEditor;
 #if !UNITY_EDITOR
+using UnityEditor;
 #endif
 
 public class ResourceManager : Singleton<ResourceManager>
@@ -15,7 +15,6 @@ public class ResourceManager : Singleton<ResourceManager>
     public List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
     public List<MachineData> MachineDatas = new List<MachineData>();
     public MenuType notValidMenu;
-    public ResourceData resourceData;
 
     #region CONTEXT MENU
     [ContextMenu("Validate All")]
@@ -23,7 +22,6 @@ public class ResourceManager : Singleton<ResourceManager>
     {
         Debug.Log("Validate all reources");
         validateBuyer();
-        validateResourceData();
         ValidateMenuClassification();
         ValidateMachineData();
     }
@@ -65,20 +63,7 @@ public class ResourceManager : Singleton<ResourceManager>
 
     #endregion
 
-    private void validateResourceData()
-    {
-        resourceData = new ResourceData()
-        {
-            buyerTypeCount = BuyerTypes.Count,
-            menuTypeCount = MenuTypes.Count
-        };
-    }
-
-
-
     public List<T> GetTypeData<T>(string _path) where T : ScriptableObject => Resources.LoadAll<T>(_path).ToList();
-
-    
 
     /// <summary>
     /// For validate and finding menu result from data list igrendients

@@ -60,10 +60,20 @@ public enum GameMode
 }
 
 [System.Serializable]
-public struct ResourceData
+public struct transformSeatData
 {
-    public int buyerTypeCount;
-    public int menuTypeCount;
+    public bool isSeatAvaible;
+    public Transform transform;
+}
+
+public enum SpawnerState
+{
+    IDDLE,
+    REACTIVE,
+    VALIDATE,
+    CAN_CREATE,
+    MAX_SEAT,
+    MAX_ORDER
 }
 
 public enum GlassState : byte

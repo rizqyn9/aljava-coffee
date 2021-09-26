@@ -4,23 +4,6 @@ using UnityEngine;
 
 namespace Game
 {
-    [System.Serializable]
-    public struct transformSeatData
-    {
-        public bool isSeatAvaible;
-        public Transform transform;
-    }
-
-    public enum SpawnerState
-    {
-        IDDLE,
-        REACTIVE,
-        VALIDATE,
-        CAN_CREATE,
-        MAX_SEAT,
-        MAX_ORDER
-    }
-
     public class CustomerControler : Singleton<CustomerControler>, IController
     {
         [Header("Properties")]
@@ -37,7 +20,6 @@ namespace Game
         [SerializeField] float delayCustomer;
         [SerializeField] SpawnerState SpawnerState = SpawnerState.IDDLE;
         [SerializeField] int customerCounter;
-
 
         [SerializeField]
         private GameState _gameState;
@@ -68,13 +50,9 @@ namespace Game
                 SpawnerState = SpawnerState.VALIDATE;
                 if (isAvaibleSeat())
                 {
-                    int set = seatIndex[Random.Range(0, seatIndex.Count)];
-                    print(set);
-                    createCustomer(set);
+                    createCustomer(seatIndex[Random.Range(0, seatIndex.Count)]);
                 }
-
             }
-
         }
 
         private void createCustomer(int _seatIndex)
@@ -101,7 +79,6 @@ namespace Game
             SpawnerState = SpawnerState.REACTIVE;
             yield return new WaitForSeconds(4);
             SpawnerState = SpawnerState.CAN_CREATE;
-            print("HI i'm spawner");
         }
 
         private void getDepends()

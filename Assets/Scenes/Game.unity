@@ -800,9 +800,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 814f20114da6a4208a0be029dcd71816, type: 2}
   - {fileID: 11400000, guid: 49864379ba3ca46e9912a46322148841, type: 2}
   notValidMenu: {fileID: 11400000, guid: 405e5426b445f4c0f923bf5bdf000cbc, type: 2}
-  resourceData:
-    buyerTypeCount: 5
-    menuTypeCount: 1
 --- !u!1 &882630724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,9 +1445,6 @@ MonoBehaviour:
   isGameTimeOut: 0
   canCreateCustomer: 0
   freeSeatDataIndex: 
-  ResourceData:
-    buyerTypeCount: 0
-    menuTypeCount: 0
   customerCounter: 1
   isGameEnd: 0
   controllerCount: 0
@@ -1508,6 +1502,10 @@ MonoBehaviour:
   BuyerTypes: []
   MachineDatas: []
   MenuClassificationDatas: []
+  ResourceCount:
+    MenuCount: 0
+    BuyerCount: 0
+    MachineCount: 0
   listGlassRegistered: []
 --- !u!4 &1542206366
 Transform:
@@ -2446,12 +2444,18 @@ MonoBehaviour:
   - isSeatAvaible: 1
     transform: {fileID: 2061301118}
   spawnPos: []
+  tempCustomerPrefab: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   LevelBase: {fileID: 0}
   BuyerTypes: []
   MenuTypes: []
+  ResourceCount:
+    MenuCount: 0
+    BuyerCount: 0
+    MachineCount: 0
   maxSpawn: 0
   delayCustomer: 0
   SpawnerState: 0
+  customerCounter: 0
   _gameState: 0
   seatIndex: 
 --- !u!222 &5488736148779487645
