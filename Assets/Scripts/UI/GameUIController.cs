@@ -6,7 +6,7 @@ using System;
 
 namespace Game
 {
-    public class GameUIController : Singleton<GameUIController>
+    public class GameUIController : Singleton<GameUIController>, IController
     {
         public TMP_Text progressHandler;
         public TMP_Text timeUI;
@@ -37,6 +37,9 @@ namespace Game
         //}
 
         [SerializeField] int _counter = 0;
+
+        public GameState GameState => throw new NotImplementedException();
+
         public void asOrderCount()
         {
             Debug.Log("asd");
@@ -51,6 +54,16 @@ namespace Game
 
         internal void StartUI()
         {
+        }
+
+        public void RegistController()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Notify()
+        {
+            throw new NotImplementedException();
         }
     }
 }

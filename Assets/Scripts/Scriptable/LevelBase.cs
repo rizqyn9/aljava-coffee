@@ -10,6 +10,7 @@ public class LevelBase : ScriptableObject
     public List<MenuClassification> MenuClassifications;
     public List<menuListName> MenuTypeUnlock;
     public List<enumBuyerType> BuyerTypeUnlock;
+    public float delayPerCustomer = 10;
 
     [Header("Game Mode")]
     public float gameDuration;

@@ -52,7 +52,8 @@ namespace Game
         {
             MachineState = MachineState.ON_PROCESS;
 
-            resultGO = Instantiate(machineType == MachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab, resultSpawnPosition);
+            GameObject go = machineType == MachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab;
+            resultGO = Instantiate(go, resultSpawnPosition);
             resultGO.transform.LeanScale(new Vector2(1f, 1f), .2f);
 
             yield return new WaitForSeconds(.2f);

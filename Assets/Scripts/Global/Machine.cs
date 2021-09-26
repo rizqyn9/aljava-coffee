@@ -32,7 +32,7 @@ public abstract class Machine : MonoBehaviour
     private void Start()
     {
         // regist to env manager
-        EnvManager.Instance.RegistMachine(this);
+        EnvController.Instance.RegistMachine(this);
         RegistToManager();
     }
 

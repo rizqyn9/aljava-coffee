@@ -16,7 +16,7 @@ public struct CoffeeProperties
 /// Menu Unlock
 /// </list>
 /// </summary>
-public class LevelManager : Singleton<LevelManager>
+public class LevelController : Singleton<LevelController>, IController
 {
     [Header("Debug")]
     [SerializeField] LevelBase _levelBase;
@@ -30,6 +30,8 @@ public class LevelManager : Singleton<LevelManager>
         set { _levelBase = value; setData(); }
     }
 
+    public GameState GameState => throw new NotImplementedException();
+
     private void setData()
     {
         MenuTypes = ResourceManager.Instance.MenuTypes.FindAll(val => _levelBase.MenuTypeUnlock.Contains(val.menuListName));
@@ -41,7 +43,7 @@ public class LevelManager : Singleton<LevelManager>
 
     internal void Init()
     {
-        MainController.Instance.Init();
+        
     }
 
     private void GetMachineMustSpawn()

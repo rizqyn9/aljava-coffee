@@ -10,7 +10,7 @@ namespace Game
         void EnvInstance();
     }
 
-    public class EnvManager : Singleton<EnvManager>
+    public class EnvController : Singleton<EnvController>, IController
     {
         [Header("Properties")]
         public Transform mainContainer;
@@ -24,9 +24,13 @@ namespace Game
         [SerializeField] List<IEnv> IEnvs = new List<IEnv>();
         [SerializeField] List<IMenuClassManager> IMenuClassManagers = new List<IMenuClassManager>();
         [SerializeField] List<Machine> Machines = new List<Machine>();
+        [SerializeField] GameState _gameState;
+
+        public GameState GameState => throw new NotImplementedException();
 
         public void Init()
         {
+            MainController.Instance.AddController(this);
             print("Init on Env Manager");
             initMachineManager();
             spawnMachine();
@@ -40,7 +44,7 @@ namespace Game
         void initMachineManager()
         {
             print("InitMachineManager");
-            foreach(MenuClassificationData _menuClassification in LevelManager.Instance.MenuClassificationDatas)
+            foreach(MenuClassificationData _menuClassification in LevelController.Instance.MenuClassificationDatas)
             {
                 GameObject go = Instantiate(_menuClassification.prefabManager, getTransform(_menuClassification.MachineClass));
                 IMenuClassManagers.Add(go.GetComponent<IMenuClassManager>());
@@ -56,7 +60,7 @@ namespace Game
             print("Spawn Machine");
             foreach(IMenuClassManager _menuClassManager in IMenuClassManagers)
             {
-                _menuClassManager.InstanceMachine(LevelManager.Instance.MachineDatas.FindAll(val=> val.MachineClass == _menuClassManager.GetMachineClass()));
+                _menuClassManager.InstanceMachine(LevelController.Instance.MachineDatas.FindAll(val=> val.MachineClass == _menuClassManager.GetMachineClass()));
             }
         }
 

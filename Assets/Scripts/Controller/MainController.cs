@@ -5,11 +5,9 @@ using UnityEngine;
 
 namespace Game
 {
-    [System.Serializable]
-    public struct transformSeatData
+    public interface IController
     {
-        public bool isSeatAvaible;
-        public Transform transform;
+           
     }
 
     public class MainController : Singleton<MainController>
@@ -35,8 +33,11 @@ namespace Game
         [SerializeField] ResourceData ResourceData;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
+        [SerializeField] List<IController> Controllers = new List<IController>();
 
         public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
+
+        #region GAME STATE
         public GameState GameState {
             get => _gameState;
             set
@@ -51,22 +52,23 @@ namespace Game
             print("Game state Changed");
         }
 
-        /// <summary>
-        /// Init all
-        /// <list type="bullet">
-        /// <item>Game UI</item>
-        /// <item>Game Envi</item>
-        /// <item>Buyer Controller</item>
-        /// <item>WIn Lose Controller</item>
-        /// </list>
-        /// </summary>
+        #endregion
+
         public void Init()
         {
             print("<color=green>Init in Main Controller</color>");
-            EnvManager.Instance.Init();
-            GameUIController.Instance.Init();
 
+            EnvController.Instance.Init();
+            GameUIController.Instance.Init();
+            CustomerControler.Instance.Init();
             StartCoroutine(StartGame());
+        }
+
+        [SerializeField] int controllerCount;
+        public void AddController(IController _controller)
+        {
+            Controllers.Add(_controller);
+            controllerCount = Controllers.Count;
         }
 
         IEnumerator StartGame()
@@ -74,9 +76,12 @@ namespace Game
             print("Game Started");
             GameState = GameState.PLAY;
 
-            EnvManager.Instance.StartMachine();
+            EnvController.Instance.StartMachine();
             GameUIController.Instance.StartUI();
-            yield return 0;
+
+            yield return new WaitForSeconds(1);
+
+            CustomerControler.Instance.StartCustomer();
         }
 
         public void Start()
@@ -86,8 +91,6 @@ namespace Game
             GameState = GameState.IDDLE;
 
             maxSlotOrder = seatDataTransform.Length;
-
-            //EnvManager.Instance.Init(_levelBase);
 
             //initMachine();
             //GameUIController.Instance.timerIsRunning = true;

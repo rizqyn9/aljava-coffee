@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game;
 
 public class Dev : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class Dev : MonoBehaviour
     public void Start()
     {
         if (!isDevMode) return;
-        LevelManager.Instance.LevelBase = levelBase;
-        LevelManager.Instance.Init();
+        LevelController.Instance.LevelBase = levelBase;
+        MainController.Instance.LevelBase = levelBase;
+        MainController.Instance.Init();
     }
 }
