@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using UnityEngine;
 
 namespace Game
@@ -34,7 +31,7 @@ namespace Game
         public bool canCreateCustomer = false;
         [SerializeField] int customerCounter = 1;
         [SerializeField] bool isGameEnd = false;
-        [SerializeField] ObservableCollection<IGameState> ListenGameState = new ObservableCollection<IGameState>();
+        [SerializeField] List<IGameState> ListenGameState = new List<IGameState>();
 
         public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
 
@@ -62,8 +59,6 @@ namespace Game
 
         public void Init()
         {
-            ListenGameState.CollectionChanged += notifyGameState;
-
             GameState = GameState.IDDLE;
             print("<color=green>Init in Main Controller</color>");
 
@@ -78,18 +73,23 @@ namespace Game
         }
 
         [SerializeField] int countIGameState;
-        private void notifyGameState(object sender, NotifyCollectionChangedEventArgs e) => countIGameState = ListenGameState.Count;
-        public void RegistGameState(IGameState _) => ListenGameState.Add(_);
+        public void RegistGameState(IGameState _)
+        {
+            ListenGameState.Add(_);
+            countIGameState = ListenGameState.Count;
+        }
 
         IEnumerator IStartGame()
         {
             print("Game Started");
             GameState = GameState.PLAY;
 
+            yield return 1;
+
             GameUIController.Instance.StartUI();
             EnvController.Instance.StartMachine();
 
-            yield return new WaitForSeconds(1);
+            new WaitForSeconds(1);
 
             CustomerController.Instance.StartCustomer();
             yield break;

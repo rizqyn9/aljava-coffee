@@ -13,6 +13,8 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
     public bool spawnOnStart;
 
     [Header("Debug")]
+    public MachineData MachineData;
+
     [SerializeField] MachineState _machineState;
     [SerializeField] GameState _gameState;
     [SerializeField] protected GameObject resultGO;
@@ -55,14 +57,15 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
         EnvController.Instance.RegistMachine(this);
     }
 
-    public void StartMachine() => InitStart();
+    public void StartMachine()
+    {
+        MachineState = MachineState.ON_IDDLE;
+        InitStart();
+    }
 
     public abstract void InitStart();
 
-    public virtual void EnvInstance()
-    {
-
-    }
+    public virtual void EnvInstance() { }
 
     public virtual void OnGameStateChanged(GameState _old, GameState _new) { }
 
@@ -70,9 +73,6 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
 
     public void OnGameStateChanged()
     {
-        if(GameState == GameState.IDDLE)
-        {
-            boxCollider2D.enabled = false;
-        }
+        boxCollider2D.enabled = GameState != GameState.IDDLE;
     }
 }

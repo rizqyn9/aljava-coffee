@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Specialized;
 
 namespace Game
 {
@@ -22,9 +20,9 @@ namespace Game
         public GlassContainer glassContainer;
 
         [Header("Debug")]
-        [SerializeField] ObservableCollection<IEnv> IEnvs = new ObservableCollection<IEnv>();
-        [SerializeField] List<IMenuClassManager> IMenuClassManagers = new List<IMenuClassManager>();
+        [SerializeField] List<IEnv> IEnvs = new List<IEnv>();
         [SerializeField] List<Machine> Machines = new List<Machine>();
+        [SerializeField] List<IMenuClassManager> IMenuClassManagers = new List<IMenuClassManager>();
         [SerializeField] GameState _gameState;
         public GameState GameState
         {
@@ -40,19 +38,21 @@ namespace Game
         {
             MainController.Instance.RegistGameState(this);
 
-            IEnvs.CollectionChanged += updateListEnv;
             print("Init on Env Manager");
             initMachineManager();
             spawnMachine();
         }
 
         [SerializeField] int IEnvRegistered;
-        private void updateListEnv(object sender, NotifyCollectionChangedEventArgs e) => IEnvRegistered = IEnvs.Count;
-
         public void RegistMachine(Machine _machine)
         {
+            print("rgist");
             Machines.Add(_machine);
-            if(_machine is IEnv) IEnvs.Add(_machine);   // Register machine as ienv is avaible
+            if (_machine is IEnv)
+            {
+                IEnvs.Add(_machine);   // Register machine as ienv is avaible
+                IEnvRegistered = IEnvs.Count;
+            }
         }
 
         /// <summary>
@@ -86,10 +86,17 @@ namespace Game
         /// </summary>
         internal void StartMachine()
         {
+            print($"Start Machine {Machines.Count}");
             foreach(Machine _machine in Machines)
             {
                 _machine.InitStart();
             }
+        }
+
+        public void InstanceMachine(MachineData _machineData, Transform _transform, out Machine _machine)
+        {
+            _machine = Instantiate(_machineData.PrefabManager, _transform).GetComponent<Machine>();
+            _machine.MachineData = _machineData;
         }
 
         Transform getTransform(MachineClass _machineClass) =>

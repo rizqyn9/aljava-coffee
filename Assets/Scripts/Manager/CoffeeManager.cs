@@ -31,9 +31,10 @@ namespace Game
             print("Render Machine in Coffee Manager");
             foreach(MachineData _machine in MachineDatas)
             {
-                GameObject go = Instantiate(_machine.PrefabManager, transform);
-                coffeeManagers.Add(go.GetComponent<ICoffeeManager>());
-                machineInstance.Add(go.GetComponent<Machine>());
+                Machine resMachine;
+                EnvController.Instance.InstanceMachine(_machine, transform, out resMachine);
+                coffeeManagers.Add(resMachine as ICoffeeManager);
+                machineInstance.Add(resMachine);
             }
         }
 

@@ -15,16 +15,17 @@ namespace Game
             MachineState = MachineState.ON_IDDLE;
         }
 
+        public override void OnMachineStateChanged(MachineState _old, MachineState _new)
+        {
+            print("Machine State Changed");
+        }
+
         public void OnMouseDown()
         {
-            print("Dont touch me unch");
-        }
-        //public void OnMouseDown()
-        //{
-        //    if (!isGameStarted || MachineState == MachineState.ON_PROCESS) return;
+            if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
+            if (MachineState == MachineState.ON_DONE) StartCoroutine(IDestroy());
 
-        //    validate();
-        //}
+        }
 
         //private void validate()
         //{
@@ -45,10 +46,10 @@ namespace Game
 
         IEnumerator ISpawn()
         {
+            print("Spawn beans");
             MachineState = MachineState.ON_PROCESS;
 
-            GameObject go = machineType == MachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab;
-            resultGO = Instantiate(go, resultSpawnPosition);
+            resultGO = Instantiate(MachineData.PrefabResult, resultSpawnPosition);
             resultGO.transform.LeanScale(new Vector2(1f, 1f), .2f);
 
             yield return new WaitForSeconds(.2f);
@@ -79,7 +80,7 @@ namespace Game
         //    return res;
         //}
 
-        public void EnvInstance()
+        public override void EnvInstance()
         {
             print("spawn");
             gameObject.LeanMoveLocalY(-1f, 1f);
