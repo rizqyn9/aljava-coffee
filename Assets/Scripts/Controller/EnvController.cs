@@ -75,8 +75,8 @@ namespace Game
             print("InitMachineManager");
             foreach(MenuClassificationData _menuClassification in LevelController.Instance.MenuClassificationDatas)
             {
-                //GameObject go = Instantiate(_menuClassification.prefabManager, getTransform(_menuClassification.MachineClass.));
-                //IMenuClassManagers.Add(go.GetComponent<IMenuClassManager>());
+                GameObject go = Instantiate(_menuClassification.prefabManager, getTransform(_menuClassification.MenuClassification));
+                IMenuClassManagers.Add(go.GetComponent<IMenuClassManager>());
             }
             print($"Count : {IMenuClassManagers.Count}");
         }
@@ -120,9 +120,9 @@ namespace Game
             return _out != null ? true : false;
         }
 
-        Transform getTransform(MachineClass _machineClass) =>
-            (_machineClass == MachineClass.COFFEE) ? mainContainer :
-            (_machineClass == MachineClass.ADDITIONAL) ? additionalContainer :
+        Transform getTransform(MenuClassification _machineClass) =>
+            (_machineClass == MenuClassification.COFFEE) ? mainContainer :
+            (_machineClass == MenuClassification.ADDITIONAL) ? additionalContainer :
             flavourContainer;
 
         public static T GetOutType<T>(GameObject _go)

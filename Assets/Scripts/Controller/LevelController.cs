@@ -52,7 +52,7 @@ public class LevelController : Singleton<LevelController>, IGameState
     {
         MenuTypes = ResourceManager.ListMenu().FindAll(val => _levelBase.MenuTypeUnlock.Contains(val.menuListName));
         BuyerTypes = ResourceManager.ListBuyer().FindAll(val => _levelBase.BuyerTypeUnlock.Contains(val.enumBuyerType));
-        //MenuClassificationDatas = ResourceManager.Instance.MenuClassificationDatas.FindAll(val => _levelBase.MenuClassifications.Contains(val.MenuClassification));
+        MenuClassificationDatas = ResourceManager.ListMenuClass().FindAll(val => _levelBase.MenuClassifications.Contains(val.MenuClassification));
 
         ResourceCount = new ResourceCount()
         {

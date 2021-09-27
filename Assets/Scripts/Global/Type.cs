@@ -149,38 +149,6 @@ public enum MachineIgrendient : byte
     ICE
 }
 
-
-/// <summary>
-/// Depreceated
-/// List for igrendients menu
-/// </summary>
-//public enum enumIgrendients : byte
-//{
-//    NULL,
-//    COFEE_MAKER,
-//    COFFEE_FILTERED,
-//    BEANS_ARABICA,
-//    BEANS_ROBUSTA,
-//    FRESHMILK,
-//    MILK_STEAMMED,
-//    SQUASH_ORANGE,
-//    SQUASH_PEACH,
-//    SQUASH_FRUIT,
-//    SQUASH_CHIA_SEED,
-//    SODA,
-//    MILK_MELON,
-//    MILK_STRAWBERRY,
-//    MILK_CHOCO,
-//    LATTE_CHOCO,
-//    LATTE_RED_VELVET,
-//    LATTE_MATCHA,
-//    LATTE_TARO,
-//    WHIPPED_CREAM,
-//    ICE,
-//    GLASS
-//}
-
-
 /// <summary>
 /// List menu registered
 /// </summary>
