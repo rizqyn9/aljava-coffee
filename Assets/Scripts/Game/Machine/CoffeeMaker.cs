@@ -12,18 +12,18 @@ namespace Game
 
         [Header("Debug")]
         [SerializeField] GlassRegistered glassTarget;
-        [SerializeField] List<enumIgrendients> igrendientsList;
+        [SerializeField] List<MachineIgrendient> igrendientsList;
 
         public override void InitStart()
         {
             MachineState = MachineState.ON_IDDLE;
-            igrendientsList = new List<enumIgrendients>();
+            igrendientsList = new List<MachineIgrendient>();
         }
 
-        public void ReqInput(enumIgrendients _enumIgrendients)
+        public void ReqInput(MachineIgrendient _MachineIgrendient)
         {
             StartCoroutine(ISpawn());
-            igrendientsList.Add(_enumIgrendients);
+            igrendientsList.Add(_MachineIgrendient);
             igrendientsList.Add(resultIgrendients);
         }
 
@@ -42,7 +42,7 @@ namespace Game
         private void OnMouseDown()
         {
             if (MachineState == MachineState.ON_DONE
-                && GlassContainer.IsGlassTargetAvaible(enumIgrendients.NULL, out glassTarget)
+                && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.NULL, out glassTarget)
                 )
             {
                 StartCoroutine(IDestroy());

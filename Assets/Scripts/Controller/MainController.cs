@@ -102,42 +102,7 @@ namespace Game
             GameState = GameState.IDDLE;
 
             maxSlotOrder = seatDataTransform.Length;
-
-            //initMachine();
-            //GameUIController.Instance.timerIsRunning = true;
-            //StartCoroutine(onStart());
         }
-
-        //private void initMachine()
-        //{
-        //    foreach(Machine _ in Machines)
-        //    {
-        //        _.isGameStarted = true;
-        //        _.startMachine();
-        //    }
-        //}
-
-        #region DEPRECEATED
-        //IEnumerator onStart()
-        //{
-        //    yield return new WaitForSeconds(4);
-
-        //    isGameStarted = true;
-        //    canCreateCustomer = true;
-        //}
-        #endregion
-
-        /// <summary>
-        /// finding Machine target, with out Machine
-        /// </summary>
-        /// <param name="_machine"></param>
-        /// <param name="_">out, bring out Machine class</param>
-        /// <returns></returns>
-        //public bool isMachineAvaible(MachineType _machine, out Machine _)
-        //{
-        //    _ = Machines.Find(val => val.machineType == _machine && val.MachineState == MachineState.ON_IDDLE);
-        //    return _;
-        //}
 
         private void Update()
         {
@@ -147,14 +112,6 @@ namespace Game
                 return;
             }
             isGameFinished = deliveryQueueMenu.Count == targetCustomer;
-            if (isGameFinished && !isGameEnd)
-            {
-                //if(freeSeatDataIndex.Count == seatDataTransform.Length)
-                //{
-                //    StartCoroutine(gameFinished());
-                //    return;
-                //}
-            }
 
             if (deliveryQueueMenu.Count >= maxSlotOrder)
                 isDeliveryFull = true;
@@ -213,9 +170,38 @@ namespace Game
             }
         }
 
-        private void clearQueue(BuyerPrototype _buyerPrototype)
-        {
-            
-        }
+        private void clearQueue(BuyerPrototype _buyerPrototype) { }
+
+
+        #region DEPRECEATED
+        //private void initMachine()
+        //{
+        //    foreach(Machine _ in Machines)
+        //    {
+        //        _.isGameStarted = true;
+        //        _.startMachine();
+        //    }
+        //}
+
+        //IEnumerator onStart()
+        //{
+        //    yield return new WaitForSeconds(4);
+
+        //    isGameStarted = true;
+        //    canCreateCustomer = true;
+        //}
+
+        /// <summary>
+        /// finding Machine target, with out Machine
+        /// </summary>
+        /// <param name="_machine"></param>
+        /// <param name="_">out, bring out Machine class</param>
+        /// <returns></returns>
+        //public bool isMachineAvaible(MachineType _machine, out Machine _)
+        //{
+        //    _ = Machines.Find(val => val.machineType == _machine && val.MachineState == MachineState.ON_IDDLE);
+        //    return _;
+        //}
+        #endregion
     }
 }

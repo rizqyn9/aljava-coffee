@@ -50,8 +50,8 @@ public class LevelController : Singleton<LevelController>, IGameState
 
     private void setData()
     {
-        MenuTypes = ResourceManager.Instance.MenuTypes.FindAll(val => _levelBase.MenuTypeUnlock.Contains(val.menuListName));
-        BuyerTypes = ResourceManager.Instance.BuyerTypes.FindAll(val => _levelBase.BuyerTypeUnlock.Contains(val.enumBuyerType));
+        MenuTypes = ResourceManager.ListMenu().FindAll(val => _levelBase.MenuTypeUnlock.Contains(val.menuListName));
+        BuyerTypes = ResourceManager.ListBuyer().FindAll(val => _levelBase.BuyerTypeUnlock.Contains(val.enumBuyerType));
         //MenuClassificationDatas = ResourceManager.Instance.MenuClassificationDatas.FindAll(val => _levelBase.MenuClassifications.Contains(val.MenuClassification));
 
         ResourceCount = new ResourceCount()
@@ -70,16 +70,16 @@ public class LevelController : Singleton<LevelController>, IGameState
 
     private void GetMachineMustSpawn()
     {
-        List<MachineType> MachineTypes = new List<MachineType>();
+        List<MachineIgrendient> MachineTypes = new List<MachineIgrendient>();
 
         foreach(MenuType _menuType in MenuTypes)
         {
-            foreach(MachineType _machineType in _menuType.Igrendients)
+            foreach(MachineIgrendient _machineType in _menuType.Igrendients)
             {
                 if (!MachineTypes.Contains(_machineType))
                 {
                     MachineTypes.Add(_machineType);
-                    MachineDatas.Add(ResourceManager.Instance.MachineDatas.Find(val => val.MachineType == _machineType));
+                    MachineDatas.Add(ResourceManager.ListMachine().Find(val => val.MachineType == _machineType));
                 }
             }
         }

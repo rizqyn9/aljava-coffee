@@ -7,6 +7,6 @@ public class MenuClassificationData : ScriptableObject
 {
     public List<MachineClass> MachineClass;
     public List<MenuClassification> MenuClassification;
-    public List<MachineType> ListMachine;
+    public List<MachineIgrendient> ListMachine;
     public GameObject prefabManager;
 }

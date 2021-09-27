@@ -5,13 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MenuType", menuName = "ScriptableObject/MenuType")]
 public class MenuType : ScriptableObject
 {
-    public menuListName menuListName;
     public string menuName;
-    public string menuDesc;
+    public MenuListName menuListName;
     public GameObject menuPrefab;
+    public List<MachineIgrendient> Igrendients;
+    public string menuDesc;
     public Sprite menuSprite;
-    public List<MachineType> Igrendients;
-    public List<enumIgrendients> recipe;
-    public int price;
     public int pointInGame;
+    public int price;
 }

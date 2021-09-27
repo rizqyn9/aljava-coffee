@@ -3,6 +3,6 @@ using UnityEngine;
 
 public class BaseAssetOnState : ScriptableObject
 {
-    public enumIgrendients enumIgrendients;
+    public MachineIgrendient enumIgrendients;
     public GameObject prefab;
 }

@@ -13,14 +13,14 @@ namespace Game
 
         [Header("Debug")]
         public GlassState glassState;
-        public List<enumIgrendients> igrendients = new List<enumIgrendients>();
+        public List<MachineIgrendient> igrendients = new List<MachineIgrendient>();
         public MenuType getMenuState;
         public bool isValidMenu = false;
         public GlassRegistered glassRegistered;
         [SerializeField] SpriteRenderer igrendientRenderer;
         [SerializeField] BuyerPrototype targetBuyer;
-        [SerializeField] enumIgrendients _lastIgrendients = enumIgrendients.NULL;
-        public enumIgrendients lastIgrendients
+        [SerializeField] MachineIgrendient _lastIgrendients = MachineIgrendient.NULL;
+        public MachineIgrendient lastIgrendients
         {
             get => _lastIgrendients;
             set
@@ -78,7 +78,7 @@ namespace Game
         /// <param name="_color"></param>
         /// <param name="_igrendients (optional)"></param>
         /// <param name="_multipleIgrendients (optional)"></param>
-        public void changeSpriteAddIgrendients(Color _color, enumIgrendients _igrendients = enumIgrendients.NULL, List<enumIgrendients> _multipleIgrendients = null)
+        public void changeSpriteAddIgrendients(Color _color, MachineIgrendient _igrendients = MachineIgrendient.NULL, List<MachineIgrendient> _multipleIgrendients = null)
         {
             if (!igrendientRenderer) igrendientRenderer = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
             if (_multipleIgrendients != null)
@@ -86,7 +86,7 @@ namespace Game
                 igrendients.AddRange(_multipleIgrendients);
                 lastIgrendients = _multipleIgrendients[_multipleIgrendients.Count - 1];
             }
-            if(_igrendients != enumIgrendients.NULL)
+            if(_igrendients != MachineIgrendient.NULL)
             {
                 igrendients.Add(_igrendients);
                 lastIgrendients = _igrendients;

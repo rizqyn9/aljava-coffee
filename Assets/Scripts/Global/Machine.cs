@@ -9,9 +9,9 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
     [Header("Propertie Machine")]
     public GameObject resultPrefab;
     public Transform resultSpawnPosition;
-    public MachineType machineType;
-    public MachineType nextTargetMachine;
-    public enumIgrendients resultIgrendients;
+    public MachineIgrendient machineType;
+    public MachineIgrendient nextTargetMachine;
+    public MachineIgrendient resultIgrendients;
     public bool spawnOnStart;
 
     [Header("Debug")]

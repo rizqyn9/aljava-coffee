@@ -24,7 +24,7 @@ public struct GameOptions
 public struct SpriteColorCustom
 {
     public string target;
-    public enumIgrendients targetIgrendients;
+    public MachineIgrendient targetIgrendients;
     public Color color;
 }
 
@@ -111,28 +111,42 @@ public enum MachineState : byte
     ON_DONE,        // PROCESSING DONE, BUT OUTPUT NOT EQUALS NULL
 }
 
-public enum MachineType : byte
+/// <summary>
+/// Machine Type will reference to igrendients
+/// </summary>
+public enum MachineIgrendient : byte
 {
-    COFEE_MAKER,
+    // Other
+    GLASS,
+    NULL,
+
+    // Coffee
     BEANS_ARABICA,
     BEANS_ROBUSTA,
-    FRESHMILK,
-    MILK_STEAMMED,
-    SQUASH_ORANGE,
-    SQUASH_PEACH,
-    SQUASH_FRUIT,
-    SQUASH_CHIA_SEED,
-    SODA,
-    MILK_MELON,
-    MILK_STRAWBERRY,
-    MILK_CHOCO,
+    COFEE_MAKER,
+
+    //Latte
     LATTE_CHOCO,
     LATTE_RED_VELVET,
     LATTE_MATCHA,
     LATTE_TARO,
-    WHIPPED_CREAM,
-    ICE,
-    GLASS
+
+    //Squash
+    SQUASH_ORANGE,
+    SQUASH_PEACH,
+    SQUASH_FRUIT,
+    SQUASH_CHIA_SEED,
+
+    //Milkshake
+    MILK_MELON,
+    MILK_STRAWBERRY,
+    MILK_CHOCO,
+
+    //Additional
+    FRESHMILK,
+    MILK_STEAMMED,
+    SODA,
+    ICE
 }
 
 
@@ -140,37 +154,37 @@ public enum MachineType : byte
 /// Depreceated
 /// List for igrendients menu
 /// </summary>
-public enum enumIgrendients : byte
-{
-    NULL,
-    COFEE_MAKER,
-    COFFEE_FILTERED,
-    BEANS_ARABICA,
-    BEANS_ROBUSTA,
-    FRESHMILK,
-    MILK_STEAMMED,
-    SQUASH_ORANGE,
-    SQUASH_PEACH,
-    SQUASH_FRUIT,
-    SQUASH_CHIA_SEED,
-    SODA,
-    MILK_MELON,
-    MILK_STRAWBERRY,
-    MILK_CHOCO,
-    LATTE_CHOCO,
-    LATTE_RED_VELVET,
-    LATTE_MATCHA,
-    LATTE_TARO,
-    WHIPPED_CREAM,
-    ICE,
-    GLASS
-}
+//public enum enumIgrendients : byte
+//{
+//    NULL,
+//    COFEE_MAKER,
+//    COFFEE_FILTERED,
+//    BEANS_ARABICA,
+//    BEANS_ROBUSTA,
+//    FRESHMILK,
+//    MILK_STEAMMED,
+//    SQUASH_ORANGE,
+//    SQUASH_PEACH,
+//    SQUASH_FRUIT,
+//    SQUASH_CHIA_SEED,
+//    SODA,
+//    MILK_MELON,
+//    MILK_STRAWBERRY,
+//    MILK_CHOCO,
+//    LATTE_CHOCO,
+//    LATTE_RED_VELVET,
+//    LATTE_MATCHA,
+//    LATTE_TARO,
+//    WHIPPED_CREAM,
+//    ICE,
+//    GLASS
+//}
 
 
 /// <summary>
 /// List menu registered
 /// </summary>
-public enum menuListName : byte
+public enum MenuListName : byte
 {
     NOT_VALID,
     ARABICA_COFFEE_LATTE,
@@ -198,7 +212,6 @@ public enum menuListName : byte
     HOT_ICE_KOPI_SUSU,
     ARABICA_FILTER,
     ROBUSTA_FILTER
-
 }
 
 public enum enumBuyerType

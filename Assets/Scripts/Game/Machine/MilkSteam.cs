@@ -28,7 +28,7 @@ namespace Game
         private void OnMouseDown()
         {
             if (MachineState == MachineState.ON_DONE
-                && GlassContainer.IsGlassTargetAvaible(enumIgrendients.COFEE_MAKER, out glassTarget)
+                && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.COFEE_MAKER, out glassTarget)
                 )
             {
                 spawnToGlass();
@@ -39,8 +39,8 @@ namespace Game
 
         private void spawnToGlass()
         {
-            bool isArabica = glassTarget.glass.igrendients.Contains(enumIgrendients.BEANS_ARABICA);
-            SpriteColorCustom _sprite = colorResult.Find(val => val.targetIgrendients == (isArabica ? enumIgrendients.BEANS_ARABICA : enumIgrendients.BEANS_ROBUSTA));
+            bool isArabica = glassTarget.glass.igrendients.Contains(MachineIgrendient.BEANS_ARABICA);
+            SpriteColorCustom _sprite = colorResult.Find(val => val.targetIgrendients == (isArabica ? MachineIgrendient.BEANS_ARABICA : MachineIgrendient.BEANS_ROBUSTA));
             glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, resultIgrendients);
             glassTarget.glass.process();
 

@@ -111,7 +111,7 @@ namespace Game
             _machine.MachineData = _machineData;
         }
 
-        public static bool FindAndCheckTarget<T>(MachineType machineType, out T _out) where T : class
+        public static bool FindAndCheckTarget<T>(MachineIgrendient machineType, out T _out) where T : class
         {
             _out = EnvController.Instance.Machines.Find(val =>
                     val.machineType == machineType

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MachineData", menuName = "ScriptableObject/MachineData")]
 public class MachineData : ScriptableObject
 {
-    public MachineType MachineType;
+    public MachineIgrendient MachineType;
     public MachineClass MachineClass;
     public GameObject PrefabManager;
     public GameObject PrefabResult;

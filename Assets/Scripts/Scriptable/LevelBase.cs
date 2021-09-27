@@ -8,7 +8,7 @@ public class LevelBase : ScriptableObject
     public GameMode gameMode;
     //[Tooltip("")]
     public List<MenuClassification> MenuClassifications;
-    public List<menuListName> MenuTypeUnlock;
+    public List<MenuListName> MenuTypeUnlock;
     public List<enumBuyerType> BuyerTypeUnlock;
     public float delayPerCustomer = 10;
 
