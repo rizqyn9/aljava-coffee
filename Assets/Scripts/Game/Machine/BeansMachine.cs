@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class BeansMachine : Machine, IEnv
+    public class BeansMachine : Machine
     {
         [Header("Debug")]
         public CoffeeMaker coffeeMaker;
@@ -23,26 +23,17 @@ namespace Game
         public void OnMouseDown()
         {
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
-            if (MachineState == MachineState.ON_DONE) StartCoroutine(IDestroy());
+            if (MachineState == MachineState.ON_DONE) validate();
 
         }
 
-        //private void validate()
-        //{
-        //    coffeeMaker = null;
-        //    switch (MachineState)
-        //    {
-        //        case MachineState.ON_IDDLE:
-        //            StartCoroutine(ISpawn());
-        //            break;
-        //        case MachineState.ON_DONE:
-        //            if (isCoffeeMakerIddle() && coffeeMaker)
-        //            {
-        //                StartCoroutine(IDestroy());
-        //            }
-        //            break;
-        //    }
-        //}
+        private void validate()
+        {
+            if (EnvController.FindAndCheckTarget<CoffeeMaker>(nextTargetMachine, out coffeeMaker))
+            {
+                StartCoroutine(IDestroy());
+            }
+        }
 
         IEnumerator ISpawn()
         {
@@ -70,21 +61,6 @@ namespace Game
 
             Debug.Log("Send To Coffee Maker");
             MachineState = MachineState.ON_IDDLE;
-        }
-
-        //bool isCoffeeMakerIddle()
-        //{
-        //    bool res = MainController.Instance.isMachineAvaible(nextTargetMachine, out Machine _machine);
-        //    coffeeMaker = _machine as CoffeeMaker;
-
-        //    return res;
-        //}
-
-        public override void EnvInstance()
-        {
-            print("spawn");
-            gameObject.LeanMoveLocalY(-1f, 1f);
-            gameObject.LeanAlpha(1, 1f);
         }
     }
 }

@@ -85,11 +85,11 @@ namespace Game
             GameState = GameState.PLAY;
 
             yield return 1;
-
+            EnvController.Instance.instanceIEnv();
             GameUIController.Instance.StartUI();
             EnvController.Instance.StartMachine();
 
-            new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
 
             CustomerController.Instance.StartCustomer();
             yield break;

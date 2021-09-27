@@ -6,13 +6,17 @@ using System;
 
 namespace Game
 {
-    public class GameUIController : Singleton<GameUIController>, IGameState
+    public class GameUIController : Singleton<GameUIController>, IGameState, IEnv
     {
+        public GameObject topBar;
         public TMP_Text progressHandler;
         public TMP_Text timeUI;
         public float countDown = 120;
         public bool timerIsRunning = false;
         public bool timeOut = false;
+
+        [Header("Debug")]
+        [SerializeField] Vector2 basePos;
 
         private void Update()
         {
@@ -31,10 +35,26 @@ namespace Game
             }
         }
 
-        //private void Start()
-        //{
-        //    asOrderCount();
-        //}
+        [SerializeField] bool go;
+        IEnumerator ITimer()
+        {
+            while (go)
+            {
+                yield return new WaitForSeconds(1);
+                sec += 1;
+            }
+            yield break;
+        }
+
+        [SerializeField] int sec;
+        private void Start()
+        {
+            EnvController.RegistEnv(this);
+            //basePos = topBar.transform.position;
+            //topBar.transform.position = new Vector2(0 ,-2f);
+
+            StartCoroutine(ITimer());
+        }
 
         [SerializeField] int _counter = 0;
         [SerializeField] GameState _gameState;
@@ -62,6 +82,16 @@ namespace Game
 
         internal void StartUI()
         {
+        }
+
+        public void EnvInstance()
+        {
+            //topBar.transform.LeanMoveLocalY(0, 1f).setEaseInElastic();
+        }
+
+        public void Command()
+        {
+            throw new NotImplementedException();
         }
     }
 }

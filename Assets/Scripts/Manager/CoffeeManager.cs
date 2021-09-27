@@ -32,7 +32,7 @@ namespace Game
             foreach(MachineData _machine in MachineDatas)
             {
                 Machine resMachine;
-                EnvController.Instance.InstanceMachine(_machine, transform, out resMachine);
+                EnvController.InstanceMachine(_machine, transform, out resMachine);
                 coffeeManagers.Add(resMachine as ICoffeeManager);
                 machineInstance.Add(resMachine);
             }

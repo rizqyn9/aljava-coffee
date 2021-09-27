@@ -8,6 +8,7 @@ namespace Game
     public interface IEnv
     {
         void EnvInstance();
+        void Command();
         public GameState GameState { get; set; }
     }
 
@@ -43,16 +44,27 @@ namespace Game
             spawnMachine();
         }
 
-        [SerializeField] int IEnvRegistered;
-        public void RegistMachine(Machine _machine)
+        public void instanceIEnv()
+        {
+            print($"IENV {IEnvs.Count}");
+            foreach(IEnv _env in IEnvs)
+            {
+                _env.EnvInstance();
+            }
+        }
+
+        public static void RegistMachine(Machine _machine)
         {
             print("rgist");
-            Machines.Add(_machine);
-            if (_machine is IEnv)
-            {
-                IEnvs.Add(_machine);   // Register machine as ienv is avaible
-                IEnvRegistered = IEnvs.Count;
-            }
+            Instance.Machines.Add(_machine);
+            if (_machine is IEnv) RegistEnv(_machine);
+        }
+
+        [SerializeField] int IEnvRegistered;
+        public static void RegistEnv(IEnv _env)
+        {
+            Instance.IEnvs.Add(_env);
+            Instance.IEnvRegistered = Instance.IEnvs.Count;
         }
 
         /// <summary>
@@ -89,14 +101,23 @@ namespace Game
             print($"Start Machine {Machines.Count}");
             foreach(Machine _machine in Machines)
             {
-                _machine.InitStart();
+                _machine.StartMachine();
             }
         }
 
-        public void InstanceMachine(MachineData _machineData, Transform _transform, out Machine _machine)
+        public static void InstanceMachine(MachineData _machineData, Transform _transform, out Machine _machine)
         {
             _machine = Instantiate(_machineData.PrefabManager, _transform).GetComponent<Machine>();
             _machine.MachineData = _machineData;
+        }
+
+        public static bool FindAndCheckTarget<T>(MachineType machineType, out T _out) where T : class
+        {
+            _out = EnvController.Instance.Machines.Find(val =>
+                    val.machineType == machineType
+                    && val.MachineState == MachineState.ON_IDDLE
+                ) as T;
+            return _out != null ? true : false;
         }
 
         Transform getTransform(MachineClass _machineClass) =>

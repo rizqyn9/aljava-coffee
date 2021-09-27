@@ -1,5 +1,7 @@
 using UnityEngine;
 using Game;
+using System;
+using System.Collections;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour, IEnv, IGameState
@@ -14,7 +16,7 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
 
     [Header("Debug")]
     public MachineData MachineData;
-
+    [SerializeField] Vector2 basePos;
     [SerializeField] MachineState _machineState;
     [SerializeField] GameState _gameState;
     [SerializeField] protected GameObject resultGO;
@@ -49,23 +51,40 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
 
     private void Start()
     {
+        gameObject.LeanAlpha(0, 0);
+        basePos = transform.position;
+        transform.transform.position = new Vector2(basePos.x, basePos.y + 1.5f);
+
         // regist to env manager
         MainController.Instance.RegistGameState(this);
 
         MachineState = MachineState.OFF;
 
-        EnvController.Instance.RegistMachine(this);
+        EnvController.RegistMachine(this);
     }
 
     public void StartMachine()
     {
+        print("Start machine");
         MachineState = MachineState.ON_IDDLE;
+        StartCoroutine(ISpawn());
         InitStart();
+    }
+
+    IEnumerator ISpawn()
+    {
+        yield return 1;
+        print("asda");
+        gameObject.LeanMoveLocalY(basePos.y, 1f);
+        gameObject.LeanAlpha(1, 2f);
     }
 
     public abstract void InitStart();
 
-    public virtual void EnvInstance() { }
+    public void EnvInstance()
+    {
+        print("Sapwn");
+    }
 
     public virtual void OnGameStateChanged(GameState _old, GameState _new) { }
 
@@ -74,5 +93,10 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
     public void OnGameStateChanged()
     {
         boxCollider2D.enabled = GameState != GameState.IDDLE;
+    }
+
+    public void Command()
+    {
+        throw new System.NotImplementedException();
     }
 }

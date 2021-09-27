@@ -75,5 +75,10 @@ namespace Game
             if (glassTarget.glassCode == null) return false;
             return true;
         }
+
+        public void Req()
+        {
+            print("hi im on requested");
+        }
     }
 }
