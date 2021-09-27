@@ -28,7 +28,7 @@ namespace Game
         private void OnMouseDown()
         {
             if (MachineState == MachineState.ON_DONE
-                && isGlassTargetAvaible()
+                && GlassContainer.IsGlassTargetAvaible(enumIgrendients.COFEE_MAKER, out glassTarget)
                 )
             {
                 spawnToGlass();
@@ -45,12 +45,12 @@ namespace Game
             glassTarget.glass.process();
 
             StartCoroutine(IDestroy());
-
         }
 
         IEnumerator ISpawn()
         {
             MachineState = MachineState.ON_PROCESS;
+
             resultGO = Instantiate(resultPrefab, resultSpawnPosition);
             resultGO.transform.localScale = Vector2.zero;
             resultGO.LeanScale(new Vector2(1, 1), delay);
@@ -63,20 +63,14 @@ namespace Game
 
         IEnumerator IDestroy()
         {
+            MachineState = MachineState.ON_PROCESS;
+
             Debug.Log("Destroy");
             Destroy(resultGO);
             spawnResult();
+
+            MachineState = MachineState.ON_IDDLE;
             yield break;
-        }
-
-        bool isGlassTargetAvaible()
-        {
-            glassTarget.glassCode = null;
-
-            glassTarget = GlassContainer.Instance.findGlassLastState(enumIgrendients.COFEE_MAKER);
-
-            if (glassTarget.glassCode == null) return false;
-            return true;
         }
     }
 }

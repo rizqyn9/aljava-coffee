@@ -75,8 +75,8 @@ namespace Game
             print("InitMachineManager");
             foreach(MenuClassificationData _menuClassification in LevelController.Instance.MenuClassificationDatas)
             {
-                GameObject go = Instantiate(_menuClassification.prefabManager, getTransform(_menuClassification.MachineClass));
-                IMenuClassManagers.Add(go.GetComponent<IMenuClassManager>());
+                //GameObject go = Instantiate(_menuClassification.prefabManager, getTransform(_menuClassification.MachineClass.));
+                //IMenuClassManagers.Add(go.GetComponent<IMenuClassManager>());
             }
             print($"Count : {IMenuClassManagers.Count}");
         }

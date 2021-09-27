@@ -74,7 +74,6 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
     IEnumerator ISpawn()
     {
         yield return 1;
-        print("asda");
         gameObject.LeanMoveLocalY(basePos.y, 1f);
         gameObject.LeanAlpha(1, 2f);
     }

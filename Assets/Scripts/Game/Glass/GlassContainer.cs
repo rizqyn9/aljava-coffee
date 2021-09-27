@@ -68,9 +68,9 @@ namespace Game
         /// Find Glass State not equals Glass.OnProcess
         /// </summary>
         /// <returns></returns>
-        public GlassRegistered findGlassLastState(enumIgrendients _lastIgrendient)
+        public static GlassRegistered FindGlassLastState(enumIgrendients _lastIgrendient)
         {
-            return glassRegistereds.Find(res => res.glass.lastIgrendients == _lastIgrendient && res.glass.glassState != GlassState.PROCESS);
+            return Instance.glassRegistereds.Find(res => res.glass.lastIgrendients == _lastIgrendient && res.glass.glassState != GlassState.PROCESS);
         }
 
         /// <summary>
@@ -81,6 +81,12 @@ namespace Game
         public GlassRegistered findGlassWithState(List<enumIgrendients> _enumIgrendients)
         {
             return glassRegistereds.Find(res => _enumIgrendients.Contains(res.glass.lastIgrendients));
+        }
+
+        public static bool IsGlassTargetAvaible(enumIgrendients _igrend,out GlassRegistered _glassRegistered)
+        {
+            _glassRegistered = FindGlassLastState(_igrend);
+            return _glassRegistered.glassCode != null;
         }
 
         #endregion

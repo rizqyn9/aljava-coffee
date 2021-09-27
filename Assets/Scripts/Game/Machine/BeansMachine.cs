@@ -41,9 +41,9 @@ namespace Game
             MachineState = MachineState.ON_PROCESS;
 
             resultGO = Instantiate(MachineData.PrefabResult, resultSpawnPosition);
-            resultGO.transform.LeanScale(new Vector2(1f, 1f), .2f);
+            resultGO.transform.LeanScale(new Vector2(1f, 1f), .8f);
 
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.8f);
 
             MachineState = MachineState.ON_DONE;
             yield break;
@@ -57,7 +57,7 @@ namespace Game
             yield return new WaitForSeconds(.2f);
             Destroy(resultGO);
 
-            coffeeMaker.reqInput(resultIgrendients);
+            coffeeMaker.ReqInput(resultIgrendients);
 
             Debug.Log("Send To Coffee Maker");
             MachineState = MachineState.ON_IDDLE;

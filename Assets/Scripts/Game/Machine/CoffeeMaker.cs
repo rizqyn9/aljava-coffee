@@ -20,7 +20,7 @@ namespace Game
             igrendientsList = new List<enumIgrendients>();
         }
 
-        public void reqInput(enumIgrendients _enumIgrendients)
+        public void ReqInput(enumIgrendients _enumIgrendients)
         {
             StartCoroutine(ISpawn());
             igrendientsList.Add(_enumIgrendients);
@@ -41,9 +41,8 @@ namespace Game
 
         private void OnMouseDown()
         {
-            if (resultSpawnPosition.childCount > 0
-                && isGlassAvaible()
-                && MachineState != MachineState.ON_PROCESS
+            if (MachineState == MachineState.ON_DONE
+                && GlassContainer.IsGlassTargetAvaible(enumIgrendients.NULL, out glassTarget)
                 )
             {
                 StartCoroutine(IDestroy());
@@ -64,21 +63,6 @@ namespace Game
 
             InitStart();
             yield break;
-        }
-
-        bool isGlassAvaible()
-        {
-            glassTarget.glassCode = null;
-
-            glassTarget = GlassContainer.Instance.findGlassLastState(enumIgrendients.NULL);
-
-            if (glassTarget.glassCode == null) return false;
-            return true;
-        }
-
-        public void Req()
-        {
-            print("hi im on requested");
         }
     }
 }
