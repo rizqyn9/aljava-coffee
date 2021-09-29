@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   gameMode: 2
-  MenuClassifications: 00000000
+  MenuClassifications: 0000000004000000
   MenuTypeUnlock: 02
   BuyerTypeUnlock: 0300000001000000
   delayPerCustomer: 1

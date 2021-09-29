@@ -22,6 +22,7 @@ namespace Game
 
         public void InstanceMachine(List<MachineData> _machineDatas)
         {
+            print("Coffee Manager");
             MachineDatas = _machineDatas;
             renderMachines();
         }

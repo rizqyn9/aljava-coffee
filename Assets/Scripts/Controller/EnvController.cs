@@ -87,8 +87,10 @@ namespace Game
         private void spawnMachine()
         {
             print("Spawn Machine");
+            print($"Manager Count {IMenuClassManagers.Count}");
             foreach(IMenuClassManager _menuClassManager in IMenuClassManagers)
             {
+                //_menuClassManager
                 _menuClassManager.InstanceMachine(LevelController.Instance.MachineDatas.FindAll(val=> val.MachineClass == _menuClassManager.GetMachineClass()));
             }
         }
@@ -113,7 +115,7 @@ namespace Game
 
         public static bool FindAndCheckTarget<T>(MachineIgrendient machineType, out T _out) where T : class
         {
-            _out = EnvController.Instance.Machines.Find(val =>
+            _out = Instance.Machines.Find(val =>
                     val.machineType == machineType
                     && val.MachineState == MachineState.ON_IDDLE
                 ) as T;

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: COFFEE
   m_EditorClassIdentifier: 
   MenuClassification: 0
-  MachineClass: 0000000002000000
+  MachineClass: 00000000
   ListMachine: 040203
   prefabManager: {fileID: 3727296534486748130, guid: 1127c99cd7e8a4a7b9aad701009e3040, type: 3}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c27a4871cd45a687e186f86879fcd, type: 3}
   m_Name: Additional_MilkSteam
   m_EditorClassIdentifier: 
-  MachineType: 4
+  MachineType: 17
   MachineClass: 2
   PrefabManager: {fileID: 4087089822136809635, guid: 594eeb4f2fb6045fbba9c1f6bb250c1d, type: 3}
+  PrefabResult: {fileID: 0}
