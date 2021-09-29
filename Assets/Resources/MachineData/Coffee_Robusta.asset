@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Coffee_Robusta
   m_EditorClassIdentifier: 
   MachineType: 2
+  TargetMachine: 4
   MachineClass: 0
   PrefabManager: {fileID: 1468853309064358762, guid: 09b90e592b15f4fe58f9fba768f140e8, type: 3}
   PrefabResult: {fileID: 8240910900947637322, guid: 459c0cb9598d741959b3b8bb6acbe100, type: 3}

@@ -29,7 +29,7 @@ namespace Game
 
         private void validate()
         {
-            if (EnvController.FindAndCheckTarget<CoffeeMaker>(nextTargetMachine, out coffeeMaker))
+            if (EnvController.FindAndCheckTarget(MachineData.MachineType, out coffeeMaker))
             {
                 StartCoroutine(IDestroy());
             }
@@ -57,7 +57,7 @@ namespace Game
             yield return new WaitForSeconds(.2f);
             Destroy(resultGO);
 
-            coffeeMaker.ReqInput(resultIgrendients);
+            coffeeMaker.ReqInput(MachineData.MachineType);
 
             Debug.Log("Send To Coffee Maker");
             MachineState = MachineState.ON_IDDLE;

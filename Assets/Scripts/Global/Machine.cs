@@ -10,9 +10,6 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
     public GameObject resultPrefab;
     public Transform resultSpawnPosition;
     public MachineIgrendient machineType;
-    public MachineIgrendient nextTargetMachine;
-    public MachineIgrendient resultIgrendients;
-    public bool spawnOnStart;
 
     [Header("Debug")]
     public MachineData MachineData;
@@ -51,6 +48,8 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
 
     private void Start()
     {
+        //MachineData = LevelController.Instance.MachineDatas.Find(val => val.MachineType == machineType);
+
         gameObject.LeanAlpha(0, 0);
         basePos = transform.position;
         transform.transform.position = new Vector2(basePos.x, basePos.y + 1.5f);

@@ -20,11 +20,6 @@ namespace Game
             spawnResult();
         }
 
-        private void spawnResult()
-        {
-            StartCoroutine(ISpawn());
-        }
-
         private void OnMouseDown()
         {
             if (MachineState == MachineState.ON_DONE
@@ -37,15 +32,21 @@ namespace Game
                 Debug.Log("gak nemu");
         }
 
+        //FIXME
+        /// <summary>
+        /// Need fixed for dynamically value
+        /// </summary>
         private void spawnToGlass()
         {
             bool isArabica = glassTarget.glass.igrendients.Contains(MachineIgrendient.BEANS_ARABICA);
             SpriteColorCustom _sprite = colorResult.Find(val => val.targetIgrendients == (isArabica ? MachineIgrendient.BEANS_ARABICA : MachineIgrendient.BEANS_ROBUSTA));
-            glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, resultIgrendients);
+            glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, MachineData.MachineType);
             glassTarget.glass.process();
 
             StartCoroutine(IDestroy());
         }
+
+        private void spawnResult() => StartCoroutine(ISpawn());
 
         IEnumerator ISpawn()
         {
