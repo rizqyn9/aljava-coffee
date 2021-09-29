@@ -48,7 +48,7 @@ namespace Game
 
         private void OnMouseDown()
         {
-            if (isValidMenu && MainController.Instance.isExistQueue(getMenuState, out targetBuyer))
+            if (isValidMenu && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer))
             {
                 Debug.Log("Find customer menu");
                 targetBuyer.customerHandler.onServeMenu(getMenuState);

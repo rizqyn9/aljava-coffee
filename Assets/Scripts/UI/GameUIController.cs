@@ -29,7 +29,7 @@ namespace Game
                 }
                 else
                 {
-                    MainController.Instance.isGameTimeOut = true;
+                    
 
                 }
             }

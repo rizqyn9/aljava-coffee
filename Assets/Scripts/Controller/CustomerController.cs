@@ -113,16 +113,6 @@ namespace Game
             }
             return seatIndex.Count > 0 ? true : false;
         }
-
-        //List<menuListName> generateMenu(int _total)
-        //{
-        //    List<menuListName> res = new List<menuListName>();
-        //    for (int i = 0; i < _total; i++)
-        //    {
-        //        res.Add(MenuTypes[Random.Range(0, ResourceCount.MenuCount)].menuListName);
-        //    }
-        //    return res;
-        //}
         
         List<MenuType> getMenuTypes(int _total)
         {

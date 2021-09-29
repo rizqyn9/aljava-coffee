@@ -50,9 +50,11 @@ namespace Game
             _renderer.sprite = _menuName.menuSprite;
             _renderer.enabled = true;
 
-            buyerOrderItemHandler itemHandler = new buyerOrderItemHandler();
-            itemHandler.itemGO = _renderer.gameObject;
-            itemHandler.menu = _menuName;
+            buyerOrderItemHandler itemHandler = new buyerOrderItemHandler()
+            {
+                itemGO = _renderer.gameObject,
+                menu = _menuName
+            };
 
             orderItemHandlers.Add(itemHandler);
         }
@@ -64,16 +66,16 @@ namespace Game
 
         public void onMenusDone()
         {
-            MainController.Instance.seatDataTransform[buyerPrototype.seatIndex].isSeatAvaible = true;
+            CustomerController.Instance.TransformSeatDatas[buyerPrototype.seatIndex].isSeatAvaible = true;
             GameUIController.Instance.asOrderCount();
             Destroy(gameObject);
         }
 
         IEnumerator startCustomer(int _duration)
         {
-            gameObject.transform.LeanMove(MainController.Instance.seatDataTransform[buyerPrototype.seatIndex].transform.position, _duration).setEaseInBounce();
+            gameObject.transform.LeanMove(CustomerController.Instance.TransformSeatDatas[buyerPrototype.seatIndex].transform.position, _duration).setEaseInBounce();
             yield return new WaitForSeconds(_duration);
-            MainController.Instance.deliveryQueueMenu.Add(buyerPrototype);
+            OrderController.Instance.deliveryQueueMenu.Add(buyerPrototype);
             yield return new WaitForSeconds(_duration/2);
             bubbles.SetActive(true);
 

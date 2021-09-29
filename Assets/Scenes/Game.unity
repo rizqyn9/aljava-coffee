@@ -774,7 +774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844339267}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2113947054}
@@ -1464,29 +1464,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDDOL: 0
-  seatDataTransform:
-  - isSeatAvaible: 1
-    transform: {fileID: 564281323}
-  - isSeatAvaible: 1
-    transform: {fileID: 1762109200}
-  - isSeatAvaible: 1
-    transform: {fileID: 1046453726}
-  startSpawnTransform:
-  - {fileID: 403457505}
-  - {fileID: 1684176195}
   delay: 2
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   targetCustomer: 5
   _gameState: 0
   _levelBase: {fileID: 0}
-  deliveryQueueMenu: []
-  maxSlotOrder: 0
-  isDeliveryFull: 0
-  isGameStarted: 0
-  isGameFinished: 0
-  isGameTimeOut: 0
-  canCreateCustomer: 0
-  customerCounter: 1
   isGameEnd: 0
   countIGameState: 0
 --- !u!4 &1532892880
@@ -1654,8 +1636,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1617386666}
+  - component: {fileID: 1617386667}
   m_Layer: 0
-  m_Name: --WinLoseController
+  m_Name: --RulesController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1669,12 +1652,24 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617386665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 731.8144, y: 678.3257, z: -48.21403}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1617386667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617386665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b33a40b9c4eb64eedb001e0479462836, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1648981621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,7 +2332,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061301117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2113947054}
@@ -2444,7 +2439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113947053}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4187478, y: -2.914447, z: -1.9225823}
+  m_LocalPosition: {x: 0, y: -1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 844339268}
@@ -2504,6 +2499,7 @@ MonoBehaviour:
   isDDOL: 0
   deliveryQueueMenu: []
   CustomerController: {fileID: 0}
+  _gameState: 0
 --- !u!222 &5488736148779487645
 CanvasRenderer:
   m_ObjectHideFlags: 0
