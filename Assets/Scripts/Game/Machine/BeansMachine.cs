@@ -29,7 +29,7 @@ namespace Game
 
         private void validate()
         {
-            if (EnvController.FindAndCheckTarget(MachineData.MachineType, out coffeeMaker))
+            if (EnvController.FindAndCheckTarget(MachineData.TargetMachine, out coffeeMaker))
             {
                 StartCoroutine(IDestroy());
             }

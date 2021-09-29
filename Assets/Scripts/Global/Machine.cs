@@ -46,6 +46,12 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
         boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
+    public void SetMachineData(MachineData _machineData)
+    {
+        MachineData = _machineData;
+        machineType = _machineData.MachineType;
+    }
+
     private void Start()
     {
         //MachineData = LevelController.Instance.MachineDatas.Find(val => val.MachineType == machineType);

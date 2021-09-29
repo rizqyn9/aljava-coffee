@@ -83,6 +83,9 @@ namespace Game
             return glassRegistereds.Find(res => _MachineIgrendient.Contains(res.glass.lastIgrendients));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool IsGlassTargetAvaible(MachineIgrendient _igrend,out GlassRegistered _glassRegistered)
         {
             _glassRegistered = FindGlassLastState(_igrend);
