@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -11,6 +11,7 @@ namespace Game
         public GameObject bubbles;
         public SpriteRenderer[] menuSpawnRenderer;
         public SpriteRenderer singleMenuSpawnRenderer;
+        public Slider slider;
 
         [Header("Debug")]
         [SerializeField] BuyerPrototype buyerPrototype;
