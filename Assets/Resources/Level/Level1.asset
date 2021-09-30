@@ -16,7 +16,7 @@ MonoBehaviour:
   gameMode: 2
   MenuClassifications: 0000000004000000
   MenuTypeUnlock: 02
-  BuyerTypeUnlock: 0300000001000000
+  BuyerTypeUnlock: 0000000001000000
   delayPerCustomer: 1
   gameDuration: 120
   minPoint: 10

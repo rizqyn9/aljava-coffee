@@ -11,7 +11,7 @@ namespace Game
         public GameObject bubbles;
         public SpriteRenderer[] menuSpawnRenderer;
         public SpriteRenderer singleMenuSpawnRenderer;
-        public Slider slider;
+        public PatienceBar PatienceBar;
 
         [Header("Debug")]
         [SerializeField] BuyerPrototype buyerPrototype;
@@ -80,9 +80,14 @@ namespace Game
             yield return new WaitForSeconds(_duration/2);
             bubbles.SetActive(true);
 
+            PatienceBar.gameObject.SetActive(true);
+
             Vector2 defScale = bubbles.transform.localScale;
             bubbles.transform.localScale = Vector2.zero;
             bubbles.LeanScale(defScale, .5f).setEaseInBounce();
+
+            yield return new WaitForSeconds(2);
+            PatienceBar.StartBar(5f);
             yield break;
 
             // Animate when Customer already spawned
