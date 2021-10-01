@@ -13,7 +13,7 @@ public class LevelBase : ScriptableObject
     public float delayPerCustomer = 10;
 
     [Header("Game Mode")]
-    public float gameDuration;
+    public int gameDuration;
     public int minPoint;
     public int minOrder;
     public int minBuyer;

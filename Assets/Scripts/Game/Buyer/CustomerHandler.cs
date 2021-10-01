@@ -86,7 +86,6 @@ namespace Game
         public void onMenusDone()
         {
             CustomerController.Instance.OnCustomerDone(buyerPrototype);
-            GameUIController.Instance.asOrderCount();
 
             RulesController.OnCustomerServed(buyerPrototype);
 

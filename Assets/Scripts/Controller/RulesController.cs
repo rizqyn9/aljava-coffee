@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,6 +48,12 @@ namespace Game
         public static void OnCustomerServed(BuyerPrototype _buyerPrototype)
         {
             Instance.buyerCounter += 1;
+            Instance.updateUI();
+        }
+
+        private void updateUI()
+        {
+            GameUIController.Instance.Counter = buyerCounter;
         }
 
         [SerializeField] int menuCounter = 0;

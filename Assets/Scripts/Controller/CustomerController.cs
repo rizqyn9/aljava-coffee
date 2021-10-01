@@ -41,6 +41,9 @@ namespace Game
             MainController.Instance.RegistGameState(this);
             OrderController = OrderController.Instance;
 
+            // TODO
+            maxSpawn = LevelController.Instance.LevelBase.minBuyer;
+
             print("Buyer Init");
             getDepends();
         }
@@ -55,7 +58,7 @@ namespace Game
         {
             if (GameState != GameState.PLAY) return;
 
-            if(SpawnerState == SpawnerState.CAN_CREATE)
+            if(SpawnerState == SpawnerState.CAN_CREATE && customerCounter <= maxSpawn)
             {
                 SpawnerState = SpawnerState.VALIDATE;
                 if (isAvaibleSeat())
