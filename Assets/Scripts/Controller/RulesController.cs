@@ -25,7 +25,7 @@ namespace Game
         {
             MainController.Instance.RegistGameState(this);
 
-            LevelBase = LevelController.Instance.LevelBase;
+            LevelBase = LevelController.LevelBase;
         }
 
         public void HandleGameTimeOut()

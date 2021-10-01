@@ -96,7 +96,7 @@ namespace Game
 
         private void setComponentUI()
         {
-            LevelBase = LevelController.Instance.LevelBase;
+            LevelBase = LevelController.LevelBase;
             CountDown = LevelBase.gameDuration;
 
             Counter = 0;

@@ -56,7 +56,7 @@ namespace Game
             GameState = GameState.IDDLE;
             print("<color=green>Init in Main Controller</color>");
 
-            LevelController.Instance.LevelBase = LevelBase;
+            LevelController.LevelBase = LevelBase;
 
             initAlController();
 

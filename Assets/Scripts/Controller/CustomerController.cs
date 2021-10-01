@@ -42,7 +42,7 @@ namespace Game
             OrderController = OrderController.Instance;
 
             // TODO
-            maxSpawn = LevelController.Instance.LevelBase.minBuyer;
+            maxSpawn = LevelController.LevelBase.minBuyer;
 
             print("Buyer Init");
             getDepends();
@@ -104,7 +104,7 @@ namespace Game
         {
             BuyerTypes = LevelController.Instance.BuyerTypes;
             MenuTypes = LevelController.Instance.MenuTypes;
-            LevelBase = LevelController.Instance.LevelBase;
+            LevelBase = LevelController.LevelBase;
             ResourceCount = LevelController.Instance.ResourceCount;
             delayCustomer = LevelBase.delayPerCustomer;
         }

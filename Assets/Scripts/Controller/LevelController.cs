@@ -43,9 +43,9 @@ public class LevelController : Singleton<LevelController>, IGameState
     }
     public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
 
-    public LevelBase LevelBase {
-        get => _levelBase;
-        set { _levelBase = value; setData(); }
+    public static LevelBase LevelBase {
+        get => Instance._levelBase;
+        set { Instance._levelBase = value; Instance.setData(); }
     }
 
     private void setData()
