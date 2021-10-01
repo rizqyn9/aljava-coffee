@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game;
 
 public class Dev : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public LevelBase levelBase;
+    public bool isDevMode = true;
 
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        
+        if (!isDevMode) return;
+        MainController.Instance.LevelBase = levelBase;
+        MainController.Instance.Init();
     }
 }

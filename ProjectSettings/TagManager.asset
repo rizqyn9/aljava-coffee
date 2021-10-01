@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Igrendients
-  - 
+  - Buyer
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 153253199
+    locked: 0
+  - name: Buyer
+    uniqueID: 3502751275
     locked: 0

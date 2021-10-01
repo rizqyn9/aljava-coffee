@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,49 +7,62 @@ namespace Game
 {
     public class CoffeeMaker : Machine
     {
-
         [Header("Properties")]
-        public GameObject prefabArabica;
-        public GameObject prefabRobusta;
         public Color colorIgrendientsOutput;
-        public enumIgrendients resultIgrendients = enumIgrendients.COFEE_MAKER;
 
         [Header("Debug")]
         [SerializeField] GlassRegistered glassTarget;
-        [SerializeField] List<enumIgrendients> igrendientsList;
+        [SerializeField] List<MachineIgrendient> igrendientsList;
 
-        public override void RegistToManager()
+        public override void InitStart()
         {
-            CoffeeManager.Instance.coffeeMakers.Add(this);
+            MachineState = MachineState.ON_IDDLE;
+            igrendientsList = new List<MachineIgrendient>();
         }
 
-        public void spawnRes(enumIgrendients _enumIgrendients)
+        public void ReqInput(MachineIgrendient _MachineIgrendient)
         {
-            igrendientsList.Add(_enumIgrendients);
-            enumMachineState = enumMachineState.ON_PROCESS;
+            StartCoroutine(ISpawn());
+            igrendientsList.Add(_MachineIgrendient);
+            igrendientsList.Add(MachineData.MachineType);
+        }
+
+        IEnumerator ISpawn()
+        {
+            MachineState = MachineState.ON_PROCESS;
+
             resultGO = Instantiate(resultPrefab, resultSpawnPosition);
-            enumMachineState = enumMachineState.ON_DONE;
+            resultGO.LeanScale(new Vector2(1f, 1f), .8f);
+            yield return new WaitForSeconds(.8f);
+
+            MachineState = MachineState.ON_DONE;
+            yield break;
         }
 
         private void OnMouseDown()
         {
-            if(resultSpawnPosition.childCount != 0)
+            if (MachineState == MachineState.ON_DONE
+                && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.NULL, out glassTarget)
+                )
             {
-                glassTarget = GlassContainer.Instance.findEmptyGlass();
-                //glassTarget.glass.addMultipleIgrendients(enumIgrendients == enumIgrendients.BEANS_ARABICA ? prefabArabica : prefabRobusta, new List<enumIgrendients> { enumIgrendients, resultIgrendients} ,enumIgrendients);
-                //use new method
-                igrendientsList.Add(resultIgrendients);
-                glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, igrendientsList);
-                Destroy(resultGO);
-                resetState();
+                StartCoroutine(IDestroy());
             }
         }
 
-        private void resetState()
+        IEnumerator IDestroy()
         {
-            enumMachineState = enumMachineState.ON_IDDLE;
-            igrendientsList = new List<enumIgrendients>();
-            
+            MachineState = MachineState.ON_PROCESS;
+
+            glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, _multipleIgrendients: igrendientsList);
+            glassTarget.glass.process();
+
+            resultGO.LeanScale(new Vector2(0, 0), .2f);
+            yield return new WaitForSeconds(.2f);
+
+            Destroy(resultGO);
+
+            InitStart();
+            yield break;
         }
     }
 }

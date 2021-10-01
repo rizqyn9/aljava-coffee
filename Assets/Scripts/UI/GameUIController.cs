@@ -2,46 +2,129 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 namespace Game
 {
-    public class GameUIController : Singleton<GameUIController>
+    public class GameUIController : Singleton<GameUIController>, IGameState, IEnv
     {
+        [Header("Properties")]
+        [SerializeField] GameObject PauseGO;
+        [SerializeField] GameObject TopBar;
+        [SerializeField] float offsetTopBar = 40;
         public TMP_Text progressHandler;
         public TMP_Text timeUI;
-        public float countDown = 120;
         public bool timerIsRunning = false;
-        public bool timeOut = false;
 
-        private void Update()
+        [Header("Debug")]
+        [SerializeField] Vector2 basePos;
+        [SerializeField] LevelBase LevelBase;
+
+
+        #region GAME STATE
+        [SerializeField] GameState _gameState;
+        public GameState GameState
         {
-            if (timerIsRunning)
-            {
-                if (countDown > 0)
-                {
-                    countDown -= Time.deltaTime;
-                    timeUI.text = Mathf.Ceil(countDown).ToString();
-                }
-                else
-                {
-                    MainController.Instance.isGameTimeOut = true;
+            get => _gameState;
+            set {
+                _gameState = value;
+            }
+        }
+        public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
+        #endregion
 
-                }
+        #region COUNTDOWN CONTROLLER
+        [SerializeField] int _countDown = 0;
+        int CountDown
+        {
+            get => _countDown;
+            set
+            {
+                _countDown = value;
+                timeUI.text = _countDown.ToString();
             }
         }
 
-        private void Start()
+        #endregion
+        
+        IEnumerator ITimer()
         {
-            asOrderCount();
+            while (CountDown > 0)
+            {
+                timerIsRunning = true;
+                yield return new WaitForSeconds(1);
+                CountDown -= 1;
+            }
+            timerIsRunning = false;
+            if (CountDown <= 0) RulesController.Instance.HandleGameTimeOut();
+            yield break;
         }
 
-        [SerializeField] int _counter = 0;
-        public void asOrderCount()
+        void StartGame()
         {
-            Debug.Log("asd");
-            progressHandler.text = $"{_counter} / {MainController.Instance.targetCustomer} Orders";
-            _counter = _counter += 1;
+            print("Start Timer");
+            StartCoroutine(ITimer());
+
         }
 
+        #region Top Bar Controller
+        [SerializeField] int targetCounter;
+        [SerializeField] int _counter;
+        public int Counter {
+            get => _counter;
+            set
+            {
+                if (_counter == value) return;
+                _counter = value;
+                updateUI();
+            }
+        }
+
+        private void updateUI()
+        {
+            progressHandler.text = getText();
+        }
+
+        #endregion
+
+        internal void Init()
+        {
+            MainController.Instance.RegistGameState(this);
+            EnvController.RegistEnv(this);
+            setComponentUI();
+        }
+
+        private void setComponentUI()
+        {
+            LevelBase = LevelController.LevelBase;
+            CountDown = LevelBase.gameDuration;
+
+            Counter = 0;
+            targetCounter = LevelBase.minBuyer;
+            updateUI();
+
+            TopBar.transform.LeanMoveLocalY(0, 1).setEaseInOutBounce();
+            PauseGO.transform.LeanMoveLocalX(360, 1).setEaseInOutBounce();
+        }
+
+        internal void StartUI()
+        {
+            StartGame();
+        }
+
+        public void EnvInstance()
+        {
+            //topBar.transform.LeanMoveLocalY(0, 1f).setEaseInElastic();
+        }
+
+        public void Command()
+        {
+            throw new NotImplementedException();
+        }
+
+        string getText()
+        {
+            return $"{Counter} / {targetCounter} buyer";
+        }
     }
 }

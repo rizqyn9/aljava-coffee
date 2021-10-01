@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,30 +7,60 @@ namespace Game
 {
     public class BeansMachine : Machine
     {
-        //[Header("Properties")]
+        [Header("Debug")]
+        public CoffeeMaker coffeeMaker;
 
-        public override void RegistToManager()
+        public override void InitStart()
         {
-            CoffeeManager.Instance.beansMachines.Add(this);
+            MachineState = MachineState.ON_IDDLE;
+        }
+
+        public override void OnMachineStateChanged(MachineState _old, MachineState _new)
+        {
+            print("Machine State Changed");
         }
 
         public void OnMouseDown()
         {
-            if(resultSpawnPosition.childCount == 0)
+            if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
+            if (MachineState == MachineState.ON_DONE) validate();
+
+        }
+
+        private void validate()
+        {
+            if (EnvController.FindAndCheckTarget(MachineData.TargetMachine, out coffeeMaker))
             {
-                spawnResult();
-            }
-            else if (resultGO && CoffeeManager.Instance.isAcceptabble(machineType == enumMachineType.BEANS_ARABICA ? enumIgrendients.BEANS_ARABICA : enumIgrendients.BEANS_ROBUSTA))
-            {
-                resultGO.transform.LeanScale(new Vector2(.5f, .5f), .2f);
-                Destroy(resultGO);
+                StartCoroutine(IDestroy());
             }
         }
 
-        private void spawnResult()
+        IEnumerator ISpawn()
         {
-            resultGO = Instantiate(machineType == enumMachineType.BEANS_ARABICA ? CoffeeManager.Instance.arabicaBeansPrefab : CoffeeManager.Instance.robustaBeansPrefab, resultSpawnPosition);
-            resultGO.transform.LeanScale(new Vector2(1f, 1f), .2f);
+            print("Spawn beans");
+            MachineState = MachineState.ON_PROCESS;
+
+            resultGO = Instantiate(MachineData.PrefabResult, resultSpawnPosition);
+            resultGO.transform.LeanScale(new Vector2(1f, 1f), .8f);
+
+            yield return new WaitForSeconds(.8f);
+
+            MachineState = MachineState.ON_DONE;
+            yield break;
+        }
+
+        IEnumerator IDestroy()
+        {
+            MachineState = MachineState.ON_PROCESS;
+
+            resultGO.transform.LeanScale(new Vector2(0f, 0f), .2f);
+            yield return new WaitForSeconds(.2f);
+            Destroy(resultGO);
+
+            coffeeMaker.ReqInput(MachineData.MachineType);
+
+            Debug.Log("Send To Coffee Maker");
+            MachineState = MachineState.ON_IDDLE;
         }
     }
 }

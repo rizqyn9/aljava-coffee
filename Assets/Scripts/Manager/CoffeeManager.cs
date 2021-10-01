@@ -1,32 +1,49 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
 {
-    public class CoffeeManager : Singleton<CoffeeManager>
+    public interface ICoffeeManager
+    {
+        void Init();
+    }
+
+    public class CoffeeManager : Singleton<CoffeeManager>, IMenuClassManager
     {
         [Header("Properties")]
+        public MachineClass MachineClass = MachineClass.COFFEE;
         public GameObject arabicaBeansPrefab;
         public GameObject robustaBeansPrefab;
+        public List<MachineData> MachineDatas;
 
         [Header("Debug")]
-        public List<CoffeeMaker> coffeeMakers = new List<CoffeeMaker>();
-        public List<BeansMachine> beansMachines = new List<BeansMachine>();
-        public MilkSteam milkSteam;
+        public List<ICoffeeManager> coffeeManagers = new List<ICoffeeManager>();
+        public List<Machine> machineInstance = new List<Machine>();
 
-        public bool isAcceptabble(enumIgrendients _enumIgrendients)
+        public void InstanceMachine(List<MachineData> _machineDatas)
         {
-            return findCoffeeMaker(_enumIgrendients);
+            print("Coffee Manager");
+            MachineDatas = _machineDatas;
+            renderMachines();
         }
-        public enumIgrendients test;
-        public bool findCoffeeMaker(enumIgrendients _enumIgrendients)
+
+        private void renderMachines()
         {
-            CoffeeMaker coffeeMaker = coffeeMakers.Find(res => res.enumMachineState == enumMachineState.ON_IDDLE);
-            if (!coffeeMaker) return false;
-            test = _enumIgrendients;
-            coffeeMaker.spawnRes(_enumIgrendients);
-            return true;
+            print("Render Machine in Coffee Manager");
+            foreach(MachineData _machine in MachineDatas)
+            {
+                Machine resMachine;
+                EnvController.InstanceMachine(_machine, transform, out resMachine);
+                coffeeManagers.Add(resMachine as ICoffeeManager);
+                machineInstance.Add(resMachine);
+            }
+        }
+
+        public MachineClass GetMachineClass() => MachineClass;
+
+        private void Start()
+        {
+            name = "--CoffeeManager";
         }
     }
 }

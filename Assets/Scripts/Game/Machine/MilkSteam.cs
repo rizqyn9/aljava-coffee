@@ -8,49 +8,70 @@ namespace Game
     public class MilkSteam : Machine
     {
         [Header("Properties")]
-        public Sprite sprite;
-        public enumIgrendients resultIgrendients = enumIgrendients.MILK_STEAMMED;
-        public List<Color> colorResult;
+        public List<SpriteColorCustom> colorResult;
+        public float delay;
 
         [Header("Debug")]
         public GlassRegistered glassTarget;
 
-        public override void RegistToManager()
+        public override void InitStart()
         {
-            CoffeeManager.Instance.milkSteam = this;
+            MachineState = MachineState.ON_IDDLE;
             spawnResult();
-        }
-
-        private void spawnResult()
-        {
-            StartCoroutine(SpawnRoutine());
-        }
-
-        IEnumerator SpawnRoutine()
-        {
-            yield return new WaitForSeconds(4f);
-            resultGO = Instantiate(resultPrefab, resultSpawnPosition);
-
         }
 
         private void OnMouseDown()
         {
-            if(resultSpawnPosition.childCount == 0)
+            if (MachineState == MachineState.ON_DONE
+                && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.COFEE_MAKER, out glassTarget)
+                )
             {
-                spawnResult();
-            } else
-            {
-                glassTarget = GlassContainer.Instance.findGlassWithState(new List<enumIgrendients> { enumIgrendients.COFEE_MAKER });
-                if (glassTarget.glassCode == null)
-                {
-                    Debug.Log("Gk nemu");
-                    return;
-                }
-                bool isArabica = glassTarget.glass.igrendients.Contains(enumIgrendients.BEANS_ARABICA);
-                glassTarget.glass.changeSpriteAddIgrendients(isArabica ? colorResult[1] : colorResult[0], new List<enumIgrendients> { resultIgrendients });
-                Destroy(resultGO);
-                spawnResult();
+                spawnToGlass();
             }
+            else
+                Debug.Log("gak nemu");
+        }
+
+        //FIXME
+        /// <summary>
+        /// Need fixed for dynamically value
+        /// </summary>
+        private void spawnToGlass()
+        {
+            bool isArabica = glassTarget.glass.igrendients.Contains(MachineIgrendient.BEANS_ARABICA);
+            SpriteColorCustom _sprite = colorResult.Find(val => val.targetIgrendients == (isArabica ? MachineIgrendient.BEANS_ARABICA : MachineIgrendient.BEANS_ROBUSTA));
+            glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, MachineData.MachineType);
+            glassTarget.glass.process();
+
+            StartCoroutine(IDestroy());
+        }
+
+        private void spawnResult() => StartCoroutine(ISpawn());
+
+        IEnumerator ISpawn()
+        {
+            MachineState = MachineState.ON_PROCESS;
+
+            resultGO = Instantiate(resultPrefab, resultSpawnPosition);
+            resultGO.transform.localScale = Vector2.zero;
+            resultGO.LeanScale(new Vector2(1, 1), delay);
+
+            yield return new WaitForSeconds(delay);
+
+            MachineState = MachineState.ON_DONE;
+            yield break;
+        }
+
+        IEnumerator IDestroy()
+        {
+            MachineState = MachineState.ON_PROCESS;
+
+            Debug.Log("Destroy");
+            Destroy(resultGO);
+            spawnResult();
+
+            MachineState = MachineState.ON_IDDLE;
+            yield break;
         }
     }
 }

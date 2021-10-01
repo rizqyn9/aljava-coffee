@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66d43aa84484c4e02963053878b188a7, type: 3}
-  m_Name: NotValidMenu
+  m_Script: {fileID: 11500000, guid: 6fbe3855f59e14d1e9e42cae4db31365, type: 3}
+  m_Name: COFFEE
   m_EditorClassIdentifier: 
-  menuListName: 0
-  menuName: 
-  menuDesc: 
-  menuPrefab: {fileID: 0}
-  menuSprite: {fileID: 0}
-  recipe: 
-  difficulty: 0
+  MenuClassification: 0
+  MachineClass: 00000000
+  ListMachine: 040203
+  prefabManager: {fileID: 3727296534486748130, guid: 1127c99cd7e8a4a7b9aad701009e3040, type: 3}

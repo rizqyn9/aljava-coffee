@@ -10,19 +10,17 @@ namespace Game
         [Header("Properties")]
         public Transform igrendientTransform;
         public GameObject baseIgrendientsGO;
-        public GameObject winPrefab;
-        public GameObject loosePrefab;
 
         [Header("Debug")]
-        public string glassCode;
-        public List<enumIgrendients> igrendients = new List<enumIgrendients>();
+        public GlassState glassState;
+        public List<MachineIgrendient> igrendients = new List<MachineIgrendient>();
         public MenuType getMenuState;
         public bool isValidMenu = false;
-        [SerializeField] SpriteRenderer debugIgrendientsGO;
-        [SerializeField] enumIgrendients _lastIgrendients = enumIgrendients.NULL;
+        public GlassRegistered glassRegistered;
+        [SerializeField] SpriteRenderer igrendientRenderer;
         [SerializeField] BuyerPrototype targetBuyer;
-        [SerializeField] GlassRegistered glassRegistered;
-        public enumIgrendients lastIgrendients
+        [SerializeField] MachineIgrendient _lastIgrendients = MachineIgrendient.NULL;
+        public MachineIgrendient lastIgrendients
         {
             get => _lastIgrendients;
             set
@@ -31,27 +29,8 @@ namespace Game
                 _lastIgrendients = value;
             }
         }
-        [SerializeField] float doubleClickTimeLimit = 0.1f;
-
-        [ContextMenu("Win")]
-        public void winCondition()
-        {
-            Instantiate(winPrefab);
-        }
-        [ContextMenu("Loose")]
-        public void looseCondition()
-        {
-            Instantiate(loosePrefab);
-        }
-
-        private void checkedMenu()
-        {
-            isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
-        }
-
-        public List<GameObject> listIgrendientsGO = new List<GameObject>();
-        public GameObject GO;
         private BoxCollider2D boxCollider2D;
+        [SerializeField] float doubleClickTimeLimit = 0.1f;
 
         private void Awake()
         {
@@ -62,28 +41,75 @@ namespace Game
         {
             StartCoroutine(InputListener());
 
-            glassCode = generateUniqueCode();
-            gameObject.name = glassCode;
-
-            glassRegistered = new GlassRegistered() { glassCode = glassCode, glass = this };
-            LevelManager.Instance.listGlassRegistered.Add(glassRegistered);
-            GlassContainer.Instance.glassRegistereds.Add(glassRegistered);
+            glassState = GlassState.EMPTY;
         }
 
-        private string generateUniqueCode() => $"--Glass-{GlassContainer.Instance.getCode()}";
+        private void checkedMenu() => isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
 
-        public void changeSpriteAddIgrendients(Color _color, List<enumIgrendients> _listIgrendients)
+        private void OnMouseDown()
         {
-            if (!debugIgrendientsGO)
+            if (isValidMenu && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer))
             {
-                debugIgrendientsGO = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
+                Debug.Log("Find customer menu");
+                targetBuyer.customerHandler.onServeMenu(getMenuState);
+
+                GlassContainer.Instance.glassOnDestroy(glassRegistered);
+                StartCoroutine(IDestroy());
             }
-            igrendients.AddRange(_listIgrendients);
-            setLastIgrendients(_listIgrendients[_listIgrendients.Count - 1]);
-            debugIgrendientsGO.color = new Color(_color.r, _color.g, _color.b, 1);
+
         }
 
-        void setLastIgrendients(enumIgrendients _lastIgrendients) => lastIgrendients = _lastIgrendients;
+        IEnumerator IDestroy()
+        {
+            gameObject.LeanScale(Vector2.zero, .5f);
+            yield return new WaitForSeconds(1f);
+
+            GlassContainer.Instance.reqGlassSpawn(glassRegistered.seatIndex);
+
+            Destroy(gameObject);
+            yield break;
+        }
+
+        #region Depends
+        /// <summary>
+        /// Add Igrendients and rendering Sprite result
+        /// _igrendiets automatically set as lastIgrendients
+        /// </summary>
+        /// <param name="_color"></param>
+        /// <param name="_igrendients (optional)"></param>
+        /// <param name="_multipleIgrendients (optional)"></param>
+        public void changeSpriteAddIgrendients(Color _color, MachineIgrendient _igrendients = MachineIgrendient.NULL, List<MachineIgrendient> _multipleIgrendients = null)
+        {
+            if (!igrendientRenderer) igrendientRenderer = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
+            if (_multipleIgrendients != null)
+            {
+                igrendients.AddRange(_multipleIgrendients);
+                lastIgrendients = _multipleIgrendients[_multipleIgrendients.Count - 1];
+            }
+            if(_igrendients != MachineIgrendient.NULL)
+            {
+                igrendients.Add(_igrendients);
+                lastIgrendients = _igrendients;
+            }
+
+            igrendientRenderer.color = new Color(_color.r, _color.g, _color.b, 1);
+        }
+
+        public void process()
+        {
+            StartCoroutine(IProcess());
+        }
+
+        IEnumerator IProcess()
+        {
+            glassState = GlassState.PROCESS;
+            animateGlass();
+
+            yield return new WaitForSeconds(1);
+            glassState = GlassState.FILLED;
+        }
+
+        private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(2.5f, 2.5f), .3f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
 
         private IEnumerator InputListener()
         {
@@ -114,20 +140,6 @@ namespace Game
             SingleClick();
         }
 
-        private void OnMouseDown()
-        {
-            if (isValidMenu && MainController.Instance.isExistQueue(getMenuState.menuListName, out targetBuyer))
-            {
-                Debug.Log("Find customer menu");
-                targetBuyer.customerHandler.onServeMenu(getMenuState.menuListName);
-
-                GlassContainer.Instance.respawn();
-                GlassContainer.Instance.glassOnDestroy(glassRegistered);
-                Destroy(gameObject);
-            }
-            
-        }
-
         private void SingleClick()
         {
         }
@@ -136,5 +148,7 @@ namespace Game
         {
             Debug.Log("Double Click");
         }
+
+        #endregion
     }
 }

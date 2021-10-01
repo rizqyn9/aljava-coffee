@@ -1,0 +1,93 @@
+using System.Collections.Generic;
+using UnityEngine;
+using Game;
+
+[System.Serializable]
+public struct CoffeeProperties
+{
+    public int delayBeansMachine;
+}
+
+[System.Serializable]
+public struct ResourceCount
+{
+    public int MenuCount;
+    public int BuyerCount;
+    public int MachineCount;
+}
+
+/// <summary>
+/// Grab all data level
+/// <list type="bullet">
+/// Buyer Unlock
+/// Menu Unlock
+/// </list>
+/// </summary>
+public class LevelController : Singleton<LevelController>, IGameState
+{
+    [Header("Debug")]
+    [SerializeField] LevelBase _levelBase;
+    public List<MenuType> MenuTypes = new List<MenuType>();
+    public List<BuyerType> BuyerTypes = new List<BuyerType>();
+    public List<MachineData> MachineDatas = new List<MachineData>();
+    public List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
+    public ResourceCount ResourceCount;
+    [SerializeField] GameState _gameState;
+    public GameState GameState
+    {
+        get => _gameState;
+        set
+        {
+            _gameState = value;
+        }
+    }
+    public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
+
+    public static LevelBase LevelBase {
+        get => Instance._levelBase;
+        set { Instance._levelBase = value; Instance.setData(); }
+    }
+
+    private void setData()
+    {
+        MenuTypes = ResourceManager.ListMenu().FindAll(val => _levelBase.MenuTypeUnlock.Contains(val.menuListName));
+        BuyerTypes = ResourceManager.ListBuyer().FindAll(val => _levelBase.BuyerTypeUnlock.Contains(val.enumBuyerType));
+        MenuClassificationDatas = ResourceManager.ListMenuClass().FindAll(val => _levelBase.MenuClassifications.Contains(val.MenuClassification));
+
+        ResourceCount = new ResourceCount()
+        {
+            BuyerCount = BuyerTypes.Count,
+            MenuCount = MenuTypes.Count
+        };
+
+        GetMachineMustSpawn();
+    }
+
+    internal void Init()
+    {
+        MainController.Instance.RegistGameState(this);
+    }
+
+    private void GetMachineMustSpawn()
+    {
+        List<MachineIgrendient> MachineTypes = new List<MachineIgrendient>();
+
+        foreach(MenuType _menuType in MenuTypes)
+        {
+            foreach(MachineIgrendient _machineType in _menuType.Igrendients)
+            {
+                if (!MachineTypes.Contains(_machineType))
+                {
+                    MachineTypes.Add(_machineType);
+                    MachineDatas.Add(ResourceManager.ListMachine().Find(val => val.MachineType == _machineType));
+                }
+            }
+        }
+    }
+
+    public void GameStateChanged(GameState _old, GameState _new)
+    {
+    }
+
+    public List<GlassRegistered> listGlassRegistered;
+}
