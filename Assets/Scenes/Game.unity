@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82718091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.35, y: 0, z: 0}
+  m_LocalPosition: {x: 7.35, y: -0.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2016407341}
@@ -271,15 +271,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDDOL: 0
-  topBar: {fileID: 238145098}
+  PauseGO: {fileID: 0}
+  TopBar: {fileID: 0}
   progressHandler: {fileID: 580109022}
   timeUI: {fileID: 1660174399}
   countDown: 120
-  timerIsRunning: 0
-  timeOut: 0
+  timerIsRunning: 1
   basePos: {x: 0, y: 0}
-  go: 1
-  sec: 0
+  LevelBase: {fileID: 0}
   _counter: 0
   _gameState: 0
 --- !u!1 &135687793
@@ -550,7 +549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391355073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.08, y: 0, z: 0}
+  m_LocalPosition: {x: -5.08, y: -0.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2016407341}
@@ -1024,7 +1023,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1040080108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.95, y: 0, z: 0}
+  m_LocalPosition: {x: 2.95, y: -0.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2016407341}
@@ -1656,7 +1655,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1617386667
 MonoBehaviour:
@@ -2334,7 +2333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061301117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5, y: 0, z: 0}
+  m_LocalPosition: {x: 5.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2113947054}
@@ -2448,7 +2447,7 @@ Transform:
   - {fileID: 267634333}
   - {fileID: 2061301118}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2113947055
 MonoBehaviour:
@@ -2463,6 +2462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDDOL: 0
+  spawnPos: []
+  tempCustomerPrefab: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   TransformSeatDatas:
   - isSeatAvaible: 1
     transform: {fileID: 844339268}
@@ -2470,8 +2471,6 @@ MonoBehaviour:
     transform: {fileID: 267634333}
   - isSeatAvaible: 1
     transform: {fileID: 2061301118}
-  spawnPos: []
-  tempCustomerPrefab: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   OrderController: {fileID: 0}
   LevelBase: {fileID: 0}
   BuyerTypes: []
@@ -2485,6 +2484,9 @@ MonoBehaviour:
   SpawnerState: 0
   customerCounter: 0
   _gameState: 0
+  spawnPosTemp:
+  - {x: -10, y: -1}
+  - {x: 10, y: -1}
   seatIndex: 
 --- !u!114 &2113947056
 MonoBehaviour:

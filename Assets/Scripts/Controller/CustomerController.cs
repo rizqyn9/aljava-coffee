@@ -8,9 +8,9 @@ namespace Game
     public class CustomerController : Singleton<CustomerController>, IGameState
     {
         [Header("Properties")]
-        public transformSeatData[] TransformSeatDatas;
         public Vector2[] spawnPos;
         public GameObject tempCustomerPrefab;
+        [SerializeField] transformSeatData[] TransformSeatDatas;
 
         [Header("Debug")]
         [SerializeField] OrderController OrderController;
@@ -65,21 +65,24 @@ namespace Game
             }
         }
 
-        Vector2[] spawnPosTemp = { new Vector2(-8.11999989f, 0), new Vector2(12.4099998f, 0) };
+        [SerializeField] Vector2[] spawnPosTemp;
         private void createCustomer(int _seatIndex)
         {
-            TransformSeatDatas[_seatIndex].isSeatAvaible = false;
-
-            GameObject custGO = Instantiate(tempCustomerPrefab, spawnPosTemp[Random.Range(0, 2)], Quaternion.identity, transform);
-            CustomerHandler customer = custGO.GetComponent<CustomerHandler>();
-
             BuyerPrototype buyerPrototype = new BuyerPrototype()
             {
                 buyerType       = BuyerTypes[Random.Range(0, ResourceCount.BuyerCount)],
                 customerCode    = $"Customer-{customerCounter++}",
                 seatIndex       = _seatIndex,
-                menuListNames   = getMenuTypes(Random.Range(1, 2))
+                menuListNames   = getMenuTypes(Random.Range(1, 2)),
+                spawnPos        = spawnPosTemp[Random.Range(0, 2)],
+                seatPos         = TransformSeatDatas[_seatIndex].transform.position
             };
+
+            TransformSeatDatas[_seatIndex].isSeatAvaible = false;
+
+            GameObject custGO = Instantiate(tempCustomerPrefab, buyerPrototype.spawnPos, Quaternion.identity, transform);
+            CustomerHandler customer = custGO.GetComponent<CustomerHandler>();
+
 
             // reference buyer
             customer.initBuyer(buyerPrototype);
@@ -122,6 +125,16 @@ namespace Game
                 res.Add(MenuTypes[Random.Range(0, ResourceCount.MenuCount)]);
             }
             return res;
+        }
+
+        public void SetPlaceAvaibility(int _seatIndex, bool _isAvaible)
+        {
+        }
+
+        public void OnCustomerDone(BuyerPrototype _cust)
+        {
+            TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
+
         }
     }
 }

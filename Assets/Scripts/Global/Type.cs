@@ -84,6 +84,8 @@ public struct BuyerPrototype
     public BuyerType buyerType;
     public BuyerState buyerState;
     public int seatIndex;
+    public Vector2 spawnPos;
+    public Vector2 seatPos;
     public List<MenuType> menuListNames;
     public CustomerHandler customerHandler;
 }

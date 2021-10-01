@@ -49,18 +49,28 @@ namespace Game
 
         public void Init()
         {
+            ListenGameState.ForEach((val) =>
+            {
+                val.GameState = GameState.PAUSE;
+            });
             GameState = GameState.IDDLE;
             print("<color=green>Init in Main Controller</color>");
 
             LevelController.Instance.LevelBase = LevelBase;
 
+            initAlController();
+
+            StartCoroutine(IStartGame());
+        }
+
+        private static void initAlController()
+        {
             LevelController.Instance.Init();
             EnvController.Instance.Init();
             GameUIController.Instance.Init();
             OrderController.Instance.Init();
             CustomerController.Instance.Init();
-
-            StartCoroutine(IStartGame());
+            RulesController.Instance.Init();
         }
 
         [SerializeField] int countIGameState;
@@ -75,7 +85,7 @@ namespace Game
             print("Game Started");
             GameState = GameState.PLAY;
 
-            yield return 1;
+            yield return new WaitForSeconds(1);
             EnvController.Instance.instanceIEnv();
             GameUIController.Instance.StartUI();
             EnvController.Instance.StartMachine();

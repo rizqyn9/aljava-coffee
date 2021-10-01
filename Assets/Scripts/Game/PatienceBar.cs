@@ -1,21 +1,60 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatienceBar : MonoBehaviour
+namespace Game
 {
-    public GameObject filled;
-
-    [ContextMenu("set")]
-    public void setBar()
+    public class PatienceBar : MonoBehaviour
     {
-        //filled.LeanScaleY(0, 3f);
-        filled.LeanMoveLocalY(-1f, 3f);
-    }
+        public GameObject filled;
+        public bool started = false;
+        public float valState = 10;
+        public float duration;
+        public CustomerHandler CustomerHandler;
 
-    internal void StartBar(float duration)
-    {
-        filled.LeanMoveLocalY(-1f, duration);
+        [ContextMenu("set")]
+        public void setBar()
+        {
+            //filled.LeanScaleY(0, 3f);
+            filled.LeanMoveLocalY(-1f, 3f);
+        }
+
+        internal void StartBar(float duration)
+        {
+            CustomerHandler = GetComponentInParent<CustomerHandler>();
+
+            filled.LeanMoveLocalY(-1f, duration);
+            //StartCoroutine(IRunBar());
+
+            //LeanTween.value(out )
+        }
+
+        public float val = 0;
+        private void Update()
+        {
+            if (filled.transform.hasChanged)
+            {
+                val = filled.transform.position.y;
+                if(filled.transform.position.y == 0)
+                {
+                    print("marah");
+                    CustomerHandler.StartCoroutine(CustomerHandler.IMarah());
+                }
+            }
+        }
+
+        [ContextMenu("test")]
+        public void Test()
+        {
+            //StartCoroutine(IRunBar());
+        }
+
+        //IEnumerator IRunBar()
+        //{
+        //    filled.LeanMoveLocalY(-1f, duration);
+        //    while (valState < float.MinValue)
+        //    {
+        //        filled.transform.pos
+        //    }
+        //}
     }
 }
