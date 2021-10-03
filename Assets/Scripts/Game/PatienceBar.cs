@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,14 +19,21 @@ namespace Game
             filled.LeanMoveLocalY(-1f, 3f);
         }
 
-        internal void StartBar(float duration)
+        internal void StartBar(float _duration)
         {
+            duration = _duration;
             CustomerHandler = GetComponentInParent<CustomerHandler>();
-
-            filled.LeanMoveLocalY(-1f, duration);
+            StartCoroutine(IStartBar());
             //StartCoroutine(IRunBar());
 
             //LeanTween.value(out )
+        }
+
+        IEnumerator IStartBar()
+        {
+            filled.LeanMoveLocalY(-1f, duration);
+            yield return new WaitForSeconds(duration);
+            CustomerHandler.onMenusDone();
         }
 
         public float val = 0;
