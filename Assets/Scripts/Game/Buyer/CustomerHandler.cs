@@ -103,6 +103,9 @@ namespace Game
 
             gameObject.transform.LeanMove(buyerPrototype.seatPos, _duration);
             yield return new WaitForSeconds(_duration);
+
+            StartCoroutine(INgomong(true));
+
             OrderController.Instance.deliveryQueueMenu.Add(buyerPrototype);
             //yield return new WaitForSeconds(_duration/2);
             bubbles.SetActive(true);
@@ -113,19 +116,20 @@ namespace Game
             bubbles.transform.localScale = Vector2.zero;
             bubbles.LeanScale(defScale, .5f).setEaseInBounce();
 
-            StartCoroutine(INgomong());
             yield return new WaitForSeconds(2);
+            StartCoroutine(INgomong(false));
             PatienceBar.StartBar(15f);
             yield break;
 
             // Animate when Customer already spawned
         }
 
-        IEnumerator INgomong()
+        IEnumerator INgomong(bool isActive)
         {
-            Animator.SetBool(ANIM.NGOMONG, true);
+            Animator.SetBool(ANIM.NGOMONG, isActive);
             yield return new WaitForSeconds(2);
-            Animator.SetBool(ANIM.NGOMONG, false);
+            if(isActive) Animator.SetBool(ANIM.NGOMONG, !isActive);
+            yield break;
         }
 
         public IEnumerator IMarah()
@@ -133,6 +137,7 @@ namespace Game
             Animator.SetBool(ANIM.MARAH, true);
             yield return new WaitForSeconds(5f);
             Animator.SetBool(ANIM.MARAH, false);
+            yield break;
         }
 
     }

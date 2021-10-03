@@ -9,6 +9,7 @@ namespace Game
     {
         [Header("Debug")]
         public CoffeeMaker coffeeMaker;
+        public bool firstInit = true;
 
         public override void InitStart()
         {
@@ -22,6 +23,7 @@ namespace Game
 
         public void OnMouseDown()
         {
+            if (MainController.Instance.GameState != GameState.PLAY) return;
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
 
@@ -37,6 +39,12 @@ namespace Game
 
         IEnumerator ISpawn()
         {
+            if (firstInit)
+            {
+                firstInitHandler();
+                yield break;
+            }
+
             print("Spawn beans");
             MachineState = MachineState.ON_PROCESS;
 
@@ -47,6 +55,12 @@ namespace Game
 
             MachineState = MachineState.ON_DONE;
             yield break;
+        }
+
+        private void firstInitHandler()
+        {
+            print("firstInit machine");
+            firstInit = false;
         }
 
         IEnumerator IDestroy()
