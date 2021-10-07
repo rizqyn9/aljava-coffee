@@ -4,20 +4,71 @@ using System;
 using System.Collections;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public abstract class Machine : MonoBehaviour, IEnv, IGameState
+public abstract class Machine : MonoBehaviour, IGameState
 {
     [Header("Propertie Machine")]
     public GameObject resultPrefab;
     public Transform resultSpawnPosition;
     public MachineIgrendient machineType;
+    public IGameState asd;
 
     [Header("Debug")]
     public MachineData MachineData;
     [SerializeField] Vector2 basePos;
     [SerializeField] MachineState _machineState;
-    [SerializeField] GameState _gameState;
+    [SerializeField] protected GameState gameState;
     [SerializeField] protected GameObject resultGO;
     [SerializeField] protected BoxCollider2D boxCollider2D;
+
+    private void OnEnable()
+    {
+        MainController.OnGameStateChanged += GameStateHandler;
+    }
+
+    private void OnDisable()
+    {
+        MainController.OnGameStateChanged -= GameStateHandler;
+    }
+
+    #region GAME STATE
+    public void GameStateHandler(GameState _gameState)
+    {
+        
+    }
+
+    // Access from child
+    public virtual void OnGameIddle()
+    {
+        print("Machine On Iddle");
+    }
+    public virtual void OnGameBeforeStart()
+    {
+        //print("Machine On Before Start;");
+    }
+    public virtual void OnGameStart()
+    {
+        print("Machine On Start");
+    }
+    public virtual void OnGamePause() { }
+    public virtual void OnGameClearance() { }
+    public virtual void OnGameFinish() { }
+
+    #endregion
+
+    private void Start()
+    {
+        gameObject.LeanAlpha(0, 0);
+        transform.transform.position = new Vector2(basePos.x, basePos.y + 1.5f);
+        basePos = transform.position;
+
+        gameState = MainController.GameState;           // To ensure that this variable sync on Main Controller
+        GameStateController.UpdateGameState(this, gameState);      //
+
+        EnvController.RegistMachine(this);
+        //MachineData = LevelController.Instance.MachineDatas.Find(val => val.MachineType == machineType);
+
+        MachineState = MachineState.OFF;
+    }
 
     public MachineState MachineState
     {
@@ -30,16 +81,6 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
         }
     }
 
-    public GameState GameState
-    {
-        get => _gameState;
-        set
-        {
-            if (_gameState == value) return;
-            OnGameStateChanged(_gameState, value);
-            _gameState = value;
-        }
-    }
 
     private void Awake()
     {
@@ -52,28 +93,12 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
         machineType = _machineData.MachineType;
     }
 
-    private void Start()
-    {
-        //MachineData = LevelController.Instance.MachineDatas.Find(val => val.MachineType == machineType);
-
-        gameObject.LeanAlpha(0, 0);
-        basePos = transform.position;
-        transform.transform.position = new Vector2(basePos.x, basePos.y + 1.5f);
-
-        // regist to env manager
-        MainController.Instance.RegistGameState(this);
-
-        MachineState = MachineState.OFF;
-
-        EnvController.RegistMachine(this);
-    }
-
     public void StartMachine()
     {
-        print("Start machine");
-        MachineState = MachineState.ON_IDDLE;
-        StartCoroutine(ISpawn());
-        InitStart();
+        //print("Start machine");
+        //MachineState = MachineState.ON_IDDLE;
+        //StartCoroutine(ISpawn());
+        //InitStart();
     }
 
     IEnumerator ISpawn()
@@ -83,24 +108,13 @@ public abstract class Machine : MonoBehaviour, IEnv, IGameState
         gameObject.LeanAlpha(1, 2f);
     }
 
-    public abstract void InitStart();
-
-    public void EnvInstance()
-    {
-        print("Sapwn");
-    }
-
-    public virtual void OnGameStateChanged(GameState _old, GameState _new) { }
+    public virtual void InitStart() { }
 
     public virtual void OnMachineStateChanged(MachineState _old, MachineState _new) { }
 
-    public void OnGameStateChanged()
-    {
-        boxCollider2D.enabled = GameState != GameState.IDDLE;
-    }
+    public GameObject GetGameObject() => gameObject;
 
-    public void Command()
+    public void OnGameInit()
     {
-        throw new System.NotImplementedException();
     }
 }

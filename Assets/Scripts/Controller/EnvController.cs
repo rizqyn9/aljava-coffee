@@ -5,66 +5,37 @@ using UnityEngine;
 
 namespace Game
 {
-    public interface IEnv
-    {
-        void EnvInstance();
-        void Command();
-        public GameState GameState { get; set; }
-    }
-
     public class EnvController : Singleton<EnvController>, IGameState
     {
         [Header("Properties")]
         public Transform mainContainer;
         public Transform flavourContainer;
         public Transform additionalContainer;
-        public GlassContainer glassContainer;
+        public GlassContainer GlassContainer;
 
         [Header("Debug")]
-        [SerializeField] List<IEnv> IEnvs = new List<IEnv>();
         [SerializeField] List<Machine> Machines = new List<Machine>();
         [SerializeField] List<IMenuClassManager> IMenuClassManagers = new List<IMenuClassManager>();
-        [SerializeField] GameState _gameState;
-        public GameState GameState
+        [SerializeField] GameState gameState;
+
+        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
+        private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
+
+        public void GameStateHandler(GameState _gameState)
         {
-            get => _gameState;
-            set
-            {
-                _gameState = value;
-            }
+            print($"ENV : {_gameState}");
         }
-        public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
 
-        public void Init()
+        private void Start()
         {
-            MainController.Instance.RegistGameState(this);
-
-            print("Init on Env Manager");
             initMachineManager();
             spawnMachine();
         }
 
-        public void instanceIEnv()
-        {
-            print($"IENV {IEnvs.Count}");
-            foreach(IEnv _env in IEnvs)
-            {
-                _env.EnvInstance();
-            }
-        }
-
         public static void RegistMachine(Machine _machine)
         {
-            print("rgist");
+            //print("rgist");
             Instance.Machines.Add(_machine);
-            if (_machine is IEnv) RegistEnv(_machine);
-        }
-
-        [SerializeField] int IEnvRegistered;
-        public static void RegistEnv(IEnv _env)
-        {
-            Instance.IEnvs.Add(_env);
-            Instance.IEnvRegistered = Instance.IEnvs.Count;
         }
 
         /// <summary>
@@ -72,13 +43,13 @@ namespace Game
         /// </summary>
         void initMachineManager()
         {
-            print("InitMachineManager");
+            //print("InitMachineManager");
             foreach(MenuClassificationData _menuClassification in LevelController.Instance.MenuClassificationDatas)
             {
                 GameObject go = Instantiate(_menuClassification.prefabManager, getTransform(_menuClassification.MenuClassification));
                 IMenuClassManagers.Add(go.GetComponent<IMenuClassManager>());
             }
-            print($"Count : {IMenuClassManagers.Count}");
+            //print($"Count : {IMenuClassManagers.Count}");
         }
 
         /// <summary>
@@ -87,8 +58,8 @@ namespace Game
         private void spawnMachine()
         {
             print("Spawn Machine");
-            print($"Manager Count {IMenuClassManagers.Count}");
-            foreach(IMenuClassManager _menuClassManager in IMenuClassManagers)
+            //print($"Manager Count {IMenuClassManagers.Count}");
+            foreach (IMenuClassManager _menuClassManager in IMenuClassManagers)
             {
                 //_menuClassManager
                 _menuClassManager.InstanceMachine(LevelController.Instance.MachineDatas.FindAll(val=> val.MachineClass == _menuClassManager.GetMachineClass()));
@@ -96,16 +67,17 @@ namespace Game
         }
 
         /// <summary>
+        /// Depreceted
         /// Turn on all machine
         /// </summary>
-        internal void StartMachine()
-        {
-            print($"Start Machine {Machines.Count}");
-            foreach(Machine _machine in Machines)
-            {
-                _machine.StartMachine();
-            }
-        }
+        //internal void StartMachine()
+        //{
+        //    print($"Start Machine {Machines.Count}");
+        //    foreach(Machine _machine in Machines)
+        //    {
+        //        _machine.StartMachine();
+        //    }
+        //}
 
         public static void InstanceMachine(MachineData _machineData, Transform _transform, out Machine _machine)
         {
@@ -131,6 +103,39 @@ namespace Game
         {
             T _out = _go.GetComponent<T>();
             return _out;
+        }
+
+        public GameObject GetGameObject() => gameObject;
+
+        public void OnGameIddle()
+        {
+        }
+
+        public void OnGameBeforeStart()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameStart()
+        {
+        }
+
+        public void OnGamePause()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameClearance()
+        {
+        }
+
+        public void OnGameFinish()
+        {
+        }
+
+        public void OnGameInit()
+        {
+            throw new NotImplementedException();
         }
     }
 }

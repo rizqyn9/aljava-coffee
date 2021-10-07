@@ -32,16 +32,7 @@ public class LevelController : Singleton<LevelController>, IGameState
     public List<MachineData> MachineDatas = new List<MachineData>();
     public List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
     public ResourceCount ResourceCount;
-    [SerializeField] GameState _gameState;
-    public GameState GameState
-    {
-        get => _gameState;
-        set
-        {
-            _gameState = value;
-        }
-    }
-    public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
+    [SerializeField] GameState gameState;
 
     public static LevelBase LevelBase {
         get => Instance._levelBase;
@@ -63,18 +54,13 @@ public class LevelController : Singleton<LevelController>, IGameState
         GetMachineMustSpawn();
     }
 
-    internal void Init()
-    {
-        MainController.Instance.RegistGameState(this);
-    }
-
     private void GetMachineMustSpawn()
     {
         List<MachineIgrendient> MachineTypes = new List<MachineIgrendient>();
 
-        foreach(MenuType _menuType in MenuTypes)
+        foreach (MenuType _menuType in MenuTypes)
         {
-            foreach(MachineIgrendient _machineType in _menuType.Igrendients)
+            foreach (MachineIgrendient _machineType in _menuType.Igrendients)
             {
                 if (!MachineTypes.Contains(_machineType))
                 {
@@ -85,9 +71,34 @@ public class LevelController : Singleton<LevelController>, IGameState
         }
     }
 
-    public void GameStateChanged(GameState _old, GameState _new)
+
+    #region Game Controller
+    private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
+    private void OnDisable() => MainController.OnGameStateChanged -= GameStateHandler;
+
+    public void GameStateHandler(GameState _gameState)
     {
+        GameStateController.UpdateGameState(this, gameState);
     }
 
-    public List<GlassRegistered> listGlassRegistered;
+    public GameObject GetGameObject() => gameObject;
+
+    public void OnGameIddle() { }
+
+    public void OnGameBeforeStart() { }
+
+    public void OnGameStart() { }
+
+    public void OnGamePause() { }
+
+    public void OnGameClearance() { }
+
+    public void OnGameFinish() { }
+
+    public void OnGameInit()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    #endregion
 }

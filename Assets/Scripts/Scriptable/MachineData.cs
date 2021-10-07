@@ -14,6 +14,8 @@ public class MachineData : ScriptableObject
     public bool autoRun = false;
     public GameObject PrefabManager;
     public GameObject PrefabResult;
+    [Tooltip("Instance UI overlay when machine touched on first time")]
+    public GameObject PrefabUIOverlay;
 }
 
 #if UNITY_EDITOR

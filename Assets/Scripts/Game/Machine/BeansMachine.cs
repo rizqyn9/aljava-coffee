@@ -11,19 +11,14 @@ namespace Game
         public CoffeeMaker coffeeMaker;
         public bool firstInit = true;
 
-        public override void InitStart()
-        {
-            MachineState = MachineState.ON_IDDLE;
-        }
-
         public override void OnMachineStateChanged(MachineState _old, MachineState _new)
         {
-            print("Machine State Changed");
+            //print("Machine State Changed");
         }
 
         public void OnMouseDown()
         {
-            if (MainController.Instance.GameState != GameState.PLAY) return;
+            if (gameState != GameState.START) return;
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
 
@@ -61,6 +56,7 @@ namespace Game
         private void firstInitHandler()
         {
             print("firstInit machine");
+            GameUIController.Instance.reqUseMachineOverlay(MachineData.PrefabUIOverlay);
             firstInit = false;
         }
 

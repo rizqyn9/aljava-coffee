@@ -22,29 +22,30 @@ namespace Game
         [SerializeField] float delayCustomer;
         [SerializeField] SpawnerState SpawnerState = SpawnerState.IDDLE;
         [SerializeField] int customerCounter;
+        [SerializeField] GameState gameState;
 
-        [SerializeField]
-        private GameState _gameState;
-        public GameState GameState
+        private void OnEnable()
         {
-            get => _gameState;
-            set
-            {
-                _gameState = value;
-            }
+            MainController.OnGameStateChanged += GameStateHandler;
         }
-        public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
 
+        private void OnDisable()
+        {
+            MainController.OnGameStateChanged += GameStateHandler;
+        }
+
+        public void GameStateHandler(GameState _gameState)
+        {
+
+        }
 
         internal void Init()
         {
-            MainController.Instance.RegistGameState(this);
             OrderController = OrderController.Instance;
 
             // TODO
             maxSpawn = LevelController.LevelBase.minBuyer;
 
-            print("Buyer Init");
             getDepends();
         }
 
@@ -56,7 +57,7 @@ namespace Game
 
         private void Update()
         {
-            if (GameState != GameState.PLAY) return;
+            if (MainController.GameState != GameState.START) return;
 
             if(SpawnerState == SpawnerState.CAN_CREATE && customerCounter <= maxSpawn)
             {
@@ -138,6 +139,43 @@ namespace Game
         {
             TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
 
+        }
+
+        public GameObject GetGameObject() => gameObject;
+
+        public void OnGameIddle()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameBeforeStart()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameStart()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGamePause()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameClearance()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameFinish()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameInit()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

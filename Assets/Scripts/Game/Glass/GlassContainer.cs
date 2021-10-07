@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Game
         public int seatIndex;
     }
 
-    public class GlassContainer : Singleton<GlassContainer>
+    public class GlassContainer : Singleton<GlassContainer>, IGameState
     {
         [Header("Properties")]
         public GameObject glassPrefab;
@@ -22,14 +23,6 @@ namespace Game
         [Header("Debug")]
         [SerializeField] List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
         [SerializeField] int cachedGlassCode = 0;
-
-        public void Start()
-        {
-            for(int i = 0; i < listPosSpawn.Count; i++)
-            {
-                reqGlassSpawn(i);
-            }
-        }
 
         public void glassOnDestroy(GlassRegistered _glassRegistered)
         {
@@ -58,6 +51,46 @@ namespace Game
             yield break;
 
         }
+
+        #region Game Controller
+        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
+        private void OnDisable() => MainController.OnGameStateChanged -= GameStateHandler;
+
+        [SerializeField] GameState gameState;
+        public void GameStateHandler(GameState _gameState)
+        {
+            gameState = _gameState;
+            GameStateController.UpdateGameState(this, _gameState);
+        }
+
+        public GameObject GetGameObject() => gameObject;
+
+        //public void OnGameIddle()
+        //{
+        //    //for (int i = 0; i < listPosSpawn.Count; i++)
+        //    //{
+        //    //    reqGlassSpawn(i);
+        //    //}
+        //}
+
+        public void OnGameBeforeStart()
+        {
+            Debug.LogWarning("glass");
+            for (int i = 0; i < listPosSpawn.Count; i++)
+            {
+                reqGlassSpawn(i);
+            }
+        }
+
+        //public void OnGameStart() { }
+
+        //public void OnGamePause() { }
+
+        //public void OnGameClearance() { }
+
+        //public void OnGameFinish() { }
+
+        #endregion
 
         #region Depends
 
@@ -90,6 +123,35 @@ namespace Game
         {
             _glassRegistered = FindGlassLastState(_igrend);
             return _glassRegistered.glassCode != null;
+        }
+
+        public void OnGameIddle()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameStart()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGamePause()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameClearance()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameFinish()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameInit()
+        {
         }
 
         #endregion

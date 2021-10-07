@@ -1,15 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game
 {
-    public interface IGameState
-    {
-        public void OnGameStateChanged();
-        public GameState GameState { get; set; }
-    }
-
     public class MainController : Singleton<MainController>
     {
         [Header("Properties")]
@@ -23,84 +19,92 @@ namespace Game
         [SerializeField] bool isGameEnd = false;
         [SerializeField] List<IGameState> ListenGameState = new List<IGameState>();
 
+        public static event Action<GameState> OnGameStateChanged;
+
         public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
 
         #region GAME STATE
-        public GameState GameState {
-            get => _gameState;
+        public static GameState GameState {
+            get => Instance._gameState;
             set
             {
-                GameStateChanged(_gameState, value);
-                _gameState = value;
+                print($"<color=green> Game State Changed {value} </color>");
+                OnGameStateChanged?.Invoke(value);
+                Instance._gameState = value;
             }
         }
 
-        private void GameStateChanged(GameState _old, GameState _new)
+        private void Update()
         {
-            if (_old == _new) return;
-            print("Game state Changed");
-            foreach(IGameState _state in ListenGameState)
+            if (Input.GetKeyDown("q"))
             {
-                _state.GameState = _new;
+                print("click");
+                OnGameStateChanged?.Invoke(GameState);
             }
         }
-
+        
         #endregion
+        
 
         public void Init()
         {
-            ListenGameState.ForEach((val) =>
-            {
-                val.GameState = GameState.PAUSE;
-            });
-            GameState = GameState.IDDLE;
-            print("<color=green>Init in Main Controller</color>");
-
             LevelController.LevelBase = LevelBase;
 
-            initAlController();
+            GameState = GameState.INIT;
+            print("<color=green>Init in Main Controller</color>");
+
+            GameState = GameState.BEFORE_START;
+            initAllControllers();
 
             StartCoroutine(IStartGame());
         }
 
-        private static void initAlController()
+        private static void initAllControllers()
         {
-            LevelController.Instance.Init();
-            EnvController.Instance.Init();
-            GameUIController.Instance.Init();
-            OrderController.Instance.Init();
-            CustomerController.Instance.Init();
-            RulesController.Instance.Init();
-        }
-
-        [SerializeField] int countIGameState;
-        public void RegistGameState(IGameState _)
-        {
-            ListenGameState.Add(_);
-            countIGameState = ListenGameState.Count;
+            //LevelController.Instance.Init();    //
+            //EnvController.Instance.Init();      //  
+            GameUIController.Instance.Init();   //
+            OrderController.Instance.Init();    //
+            CustomerController.Instance.Init(); //
+            RulesController.Instance.Init();    //
         }
 
         IEnumerator IStartGame()
         {
             print("Game Started");
-            GameState = GameState.PLAY;
+            GameState = GameState.BEFORE_START;
 
-            yield return new WaitForSeconds(1);
-            EnvController.Instance.instanceIEnv();
-            GameUIController.Instance.StartUI();
-            EnvController.Instance.StartMachine();
+            //yield return new WaitForSeconds(1);
+            //GameUIController.Instance.StartUI();
 
-            yield return new WaitForSeconds(3);
+            ////Depreceated
+            ////EnvController.Instance.StartMachine();
 
-            CustomerController.Instance.StartCustomer();
+            //yield return new WaitForSeconds(3);
+
+            //CustomerController.Instance.StartCustomer();
             yield break;
         }
+
+
+        [SerializeField] EnvController EnvController;
+        [SerializeField] LevelController LevelController;
+        [SerializeField] GameUIController GameUIController;
+        [SerializeField] OrderController OrderController;
+        [SerializeField] CustomerController CustomerController;
+        [SerializeField] RulesController RulesController;
 
         public void Start()
         {
             Application.targetFrameRate = 60; // Optional platform
+            //GameState = GameState.FINISH;
 
-            GameState = GameState.IDDLE;
+            EnvController = EnvController.Instance;
+            LevelController = LevelController.Instance;
+            GameUIController = GameUIController.Instance;
+            OrderController = OrderController.Instance;
+            CustomerController = CustomerController.Instance;
+            RulesController = RulesController.Instance;
         }
 
         IEnumerator gameFinished()

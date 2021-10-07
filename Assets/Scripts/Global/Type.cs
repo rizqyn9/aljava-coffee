@@ -2,6 +2,18 @@ using UnityEngine;
 using System.Collections.Generic;
 using Game;
 
+public interface IGameState
+{
+    public void GameStateHandler(GameState _gameState);
+    GameObject GetGameObject();
+    public void OnGameInit();
+    public void OnGameIddle();
+    public void OnGameBeforeStart();
+    public void OnGameStart();
+    public void OnGamePause();
+    public void OnGameClearance();
+    public void OnGameFinish();
+}
 /// <summary>
 /// Behaviour for class manager
 /// <list type="bullet">
@@ -46,10 +58,11 @@ public enum MenuClassification
 
 public enum GameState
 {
-    IDDLE,          // STATE BEFORE INITIALIZE GAME
-    PLAY,           // GAME ALREADY TO PLAYING
+    INIT,          // STATE BEFORE INITIALIZE GAME
+    BEFORE_START,
+    START,           // GAME ALREADY TO PLAYING
     PAUSE,          // GAME ON PAUSE TRIGGER
-    STOP,           // GAME STOPPED, CRASH, FINISH 
+    CLEARANCE,           // GAME STOPPED, CRASH, FINISH 
     FINISH          // GAME FINISHED
 }
 

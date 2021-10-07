@@ -6,31 +6,38 @@ using System;
 
 namespace Game
 {
-    public class GameUIController : Singleton<GameUIController>, IGameState, IEnv
+    public class GameUIController : Singleton<GameUIController>, IGameState
     {
         [Header("Properties")]
         [SerializeField] GameObject PauseGO;
         [SerializeField] GameObject TopBar;
         [SerializeField] float offsetTopBar = 40;
-        public TMP_Text progressHandler;
-        public TMP_Text timeUI;
-        public bool timerIsRunning = false;
+        [SerializeField] TMP_Text progressHandler;
+        [SerializeField] TMP_Text timeUI;
+        [SerializeField] bool timerIsRunning = false;
+        [SerializeField] GameObject MachineUIOverlay;
 
         [Header("Debug")]
         [SerializeField] Vector2 basePos;
         [SerializeField] LevelBase LevelBase;
 
-
         #region GAME STATE
-        [SerializeField] GameState _gameState;
-        public GameState GameState
+        [SerializeField] GameState gameState = GameState.INIT;
+        private void OnEnable()
         {
-            get => _gameState;
-            set {
-                _gameState = value;
-            }
+            MainController.OnGameStateChanged += GameStateHandler;
         }
-        public void OnGameStateChanged() => GameState = MainController.Instance.GameState;
+
+        private void OnDisable()
+        {
+            MainController.OnGameStateChanged += GameStateHandler;
+        }
+
+        public void GameStateHandler(GameState _gameState)
+        {
+
+        }
+
         #endregion
 
         #region COUNTDOWN CONTROLLER
@@ -80,17 +87,16 @@ namespace Game
             }
         }
 
+        public GameState GameState { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         private void updateUI()
         {
             progressHandler.text = getText();
         }
 
         #endregion
-
         internal void Init()
         {
-            MainController.Instance.RegistGameState(this);
-            EnvController.RegistEnv(this);
             setComponentUI();
         }
 
@@ -102,7 +108,11 @@ namespace Game
             Counter = 0;
             targetCounter = LevelBase.minBuyer;
             updateUI();
+            //spawnTopUI();
+        }
 
+        private void spawnTopUI()
+        {
             TopBar.transform.LeanMoveLocalY(0, 1).setEaseInOutBounce();
             PauseGO.transform.LeanMoveLocalX(360, 1).setEaseInOutBounce();
         }
@@ -112,19 +122,67 @@ namespace Game
             StartGame();
         }
 
-        public void EnvInstance()
+        string getText()
         {
-            //topBar.transform.LeanMoveLocalY(0, 1f).setEaseInElastic();
+            return $"{Counter} / {targetCounter} buyer";
         }
 
-        public void Command()
+        public GameObject GetGameObject() => gameObject;
+
+        public void OnGameIddle()
         {
             throw new NotImplementedException();
         }
 
-        string getText()
+        public void OnGameBeforeStart()
         {
-            return $"{Counter} / {targetCounter} buyer";
+            throw new NotImplementedException();
+        }
+
+        public void OnGameStart()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGamePause()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameClearance()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnGameFinish()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [SerializeField] bool isOverlayActive;
+        public bool reqUseMachineOverlay(GameObject _go)
+        {
+            if (isOverlayActive) return false;
+
+            MachineUIOverlay.SetActive(true);
+            MachineUIOverlay.LeanMoveLocalY(0, 2f);
+
+            isOverlayActive = true;
+            return true;
+        }
+
+        public void Btn_CloseOverlayMachine()
+        {
+            if (!isOverlayActive) return;
+            MachineUIOverlay.LeanMoveLocalY(-430, 2f);
+
+            isOverlayActive = false;
+        }
+
+        public void OnGameInit()
+        {
+            throw new NotImplementedException();
         }
     }
 }

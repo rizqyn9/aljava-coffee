@@ -10,20 +10,24 @@ namespace Game
         public CustomerController CustomerController = null;
 
         [Header("Debug")]
-        [SerializeField] GameState _gameState;
-        public GameState GameState
+        [SerializeField] GameState gameState;
+
+        private void OnEnable()
         {
-            get => _gameState;
-            set => _gameState = value;
+            MainController.OnGameStateChanged += GameStateHandler;
         }
 
-        public void OnGameStateChanged() => _gameState = MainController.Instance.GameState;
-
-        internal void Init()
+        private void OnDisable()
         {
-            MainController.Instance.RegistGameState(this);
+            MainController.OnGameStateChanged += GameStateHandler;
+        }
+
+        public void GameStateHandler(GameState _gameState)
+        {
 
         }
+
+        internal void Init() { }
         private void Start()
         {
             CustomerController = CustomerController.Instance;
@@ -77,7 +81,42 @@ namespace Game
 
         private void clearQueue(BuyerPrototype _buyerPrototype) { }
 
+        public GameObject GetGameObject() => gameObject;
 
+        public void OnGameIddle()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameBeforeStart()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameStart()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGamePause()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameClearance()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameFinish()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnGameInit()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 }
