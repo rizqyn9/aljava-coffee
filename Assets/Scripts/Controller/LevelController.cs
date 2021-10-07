@@ -78,6 +78,7 @@ public class LevelController : Singleton<LevelController>, IGameState
 
     public void GameStateHandler(GameState _gameState)
     {
+        gameState = _gameState;
         GameStateController.UpdateGameState(this, gameState);
     }
 

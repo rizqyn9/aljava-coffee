@@ -53,7 +53,6 @@ namespace Game
             GameState = GameState.INIT;
             print("<color=green>Init in Main Controller</color>");
 
-            GameState = GameState.BEFORE_START;
             initAllControllers();
 
             StartCoroutine(IStartGame());
@@ -63,10 +62,10 @@ namespace Game
         {
             //LevelController.Instance.Init();    //
             //EnvController.Instance.Init();      //  
-            GameUIController.Instance.Init();   //
-            OrderController.Instance.Init();    //
-            CustomerController.Instance.Init(); //
-            RulesController.Instance.Init();    //
+            //GameUIController.Instance.Init();   //
+            //OrderController.Instance.Init();    //
+            //CustomerController.Instance.Init(); //
+            //RulesController.Instance.Init();    //
         }
 
         IEnumerator IStartGame()
@@ -74,11 +73,9 @@ namespace Game
             print("Game Started");
             GameState = GameState.BEFORE_START;
 
-            //yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
+            GameState = GameState.START;
             //GameUIController.Instance.StartUI();
-
-            ////Depreceated
-            ////EnvController.Instance.StartMachine();
 
             //yield return new WaitForSeconds(3);
 
@@ -86,25 +83,9 @@ namespace Game
             yield break;
         }
 
-
-        [SerializeField] EnvController EnvController;
-        [SerializeField] LevelController LevelController;
-        [SerializeField] GameUIController GameUIController;
-        [SerializeField] OrderController OrderController;
-        [SerializeField] CustomerController CustomerController;
-        [SerializeField] RulesController RulesController;
-
         public void Start()
         {
             Application.targetFrameRate = 60; // Optional platform
-            //GameState = GameState.FINISH;
-
-            EnvController = EnvController.Instance;
-            LevelController = LevelController.Instance;
-            GameUIController = GameUIController.Instance;
-            OrderController = OrderController.Instance;
-            CustomerController = CustomerController.Instance;
-            RulesController = RulesController.Instance;
         }
 
         IEnumerator gameFinished()

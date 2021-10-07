@@ -14,4 +14,12 @@ public class Dev : MonoBehaviour
         MainController.Instance.LevelBase = levelBase;
         MainController.Instance.Init();
     }
+
+    [SerializeField] GameState gameState;
+    [ContextMenu("Debug Test")]
+    public void debugGameState()
+    {
+        print("On Debug");
+        MainController.GameState = gameState;
+    }
 }

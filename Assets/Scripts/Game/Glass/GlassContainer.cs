@@ -24,6 +24,45 @@ namespace Game
         [SerializeField] List<GlassRegistered> glassRegistereds = new List<GlassRegistered>();
         [SerializeField] int cachedGlassCode = 0;
 
+        #region Game Controller
+        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
+        private void OnDisable() => MainController.OnGameStateChanged -= GameStateHandler;
+
+        [SerializeField] GameState gameState;
+        public void GameStateHandler(GameState _gameState)
+        {
+            gameState = _gameState;
+            GameStateController.UpdateGameState(this, _gameState);
+        }
+
+        public GameObject GetGameObject() => gameObject;
+
+        public void OnGameIddle()
+        {
+        }
+
+        public void OnGameBeforeStart()
+        {
+            for (int i = 0; i < listPosSpawn.Count; i++)
+            {
+                reqGlassSpawn(i);
+            }
+        }
+
+        public void OnGameStart() { }
+
+        public void OnGamePause() { }
+
+        public void OnGameClearance() { }
+
+        public void OnGameFinish() { }
+
+        public void OnGameInit() { }
+
+        #endregion
+
+        #region Depends
+
         public void glassOnDestroy(GlassRegistered _glassRegistered)
         {
             //glassRegistereds
@@ -39,6 +78,7 @@ namespace Game
                 glassCode = generateUniqueCode(),
                 seatIndex = _seat
             };
+
             StartCoroutine(spawnGlass(_spawn.gameObject));
             glassRegistereds.Add(_registGlass);
             _spawn.glassRegistered = _registGlass;
@@ -51,48 +91,6 @@ namespace Game
             yield break;
 
         }
-
-        #region Game Controller
-        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
-        private void OnDisable() => MainController.OnGameStateChanged -= GameStateHandler;
-
-        [SerializeField] GameState gameState;
-        public void GameStateHandler(GameState _gameState)
-        {
-            gameState = _gameState;
-            GameStateController.UpdateGameState(this, _gameState);
-        }
-
-        public GameObject GetGameObject() => gameObject;
-
-        //public void OnGameIddle()
-        //{
-        //    //for (int i = 0; i < listPosSpawn.Count; i++)
-        //    //{
-        //    //    reqGlassSpawn(i);
-        //    //}
-        //}
-
-        public void OnGameBeforeStart()
-        {
-            Debug.LogWarning("glass");
-            for (int i = 0; i < listPosSpawn.Count; i++)
-            {
-                reqGlassSpawn(i);
-            }
-        }
-
-        //public void OnGameStart() { }
-
-        //public void OnGamePause() { }
-
-        //public void OnGameClearance() { }
-
-        //public void OnGameFinish() { }
-
-        #endregion
-
-        #region Depends
 
         public string generateUniqueCode() => $"Glass-{cachedGlassCode++}";
 
@@ -123,35 +121,6 @@ namespace Game
         {
             _glassRegistered = FindGlassLastState(_igrend);
             return _glassRegistered.glassCode != null;
-        }
-
-        public void OnGameIddle()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGamePause()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameClearance()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameFinish()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameInit()
-        {
         }
 
         #endregion

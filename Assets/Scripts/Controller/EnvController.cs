@@ -18,13 +18,36 @@ namespace Game
         [SerializeField] List<IMenuClassManager> IMenuClassManagers = new List<IMenuClassManager>();
         [SerializeField] GameState gameState;
 
+        #region GAME STATE
         private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
         private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
 
         public void GameStateHandler(GameState _gameState)
         {
-            print($"ENV : {_gameState}");
+            GameStateController.UpdateGameState(this, _gameState);
+            gameState = _gameState;
         }
+
+        public GameObject GetGameObject() => gameObject;
+
+        public void OnGameIddle()
+        {
+
+        }
+
+        public void OnGameBeforeStart() { }
+
+        public void OnGameStart() { }
+
+        public void OnGamePause() { }
+
+        public void OnGameClearance() { }
+
+        public void OnGameFinish() { }
+
+        public void OnGameInit() { }
+
+        #endregion
 
         private void Start()
         {
@@ -32,11 +55,7 @@ namespace Game
             spawnMachine();
         }
 
-        public static void RegistMachine(Machine _machine)
-        {
-            //print("rgist");
-            Instance.Machines.Add(_machine);
-        }
+        public static void RegistMachine(Machine _machine) => Instance.Machines.Add(_machine);
 
         /// <summary>
         /// Spawn class menu manager
@@ -66,19 +85,6 @@ namespace Game
             }
         }
 
-        /// <summary>
-        /// Depreceted
-        /// Turn on all machine
-        /// </summary>
-        //internal void StartMachine()
-        //{
-        //    print($"Start Machine {Machines.Count}");
-        //    foreach(Machine _machine in Machines)
-        //    {
-        //        _machine.StartMachine();
-        //    }
-        //}
-
         public static void InstanceMachine(MachineData _machineData, Transform _transform, out Machine _machine)
         {
             _machine = Instantiate(_machineData.PrefabManager, _transform).GetComponent<Machine>();
@@ -103,39 +109,6 @@ namespace Game
         {
             T _out = _go.GetComponent<T>();
             return _out;
-        }
-
-        public GameObject GetGameObject() => gameObject;
-
-        public void OnGameIddle()
-        {
-        }
-
-        public void OnGameBeforeStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameStart()
-        {
-        }
-
-        public void OnGamePause()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameClearance()
-        {
-        }
-
-        public void OnGameFinish()
-        {
-        }
-
-        public void OnGameInit()
-        {
-            throw new NotImplementedException();
         }
     }
 }

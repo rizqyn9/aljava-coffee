@@ -13,7 +13,7 @@ namespace Game
 
         public override void OnMachineStateChanged(MachineState _old, MachineState _new)
         {
-            //print("Machine State Changed");
+            base.OnMachineStateChanged(_old, _new);
         }
 
         public void OnMouseDown()
@@ -21,7 +21,6 @@ namespace Game
             if (gameState != GameState.START) return;
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
-
         }
 
         private void validate()
@@ -34,11 +33,11 @@ namespace Game
 
         IEnumerator ISpawn()
         {
-            if (firstInit)
-            {
-                firstInitHandler();
-                yield break;
-            }
+            //if (firstInit)
+            //{
+            //    firstInitHandler();
+            //    yield break;
+            //}
 
             print("Spawn beans");
             MachineState = MachineState.ON_PROCESS;
@@ -51,6 +50,12 @@ namespace Game
 
             MachineState = MachineState.ON_DONE;
             yield break;
+        }
+
+        public override void OnMachineProcess()
+        {
+            baseAnimateOnProcess();
+            base.OnMachineProcess();
         }
 
         private void firstInitHandler()
