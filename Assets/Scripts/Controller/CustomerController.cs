@@ -24,22 +24,17 @@ namespace Game
         [SerializeField] int customerCounter;
         [SerializeField] GameState gameState;
 
-        private void OnEnable()
-        {
-            MainController.OnGameStateChanged += GameStateHandler;
-        }
+        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
 
-        private void OnDisable()
-        {
-            MainController.OnGameStateChanged += GameStateHandler;
-        }
+        private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
 
         public void GameStateHandler(GameState _gameState)
         {
-
+            gameState = _gameState;
+            GameStateController.UpdateGameState(this, gameState);
         }
 
-        internal void Init()
+        public void OnGameBeforeStart()
         {
             OrderController = OrderController.Instance;
 
@@ -49,7 +44,7 @@ namespace Game
             getDepends();
         }
 
-        internal void StartCustomer()
+        public void OnGameStart()
         {
             print("I'm already to spawn my child");
             SpawnerState = SpawnerState.CAN_CREATE;
@@ -57,7 +52,7 @@ namespace Game
 
         private void Update()
         {
-            if (MainController.GameState != GameState.START) return;
+            if (gameState != GameState.START) return;
 
             if(SpawnerState == SpawnerState.CAN_CREATE && customerCounter <= maxSpawn)
             {
@@ -143,20 +138,7 @@ namespace Game
 
         public GameObject GetGameObject() => gameObject;
 
-        public void OnGameIddle()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGameBeforeStart()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGameStart()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void OnGameIddle() { }
 
         public void OnGamePause()
         {
@@ -175,7 +157,6 @@ namespace Game
 
         public void OnGameInit()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

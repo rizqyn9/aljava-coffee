@@ -35,7 +35,6 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public virtual void OnGameStateChanged() { }
 
-    // Access from child
     public virtual void OnGameIddle()
     {
         boxCollider2D.enabled = false;
