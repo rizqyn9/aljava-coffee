@@ -2732,7 +2732,7 @@ MonoBehaviour:
     transform: {fileID: 267634333}
   - isSeatAvaible: 1
     transform: {fileID: 2061301118}
-  OrderController: {fileID: 0}
+  OrderController: {fileID: 2113947056}
   LevelBase: {fileID: 0}
   BuyerTypes: []
   MenuTypes: []
@@ -2763,7 +2763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDDOL: 0
   deliveryQueueMenu: []
-  CustomerController: {fileID: 0}
+  CustomerController: {fileID: 2113947055}
   gameState: 0
 --- !u!222 &5488736148779487645
 CanvasRenderer:

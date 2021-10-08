@@ -22,21 +22,33 @@ namespace Game
         [SerializeField] LevelBase LevelBase;
 
         #region GAME STATE
-        [SerializeField] GameState gameState = GameState.INIT;
-        private void OnEnable()
-        {
-            MainController.OnGameStateChanged += GameStateHandler;
-        }
+        [SerializeField] GameState gameState;
 
-        private void OnDisable()
-        {
-            MainController.OnGameStateChanged += GameStateHandler;
-        }
+        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
+        private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
 
         public void GameStateHandler(GameState _gameState)
         {
-
+            gameState = _gameState;
+            GameStateController.UpdateGameState(this, gameState);
         }
+
+        public void OnGameInit()
+        {
+            setComponentUI();
+        }
+
+        public void OnGameBeforeStart()
+        {
+            spawnTopUI();
+        }
+
+        public void OnGameStart()
+        {
+            StartUI();
+        }
+
+
 
         #endregion
 
@@ -97,7 +109,6 @@ namespace Game
         #endregion
         internal void Init()
         {
-            setComponentUI();
         }
 
         private void setComponentUI()
@@ -129,20 +140,7 @@ namespace Game
 
         public GameObject GetGameObject() => gameObject;
 
-        public void OnGameIddle()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameBeforeStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameStart()
-        {
-            throw new NotImplementedException();
-        }
+        public void OnGameIddle() { }
 
         public void OnGamePause()
         {
@@ -178,11 +176,6 @@ namespace Game
             MachineUIOverlay.LeanMoveLocalY(-430, 2f);
 
             isOverlayActive = false;
-        }
-
-        public void OnGameInit()
-        {
-            throw new NotImplementedException();
         }
     }
 }

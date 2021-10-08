@@ -133,7 +133,6 @@ namespace Game
         public void OnCustomerDone(BuyerPrototype _cust)
         {
             TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
-
         }
 
         public GameObject GetGameObject() => gameObject;
