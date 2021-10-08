@@ -5,6 +5,11 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
+/// <summary>
+/// TODO
+/// Create levelling Machine
+/// Dynamic value for duration long time
+/// </summary>
 [CreateAssetMenu(fileName = "MachineData", menuName = "ScriptableObject/MachineData")]
 public class MachineData : ScriptableObject
 {
@@ -16,6 +21,8 @@ public class MachineData : ScriptableObject
     public GameObject PrefabResult;
     [Tooltip("Instance UI overlay when machine touched on first time")]
     public GameObject PrefabUIOverlay;
+    public float durationProcess = .5f;
+    public bool useBarComponent = true;
 }
 
 #if UNITY_EDITOR

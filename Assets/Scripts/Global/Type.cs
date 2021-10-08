@@ -121,8 +121,10 @@ public enum GlassState : byte
 public enum MachineState : byte
 {
     OFF,            // OFF, CANT HANDLING ANY REQUEST
+    INIT,
     ON_IDDLE,       // OUTPUT EMPTY
     ON_PROCESS,     // MACHINE GOING PROCESS
+    ON_CLEARANCE,
     ON_DONE,        // PROCESSING DONE, BUT OUTPUT NOT EQUALS NULL
 }
 

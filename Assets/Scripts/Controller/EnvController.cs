@@ -12,6 +12,9 @@ namespace Game
         public Transform flavourContainer;
         public Transform additionalContainer;
         public GlassContainer GlassContainer;
+        public GameObject radBar;
+
+        public static GameObject BarComponent { get => Instance.radBar; }
 
         [Header("Debug")]
         [SerializeField] List<Machine> Machines = new List<Machine>();

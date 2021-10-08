@@ -14,9 +14,10 @@ namespace Game
         [Header("Debug")]
         public GlassRegistered glassTarget;
 
-        public override void InitStart()
+        private void Start() => delay = MachineData.durationProcess;
+
+        public override void OnMachineIddle()
         {
-            MachineState = MachineState.ON_IDDLE;
             spawnResult();
         }
 
@@ -29,7 +30,7 @@ namespace Game
                 spawnToGlass();
             }
             else
-                Debug.Log("gak nemu");
+                Debug.LogWarning("gak nemu");
         }
 
         //FIXME

@@ -1,15 +1,20 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
 {
+    /// <summary>
+    /// TODO
+    /// On first init trigger UI overlay
+    /// Add Prefab overlay
+    /// FIXME
+    /// Machine State
+    /// </summary>
     public class BeansMachine : Machine
     {
         [Header("Debug")]
-        public CoffeeMaker coffeeMaker;
-        public bool firstInit = true;
+        [SerializeField] CoffeeMaker coffeeMaker;
+        [SerializeField] bool firstInit = true;
 
         public override void OnMachineStateChanged(MachineState _old, MachineState _new)
         {
@@ -52,10 +57,28 @@ namespace Game
             yield break;
         }
 
+        public override void OnGameBeforeStart()
+        {
+            base.OnGameBeforeStart();
+            instanceRadiusBar();
+        }
+
         public override void OnMachineProcess()
         {
-            baseAnimateOnProcess();
             base.OnMachineProcess();
+
+            baseAnimateOnProcess();
+            BarMachine.StartBar();
+        }
+
+        public override void OnMachineDone()
+        {
+            base.OnMachineDone();
+        }
+
+        public override void OnMachineClearance()
+        {
+            base.OnMachineClearance();
         }
 
         private void firstInitHandler()
@@ -67,7 +90,7 @@ namespace Game
 
         IEnumerator IDestroy()
         {
-            MachineState = MachineState.ON_PROCESS;
+            MachineState = MachineState.ON_CLEARANCE;
 
             resultGO.transform.LeanScale(new Vector2(0f, 0f), .2f);
             yield return new WaitForSeconds(.2f);

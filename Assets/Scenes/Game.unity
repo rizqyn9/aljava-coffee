@@ -2510,6 +2510,7 @@ MonoBehaviour:
   flavourContainer: {fileID: 1040080109}
   additionalContainer: {fileID: 82718092}
   GlassContainer: {fileID: 2019888368}
+  radBar: {fileID: 8475428959963206336, guid: 4721c8283017843f39893dfed285676b, type: 3}
   Machines: []
   gameState: 0
 --- !u!1 &2019888366

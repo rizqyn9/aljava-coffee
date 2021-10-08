@@ -14,9 +14,10 @@ namespace Game
         [SerializeField] GlassRegistered glassTarget;
         [SerializeField] List<MachineIgrendient> igrendientsList;
 
-        public override void InitStart()
+        public override void OnMachineIddle()
         {
-            MachineState = MachineState.ON_IDDLE;
+            base.OnMachineIddle();
+            print("INit");
             igrendientsList = new List<MachineIgrendient>();
         }
 
@@ -30,6 +31,8 @@ namespace Game
         IEnumerator ISpawn()
         {
             MachineState = MachineState.ON_PROCESS;
+
+            baseAnimateOnProcess();
 
             resultGO = Instantiate(resultPrefab, resultSpawnPosition);
             resultGO.LeanScale(new Vector2(1f, 1f), .8f);
@@ -61,7 +64,7 @@ namespace Game
 
             Destroy(resultGO);
 
-            InitStart();
+            MachineState = MachineState.ON_IDDLE;
             yield break;
         }
     }
