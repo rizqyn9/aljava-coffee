@@ -10,6 +10,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     public GameObject resultPrefab;
     public Transform resultSpawnPosition;
     public MachineIgrendient machineType;
+    public Transform progressBar;
 
     [Header("Debug")]
     public MachineData MachineData;
@@ -27,7 +28,6 @@ public abstract class Machine : MonoBehaviour, IGameState
     #region GAME STATE
     public void GameStateHandler(GameState _gameState)
     {
-        //print("====== Machine Game state handler");
         gameState = _gameState;
         GameStateController.UpdateGameState(this, _gameState);
         OnGameStateChanged();
@@ -66,12 +66,13 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     private void Start()
     {
+        MachineState = MachineState.INIT;
         gameObject.LeanAlpha(0, 0);
-        //transform.transform.position = new Vector2(basePos.x, basePos.y + 1.5f);
+
         basePos = transform.position;
 
-        gameState = MainController.GameState;           // To ensure that this variable sync on Main Controller
-        GameStateController.UpdateGameState(this, gameState);      //
+        gameState = MainController.GameState;                       // To ensure that this variable sync on Main Controller
+        GameStateController.UpdateGameState(this, gameState);       //
 
         EnvController.RegistMachine(this);
 
@@ -119,14 +120,26 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public virtual void OnMachineOff() { }
 
-    public virtual void OnMachineInit() { }
+    public virtual void OnMachineInit()
+    {
+        instanceRadiusBar();
+    }
 
-    public virtual void OnMachineDone() { }
+    public virtual void OnMachineProcess()
+    {
+        baseAnimateOnProcess();
+        BarMachine.isActive = true;
+    }
 
-    public virtual void OnMachineProcess() { }
+    public virtual void OnMachineDone()
+    {
 
-    public virtual void OnMachineClearance() { }
+    }
 
+    public virtual void OnMachineClearance()
+    {
+        BarMachine.isActive = false;
+    }
     public virtual void OnMachineIddle() { }
 
     #endregion
@@ -155,8 +168,11 @@ public abstract class Machine : MonoBehaviour, IGameState
     public void instanceRadiusBar()
     {
         RadiusBar = Instantiate(EnvController.BarComponent, FindObjectOfType<Canvas>().transform);
-        RadiusBar.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        RadiusBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(1,1,0));
         BarMachine = RadiusBar.GetComponent<BarMachine>();
+        BarMachine.machine = this;
         BarMachine.time = MachineData.durationProcess;
     }
+
+    public void setMachineState(MachineState _state) => MachineState = _state;
 }

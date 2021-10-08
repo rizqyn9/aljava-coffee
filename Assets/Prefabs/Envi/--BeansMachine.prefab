@@ -143,6 +143,7 @@ Transform:
   m_Children:
   - {fileID: 1468853308835805809}
   - {fileID: 1468853308871374573}
+  - {fileID: 7339534482226065150}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -161,14 +162,17 @@ MonoBehaviour:
   resultPrefab: {fileID: 3704801023082429980, guid: de620c6f76bf842818e965070b272ffb, type: 3}
   resultSpawnPosition: {fileID: 1468853308871374573}
   machineType: 3
-  nextTargetMachine: 0
-  resultIgrendients: 4
-  spawnOnStart: 0
-  MachineState: 0
-  isGameStarted: 0
+  progressBar: {fileID: 7339534482226065150}
+  MachineData: {fileID: 0}
+  basePos: {x: 0, y: 0}
+  _machineState: 0
+  gameState: 0
   resultGO: {fileID: 0}
   boxCollider2D: {fileID: 0}
+  BarMachine: {fileID: 0}
+  RadiusBar: {fileID: 0}
   coffeeMaker: {fileID: 0}
+  firstInit: 1
 --- !u!61 &1468853309064358763
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -195,3 +199,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.6777651, y: 2.833641}
   m_EdgeRadius: 0
+--- !u!1 &6542132313077572820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7339534482226065150}
+  m_Layer: 0
+  m_Name: barComp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7339534482226065150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6542132313077572820}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1468853309064358761}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

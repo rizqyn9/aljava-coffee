@@ -17,7 +17,6 @@ namespace Game
         public override void OnMachineIddle()
         {
             base.OnMachineIddle();
-            print("INit");
             igrendientsList = new List<MachineIgrendient>();
         }
 

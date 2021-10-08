@@ -38,11 +38,11 @@ namespace Game
 
         IEnumerator ISpawn()
         {
-            //if (firstInit)
-            //{
-            //    firstInitHandler();
-            //    yield break;
-            //}
+            if (firstInit)
+            {
+                firstInitHandler();
+                yield break;
+            }
 
             print("Spawn beans");
             MachineState = MachineState.ON_PROCESS;
@@ -57,19 +57,13 @@ namespace Game
             yield break;
         }
 
-        public override void OnGameBeforeStart()
-        {
-            base.OnGameBeforeStart();
-            instanceRadiusBar();
-        }
+        //public override void OnMachineProcess()
+        //{
+        //    base.OnMachineProcess();
 
-        public override void OnMachineProcess()
-        {
-            base.OnMachineProcess();
-
-            baseAnimateOnProcess();
-            BarMachine.StartBar();
-        }
+        //    baseAnimateOnProcess();
+        //    BarMachine.StartBar();
+        //}
 
         public override void OnMachineDone()
         {

@@ -50,36 +50,23 @@ namespace Game
         {
             LevelController.LevelBase = LevelBase;
 
-            GameState = GameState.INIT;
             print("<color=green>Init in Main Controller</color>");
-
-            initAllControllers();
 
             StartCoroutine(IStartGame());
         }
 
-        private static void initAllControllers()
-        {
-            //LevelController.Instance.Init();    //
-            //EnvController.Instance.Init();      //  
-            //GameUIController.Instance.Init();   //
-            //OrderController.Instance.Init();    //
-            //CustomerController.Instance.Init(); //
-            //RulesController.Instance.Init();    //
-        }
-
         IEnumerator IStartGame()
         {
+            GameState = GameState.INIT;
+
+            yield return new WaitForSeconds(1);
+
             print("Game Started");
             GameState = GameState.BEFORE_START;
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
             GameState = GameState.START;
-            //GameUIController.Instance.StartUI();
 
-            //yield return new WaitForSeconds(3);
-
-            //CustomerController.Instance.StartCustomer();
             yield break;
         }
 

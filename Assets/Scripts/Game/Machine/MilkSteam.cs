@@ -9,17 +9,11 @@ namespace Game
     {
         [Header("Properties")]
         public List<SpriteColorCustom> colorResult;
-        public float delay;
 
         [Header("Debug")]
         public GlassRegistered glassTarget;
 
-        private void Start() => delay = MachineData.durationProcess;
-
-        public override void OnMachineIddle()
-        {
-            spawnResult();
-        }
+        public override void OnMachineIddle() => spawnResult();
 
         private void OnMouseDown()
         {
@@ -55,9 +49,9 @@ namespace Game
 
             resultGO = Instantiate(resultPrefab, resultSpawnPosition);
             resultGO.transform.localScale = Vector2.zero;
-            resultGO.LeanScale(new Vector2(1, 1), delay);
+            resultGO.LeanScale(new Vector2(1, 1), MachineData.durationProcess);
 
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(MachineData.durationProcess);
 
             MachineState = MachineState.ON_DONE;
             yield break;
@@ -67,7 +61,6 @@ namespace Game
         {
             MachineState = MachineState.ON_PROCESS;
 
-            Debug.Log("Destroy");
             Destroy(resultGO);
             spawnResult();
 

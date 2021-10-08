@@ -12,26 +12,39 @@ namespace Game
         [Header("Debug")]
         [SerializeField] GameState gameState;
 
-        private void OnEnable()
-        {
-            MainController.OnGameStateChanged += GameStateHandler;
-        }
-
-        private void OnDisable()
-        {
-            MainController.OnGameStateChanged += GameStateHandler;
-        }
+        #region GAME STATE
+        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
+        private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
 
         public void GameStateHandler(GameState _gameState)
         {
-
+            gameState = _gameState;
+            GameStateController.UpdateGameState(this, gameState);
         }
 
-        internal void Init() { }
-        private void Start()
+        internal void Init()
+        {
+            deliveryQueueMenu = new List<BuyerPrototype>();
+        }
+
+        public void OnGameIddle() { }
+
+        public void OnGameBeforeStart() { }
+
+        public void OnGameStart() { }
+
+        public void OnGamePause() { }
+
+        public void OnGameClearance() { }
+
+        public void OnGameFinish() { }
+
+        public void OnGameInit() { }
+        #endregion
+
+        protected void Awake()
         {
             CustomerController = CustomerController.Instance;
-            print("Order Controller");
         }
 
         public bool findMenu(MenuType _menu, out CustomerHandler _customerHandler)
@@ -82,41 +95,5 @@ namespace Game
         private void clearQueue(BuyerPrototype _buyerPrototype) { }
 
         public GameObject GetGameObject() => gameObject;
-
-        public void OnGameIddle()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGameBeforeStart()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGameStart()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGamePause()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGameClearance()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGameFinish()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnGameInit()
-        {
-            throw new System.NotImplementedException();
-        }
     }
-
 }

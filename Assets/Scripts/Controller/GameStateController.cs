@@ -8,7 +8,7 @@ namespace Game
     {
         public static void UpdateGameState(IGameState _, GameState gameState)
         {
-            Debug.Log($"<color=yellow> req Update :{_} </color>");
+            //Debug.Log($"<color=yellow> req Update :{_} </color>");
             switch (gameState)
             {
                 case GameState.INIT:
