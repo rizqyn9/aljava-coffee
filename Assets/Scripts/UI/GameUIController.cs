@@ -14,7 +14,7 @@ namespace Game
         [SerializeField] TMP_Text progressHandler;
         [SerializeField] TMP_Text timeUI;
         [SerializeField] bool timerIsRunning = false;
-        [SerializeField] GameObject MachineUIOverlay;
+        [SerializeField] MachineOverlay machineOverlay;
 
         [Header("Debug")]
         [SerializeField] Vector2 basePos;
@@ -156,25 +156,6 @@ namespace Game
             throw new NotImplementedException();
         }
 
-
-        [SerializeField] bool isOverlayActive;
-        public bool reqUseMachineOverlay(GameObject _go)
-        {
-            if (isOverlayActive) return false;
-
-            MachineUIOverlay.SetActive(true);
-            MachineUIOverlay.LeanMoveLocalY(0, 2f);
-
-            isOverlayActive = true;
-            return true;
-        }
-
-        public void Btn_CloseOverlayMachine()
-        {
-            if (!isOverlayActive) return;
-            MachineUIOverlay.LeanMoveLocalY(-430, 2f);
-
-            isOverlayActive = false;
-        }
+        public bool reqUseMachineOverlay(GameObject _go) => machineOverlay.reqOverlay();
     }
 }
