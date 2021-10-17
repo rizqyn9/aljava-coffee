@@ -278,14 +278,13 @@ MonoBehaviour:
   progressHandler: {fileID: 580109022}
   timeUI: {fileID: 1660174399}
   timerIsRunning: 1
-  MachineUIOverlay: {fileID: 1669209335}
+  machineOverlay: {fileID: 1669209337}
   basePos: {x: 0, y: 0}
   LevelBase: {fileID: 0}
   gameState: 0
   _countDown: 0
   targetCounter: 0
   _counter: 0
-  isOverlayActive: 0
 --- !u!1 &135687793
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,13 +901,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 100782311}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1669209337}
+        m_TargetAssemblyTypeName: Game.MachineOverlay, Assembly-CSharp
+        m_MethodName: BTN_CloseOverlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2206,6 +2205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1669209336}
   - component: {fileID: 1669209338}
+  - component: {fileID: 1669209337}
   m_Layer: 5
   m_Name: --MachineOverlay
   m_TagString: Untagged
@@ -2234,6 +2234,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -430}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1669209337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669209335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f0792d4215d43ebbd18f3424b7e3a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOverlayActive: 0
+  startPos: {x: 0, y: 0}
 --- !u!222 &1669209338
 CanvasRenderer:
   m_ObjectHideFlags: 0
