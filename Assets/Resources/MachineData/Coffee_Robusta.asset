@@ -18,6 +18,6 @@ MonoBehaviour:
   autoRun: 0
   PrefabManager: {fileID: 1468853309064358762, guid: 09b90e592b15f4fe58f9fba768f140e8, type: 3}
   PrefabResult: {fileID: 8240910900947637322, guid: 459c0cb9598d741959b3b8bb6acbe100, type: 3}
-  PrefabUIOverlay: {fileID: 0}
+  PrefabUIOverlay: {fileID: 5546766652951777298, guid: d51707435fb1f4b6d94c71555763fd2b, type: 3}
   durationProcess: 5
   useBarComponent: 1

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class MachineUI : MonoBehaviour
+    public abstract class MachineUI : MonoBehaviour
     {
         [Header("Debug")]
         [SerializeField] MachineData machineData;

@@ -118,7 +118,6 @@ namespace Game
             Counter = 0;
             targetCounter = LevelBase.minBuyer;
             updateUI();
-            //spawnTopUI();
         }
 
         private void spawnTopUI()
@@ -156,6 +155,6 @@ namespace Game
             throw new NotImplementedException();
         }
 
-        public bool reqUseMachineOverlay(GameObject _go) => machineOverlay.reqOverlay();
+        public bool reqUseMachineOverlay(MachineData _machineData) => machineOverlay.reqOverlay(_machineData);
     }
 }

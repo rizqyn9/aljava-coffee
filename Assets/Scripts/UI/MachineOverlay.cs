@@ -1,22 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
 {
     public class MachineOverlay : MonoBehaviour
     {
-        [SerializeField] bool isOverlayActive = false;
-        [SerializeField] Vector2 startPos;
+        [Header("Properties")]
+        [SerializeField] float yOffset;
 
-        public bool reqOverlay()
+        [Header("Debug")]
+        [SerializeField] bool isOverlayActive = false;
+        [SerializeField] MachineData machineData;
+        [SerializeField] MachineUI machineUI;
+        [SerializeField] GameObject spawnGO;
+
+        private void OnEnable()
+        {
+            transform.position = new Vector2(transform.position.x, yOffset);
+        }
+
+        public bool reqOverlay(MachineData _machineData)
         {
             if (isOverlayActive) return false;
 
-            startPos = transform.position;
+            spawnGO = Instantiate(_machineData.PrefabUIOverlay, gameObject.transform);
+            machineUI = spawnGO.GetComponent<MachineUI>();
+            machineData = _machineData;
 
             setOverlayActive();
             return true;
+        }
+
+        public void reset()
+        {
+
         }
 
         void setOverlayActive()
@@ -29,7 +45,7 @@ namespace Game
         void setOverlayNonActive()
         {
             if (!isOverlayActive) return;
-            gameObject.LeanMoveLocalY(startPos.y - 100, 1f).setEaseInOutBack();
+            gameObject.LeanMoveLocalY(yOffset, 1f).setEaseInOutBack();
             isOverlayActive = false;
         }
 

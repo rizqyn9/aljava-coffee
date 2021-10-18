@@ -77,8 +77,8 @@ namespace Game
 
         private void firstInitHandler()
         {
-            print("firstInit machine");
-            GameUIController.Instance.reqUseMachineOverlay(MachineData.PrefabUIOverlay);
+            //print("firstInit machine");
+            GameUIController.Instance.reqUseMachineOverlay(MachineData);
             firstInit = false;
         }
 
