@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour
     public GameObject ExitBox;
     public GameObject AboutBox;
     public GameObject OrderBox;
+    public GameObject UpgradeBox;
+    public GameObject UpgradeWindow;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,8 @@ public class MenuManager : MonoBehaviour
         ExitBox.SetActive(false);
         AboutBox.SetActive(false);
         OrderBox.SetActive(false);
+        UpgradeBox.SetActive(false);
+        UpgradeWindow.SetActive(false);
     }
 
     // Update is called once per frame
@@ -73,6 +77,22 @@ public class MenuManager : MonoBehaviour
     public void CloseBuy()
     {
         OrderBox.SetActive(false);
+    }
+    public void OpenUpgrade()
+    {
+        UpgradeBox.SetActive(true);
+    }
+    public void CloseUpgrade()
+    {
+        UpgradeBox.SetActive(false);
+    }
+    public void UpgradeWindowOpen()
+    {
+        UpgradeWindow.SetActive(true);
+    }
+    public void UpgradeWindowClose()
+    {
+        UpgradeWindow.SetActive(false);
     }
     public void OpenMaps()
     {
