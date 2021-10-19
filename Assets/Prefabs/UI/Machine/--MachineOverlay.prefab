@@ -59,8 +59,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f0792d4215d43ebbd18f3424b7e3a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffset: 0
   isOverlayActive: 0
-  startPos: {x: 0, y: 0}
+  machineData: {fileID: 0}
+  machineUI: {fileID: 0}
+  spawnGO: {fileID: 0}
 --- !u!1 &755924525772405747
 GameObject:
   m_ObjectHideFlags: 0

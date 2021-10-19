@@ -14,6 +14,7 @@ namespace Game
         [SerializeField] TMP_Text progressHandler;
         [SerializeField] TMP_Text timeUI;
         [SerializeField] bool timerIsRunning = false;
+        [SerializeField] GameObject noClickArea;
         [SerializeField] MachineOverlay machineOverlay;
 
         [Header("Debug")]
@@ -39,6 +40,8 @@ namespace Game
 
         public void OnGameBeforeStart()
         {
+            machineOverlay.defaultPosition();
+            machineOverlay.gameObject.SetActive(true);
             spawnTopUI();
         }
 
@@ -110,6 +113,8 @@ namespace Game
         {
         }
 
+
+
         private void setComponentUI()
         {
             LevelBase = LevelController.LevelBase;
@@ -156,5 +161,10 @@ namespace Game
         }
 
         public bool reqUseMachineOverlay(MachineData _machineData) => machineOverlay.reqOverlay(_machineData);
+
+        #region NoClickArea
+        public void setNoClickArea(bool isActive) => noClickArea.SetActive(isActive);
+        public void Btn_NoClickAre() => print("click");
+        #endregion
     }
 }

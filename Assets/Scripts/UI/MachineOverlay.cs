@@ -15,6 +15,11 @@ namespace Game
 
         private void OnEnable()
         {
+            defaultPosition();
+        }
+
+        public void defaultPosition()
+        {
             transform.position = new Vector2(transform.position.x, yOffset);
         }
 
@@ -38,6 +43,7 @@ namespace Game
         void setOverlayActive()
         {
             if (isOverlayActive) return ;
+            GameUIController.Instance.setNoClickArea(true);
             gameObject.LeanMoveLocalY(0, 1f).setEaseInOutBack();
             isOverlayActive = true;
         }
@@ -45,6 +51,7 @@ namespace Game
         void setOverlayNonActive()
         {
             if (!isOverlayActive) return;
+            GameUIController.Instance.setNoClickArea(false);
             gameObject.LeanMoveLocalY(yOffset, 1f).setEaseInOutBack();
             isOverlayActive = false;
         }
