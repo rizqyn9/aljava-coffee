@@ -17,7 +17,6 @@ namespace Game
         [SerializeField] GameState _gameState;
         [SerializeField] LevelBase _levelBase;
         [SerializeField] bool isGameEnd = false;
-        [SerializeField] List<IGameState> ListenGameState = new List<IGameState>();
 
         public static event Action<GameState> OnGameStateChanged;
 
@@ -45,11 +44,6 @@ namespace Game
 
         private void Update()
         {
-            if (Input.GetKeyDown("q"))
-            {
-                print("click");
-                OnGameStateChanged?.Invoke(GameState);
-            }
         }
         
         #endregion
@@ -68,12 +62,11 @@ namespace Game
         {
             GameState = GameState.INIT;
 
-            yield return new WaitForSeconds(1);
+            //yield return new WaitForSeconds(1);
 
-            //print("Game Started");
             GameState = GameState.BEFORE_START;
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(GlobalController.Instance.startingAnimLenght);
             GameState = GameState.START;
 
             yield break;
@@ -81,7 +74,7 @@ namespace Game
 
         public void Start()
         {
-            Application.targetFrameRate = 60; // Optional platform
+            Application.targetFrameRate = 30; // Optional platform
         }
 
         IEnumerator gameFinished()

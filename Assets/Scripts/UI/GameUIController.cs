@@ -128,8 +128,8 @@ namespace Game
 
         private void spawnTopUI()
         {
-            TopBar.transform.LeanMoveLocalY(0, 1).setEaseInOutBounce();
-            PauseGO.transform.LeanMoveLocalX(360, 1).setEaseInOutBounce();
+            TopBar.transform.LeanMoveLocalY(0, GlobalController.Instance.startingAnimLenght).setEaseInOutBounce();
+            PauseGO.transform.LeanMoveLocalX(360, GlobalController.Instance.startingAnimLenght).setEaseInOutBounce();
         }
 
         internal void StartUI()
@@ -161,7 +161,7 @@ namespace Game
             throw new NotImplementedException();
         }
 
-        public bool reqUseMachineOverlay(MachineData _machineData) => machineOverlay.reqOverlay(_machineData);
+        public bool reqUseMachineOverlay(Machine machine) => machineOverlay.reqOverlay(machine);
 
         #region NoClickArea
         public void setNoClickArea(bool isActive) => noClickArea.SetActive(isActive);

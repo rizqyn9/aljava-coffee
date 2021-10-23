@@ -153,8 +153,8 @@ public abstract class Machine : MonoBehaviour, IGameState
     IEnumerator ISpawn()
     {
         yield return 1;
-        gameObject.LeanMoveLocalY(basePos.y, 1f);
-        gameObject.LeanAlpha(1, 2f);
+        gameObject.LeanMoveLocalY(basePos.y, GlobalController.Instance.startingAnimLenght/2);
+        gameObject.LeanAlpha(1, GlobalController.Instance.startingAnimLenght);
     }
 
     public GameObject GetGameObject() => gameObject;

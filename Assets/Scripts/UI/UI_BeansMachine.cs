@@ -8,9 +8,7 @@ namespace Game
     {
         [SerializeField] BeansMachine beansMachine;
 
-        public void Btn_MachineClick()
-        {
-
-        }
+        public void Btn_SimApprove() => handleApprovalChange(true);
+        public void Btn_SimReject() => handleApprovalChange(false);
     }
 }

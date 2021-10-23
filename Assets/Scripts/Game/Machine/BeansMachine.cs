@@ -9,11 +9,6 @@ namespace Game
         [SerializeField] CoffeeMaker coffeeMaker;
         [SerializeField] bool firstInit = true;
 
-        public override void OnMachineStateChanged(MachineState _old, MachineState _new)
-        {
-            base.OnMachineStateChanged(_old, _new);
-        }
-
         public void OnMouseDown()
         {
             if (!isInteractable()) return;
@@ -29,6 +24,11 @@ namespace Game
             }
         }
 
+        private void firstInitHandler()
+        {
+            GameUIController.Instance.reqUseMachineOverlay(this);
+            firstInit = false;
+        }
 
         IEnumerator ISpawn()
         {
@@ -38,7 +38,6 @@ namespace Game
                 yield break;
             }
 
-            print("Spawn beans");
             MachineState = MachineState.ON_PROCESS;
 
             resultGO = Instantiate(MachineData.PrefabResult, resultSpawnPosition);
@@ -49,23 +48,6 @@ namespace Game
 
             MachineState = MachineState.ON_DONE;
             yield break;
-        }
-
-        public override void OnMachineDone()
-        {
-            base.OnMachineDone();
-        }
-
-        public override void OnMachineClearance()
-        {
-            base.OnMachineClearance();
-        }
-
-        private void firstInitHandler()
-        {
-            //print("firstInit machine");
-            GameUIController.Instance.reqUseMachineOverlay(MachineData);
-            firstInit = false;
         }
 
         IEnumerator IDestroy()
