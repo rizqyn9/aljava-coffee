@@ -10,7 +10,8 @@ public abstract class Machine : MonoBehaviour, IGameState
     public GameObject resultPrefab;
     public Transform resultSpawnPosition;
     public MachineIgrendient machineType;
-    public Transform progressBar;
+    public Transform posProgressBar;
+    public Transform posBarCapacity;
 
     [Header("Debug")]
     public MachineData MachineData;
@@ -19,11 +20,43 @@ public abstract class Machine : MonoBehaviour, IGameState
     [SerializeField] protected GameState gameState;
     [SerializeField] protected GameObject resultGO;
     [SerializeField] protected BoxCollider2D boxCollider2D;
+
+    /** RADIUS BAR */
     [SerializeField] protected BarMachine BarMachine;
-    [SerializeField] protected GameObject RadiusBar;
+    [SerializeField] protected GameObject BarMachineGO;
+
+    /** CAPACITY */
+    [SerializeField] protected CapacityMachine BarCapacity;
+    [SerializeField] protected GameObject BarCapacityGO;
+    [SerializeField] protected int maxCapacity;
+    [SerializeField] protected int stateCapacity;
+
+    #region FirstInit
+    public void SetMachineData(MachineData _machineData)
+    {
+        MachineData = _machineData;
+        machineType = _machineData.MachineType;
+    }
 
     private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
     private void OnDisable() => MainController.OnGameStateChanged -= GameStateHandler;
+    private void Awake() => boxCollider2D = GetComponent<BoxCollider2D>();
+
+    private void Start()
+    {
+        MachineState = MachineState.INIT;
+        gameObject.LeanAlpha(0, 0);
+
+        basePos = transform.position;
+
+        gameState = MainController.GameState;                       // To ensure that this variable sync on Main Controller
+        GameStateController.UpdateGameState(this, gameState);       //
+
+        EnvController.RegistMachine(this);
+
+        MachineState = MachineState.OFF;
+    }
+    #endregion
 
     #region GAME STATE
     public void GameStateHandler(GameState _gameState)
@@ -58,26 +91,6 @@ public abstract class Machine : MonoBehaviour, IGameState
         boxCollider2D.enabled = false;
     }
     #endregion
-
-    private void Awake()
-    {
-        boxCollider2D = GetComponent<BoxCollider2D>();
-    }
-
-    private void Start()
-    {
-        MachineState = MachineState.INIT;
-        gameObject.LeanAlpha(0, 0);
-
-        basePos = transform.position;
-
-        gameState = MainController.GameState;                       // To ensure that this variable sync on Main Controller
-        GameStateController.UpdateGameState(this, gameState);       //
-
-        EnvController.RegistMachine(this);
-
-        MachineState = MachineState.OFF;
-    }
 
     #region MACHINE STATE
     public MachineState MachineState
@@ -123,6 +136,10 @@ public abstract class Machine : MonoBehaviour, IGameState
     public virtual void OnMachineInit()
     {
         instanceRadiusBar();
+        if (MachineData.useBarCapacity)
+        {
+            instanceBarCapacity();
+        }
     }
 
     public virtual void OnMachineProcess()
@@ -144,12 +161,6 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     #endregion
 
-    public void SetMachineData(MachineData _machineData)
-    {
-        MachineData = _machineData;
-        machineType = _machineData.MachineType;
-    }
-
     IEnumerator ISpawn()
     {
         yield return 1;
@@ -165,14 +176,30 @@ public abstract class Machine : MonoBehaviour, IGameState
         LeanTween.scaleY(gameObject, .85f, .4f).setEaseInOutBounce().setLoopPingPong(5);
     }
 
-    public void instanceRadiusBar()
+    void instanceRadiusBar()
     {
-        RadiusBar = Instantiate(EnvController.BarComponent, GameUIController.Instance.radiusUI);
-        RadiusBar.name = $"{gameObject.name}--radius-bar";
-        RadiusBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(1,1,0));
-        BarMachine = RadiusBar.GetComponent<BarMachine>();
+        BarMachineGO = Instantiate(EnvController.Instance.radBarComponent, GameUIController.Instance.radiusUI);
+        BarMachineGO.name = $"{gameObject.name}--radius-bar";
+        BarMachineGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(MachineData.posBarDuration.x, MachineData.posBarDuration.y, 0));
+        BarMachine = BarMachineGO.GetComponent<BarMachine>();
         BarMachine.machine = this;
         BarMachine.time = MachineData.durationProcess;
+    }
+
+    void instanceBarCapacity()
+    {
+        BarCapacityGO = Instantiate(EnvController.Instance.capacityBarComponent, GameUIController.Instance.capacityUI);
+        BarCapacityGO.name = $"{gameObject.name}--capacity-bar";
+        BarCapacityGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(MachineData.posBarCapacity.x, MachineData.posBarCapacity.y, 0));
+
+        BarCapacity = BarCapacityGO.GetComponent<CapacityMachine>();
+    }
+
+    public void grabMachine()
+    {
+        stateCapacity -= 1;
+        BarCapacity.stateCapacity = stateCapacity;
+
     }
 
     public void setMachineState(MachineState _state) => MachineState = _state;

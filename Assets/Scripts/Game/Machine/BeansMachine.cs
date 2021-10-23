@@ -14,13 +14,18 @@ namespace Game
             if (!isInteractable()) return;
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
+            
         }
 
         private void validate()
         {
             if (EnvController.FindAndCheckTarget(MachineData.TargetMachine, out coffeeMaker))
             {
-                StartCoroutine(IDestroy());
+                grabMachine();
+                if(stateCapacity <= 0)
+                {
+                    StartCoroutine(IDestroy());
+                }
             }
         }
 

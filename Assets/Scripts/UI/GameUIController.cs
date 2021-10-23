@@ -17,6 +17,7 @@ namespace Game
         [SerializeField] GameObject noClickArea;
         [SerializeField] MachineOverlay machineOverlay;
         public Transform radiusUI;
+        public Transform capacityUI;
 
         [Header("Debug")]
         [SerializeField] Vector2 basePos;

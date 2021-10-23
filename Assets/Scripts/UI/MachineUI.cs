@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,11 @@ namespace Game
 {
     public abstract class MachineUI : MonoBehaviour
     {
+        [Header("Properties")]
+        [SerializeField] bool useCheckButton = true;
+
         [Header("Debug")]
         [SerializeField] Machine machine;
-        [SerializeField] bool isApproved;
         [SerializeField] MachineOverlay machineOverlay;
 
         public void setData(Machine _machine, MachineOverlay _machineOverlay)
@@ -18,11 +21,21 @@ namespace Game
         }
 
 
-        public void handleApprovalChange(bool res)
+        [SerializeField] bool _isApproved;
+        public bool isApproved
         {
-            isApproved = res;
-            machineOverlay.handleApprove(res);
-            OnApprovalChange();
+            get => _isApproved;
+            set
+            {
+                _isApproved = value;
+                OnApprovalChange();
+                if (!useCheckButton) handleCheck();
+            }
+        }
+
+        public void handleCheck()
+        {
+            machineOverlay.handleApprove(isApproved);
         }
 
         public virtual void OnApprovalChange() { }

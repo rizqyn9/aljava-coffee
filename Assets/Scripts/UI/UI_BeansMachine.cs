@@ -6,9 +6,8 @@ namespace Game
 {
     public class UI_BeansMachine : MachineUI
     {
-        [SerializeField] BeansMachine beansMachine;
-
-        public void Btn_SimApprove() => handleApprovalChange(true);
-        public void Btn_SimReject() => handleApprovalChange(false);
+        public void Btn_SimApprove() => isApproved = true;
+        public void Btn_SimReject() => isApproved = false;
+        public void Btn_Check() => handleCheck();
     }
 }
