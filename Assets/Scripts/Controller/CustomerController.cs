@@ -46,7 +46,7 @@ namespace Game
 
         public void OnGameStart()
         {
-            print("I'm already to spawn my child");
+            //print("I'm already to spawn my child");
             SpawnerState = SpawnerState.CAN_CREATE;
         }
 

@@ -23,6 +23,15 @@ namespace Game
 
         public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
 
+        #region Prevent sprite
+        private bool _onUI = false;
+        public bool onUI
+        {
+            get => _onUI;
+            set => _onUI = value;
+        }
+        #endregion
+
         #region GAME STATE
         public static GameState GameState {
             get => Instance._gameState;
@@ -44,7 +53,7 @@ namespace Game
         }
         
         #endregion
-        
+
 
         public void Init()
         {
@@ -61,7 +70,7 @@ namespace Game
 
             yield return new WaitForSeconds(1);
 
-            print("Game Started");
+            //print("Game Started");
             GameState = GameState.BEFORE_START;
 
             yield return new WaitForSeconds(3);

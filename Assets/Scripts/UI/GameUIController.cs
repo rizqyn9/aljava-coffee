@@ -16,6 +16,7 @@ namespace Game
         [SerializeField] bool timerIsRunning = false;
         [SerializeField] GameObject noClickArea;
         [SerializeField] MachineOverlay machineOverlay;
+        public Transform radiusUI;
 
         [Header("Debug")]
         [SerializeField] Vector2 basePos;

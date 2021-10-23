@@ -167,7 +167,8 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public void instanceRadiusBar()
     {
-        RadiusBar = Instantiate(EnvController.BarComponent, FindObjectOfType<Canvas>().transform);
+        RadiusBar = Instantiate(EnvController.BarComponent, GameUIController.Instance.radiusUI);
+        RadiusBar.name = $"{gameObject.name}--radius-bar";
         RadiusBar.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(1,1,0));
         BarMachine = RadiusBar.GetComponent<BarMachine>();
         BarMachine.machine = this;
@@ -175,4 +176,17 @@ public abstract class Machine : MonoBehaviour, IGameState
     }
 
     public void setMachineState(MachineState _state) => MachineState = _state;
+
+    /// <summary>
+    /// for validating when player try to click gameObject
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool isInteractable()
+    {
+        if (
+            !MainController.Instance.onUI
+            && gameState != GameState.START
+            ) return false;
+        else return true;
+    }
 }

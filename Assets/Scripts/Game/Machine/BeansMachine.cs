@@ -3,13 +3,6 @@ using UnityEngine;
 
 namespace Game
 {
-    /// <summary>
-    /// TODO
-    /// On first init trigger UI overlay
-    /// Add Prefab overlay
-    /// FIXME
-    /// Machine State
-    /// </summary>
     public class BeansMachine : Machine
     {
         [Header("Debug")]
@@ -23,7 +16,7 @@ namespace Game
 
         public void OnMouseDown()
         {
-            if (gameState != GameState.START) return;
+            if (!isInteractable()) return;
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
         }
@@ -35,6 +28,7 @@ namespace Game
                 StartCoroutine(IDestroy());
             }
         }
+
 
         IEnumerator ISpawn()
         {
@@ -56,14 +50,6 @@ namespace Game
             MachineState = MachineState.ON_DONE;
             yield break;
         }
-
-        //public override void OnMachineProcess()
-        //{
-        //    base.OnMachineProcess();
-
-        //    baseAnimateOnProcess();
-        //    BarMachine.StartBar();
-        //}
 
         public override void OnMachineDone()
         {
