@@ -77,7 +77,6 @@ namespace Game
                         _buyerPrototype.menuListNames.Remove(_menuName);
                         if (_buyerPrototype.menuListNames.Count < 1)
                         {
-                            Debug.Log("Clear");
                             _buyerPrototype.customerHandler.onMenusDone();
                         }
                         clearQueue(deliveryQueueMenu[i]);
