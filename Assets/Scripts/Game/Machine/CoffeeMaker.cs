@@ -12,15 +12,26 @@ namespace Game
 
         [Header("Debug")]
         [SerializeField] GlassRegistered glassTarget;
-        [SerializeField] List<MachineIgrendient> igrendientsList;
+        [SerializeField] List<MachineIgrendient> igrendientsList = new List<MachineIgrendient>();
 
-        public override void OnMachineIddle()
+        private void OnMouseDown()
         {
-            base.OnMachineIddle();
-            igrendientsList = new List<MachineIgrendient>();
+            if (MachineState == MachineState.ON_DONE
+                && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.NULL, out glassTarget)
+                && igrendientsList.Count >= 0
+                )
+            {
+                StartCoroutine(IDestroy());
+            }
         }
 
-        public void ReqInput(MachineIgrendient _MachineIgrendient)
+        public override void OnMachineInit()
+        {
+            base.OnMachineInit();
+
+        }
+
+        public void reqInput(MachineIgrendient _MachineIgrendient)
         {
             StartCoroutine(ISpawn());
             igrendientsList.Add(_MachineIgrendient);
@@ -31,40 +42,27 @@ namespace Game
         {
             MachineState = MachineState.ON_PROCESS;
 
+            yield return 1;
+
             baseAnimateOnProcess();
 
-            resultGO = Instantiate(resultPrefab, resultSpawnPosition);
-            resultGO.LeanScale(new Vector2(1f, 1f), .8f);
-            yield return new WaitForSeconds(.8f);
-
-            MachineState = MachineState.ON_DONE;
             yield break;
-        }
-
-        private void OnMouseDown()
-        {
-            if (MachineState == MachineState.ON_DONE
-                && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.NULL, out glassTarget)
-                )
-            {
-                StartCoroutine(IDestroy());
-            }
         }
 
         IEnumerator IDestroy()
         {
-            MachineState = MachineState.ON_PROCESS;
-
             glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, _multipleIgrendients: igrendientsList);
             glassTarget.glass.process();
 
-            resultGO.LeanScale(new Vector2(0, 0), .2f);
-            yield return new WaitForSeconds(.2f);
-
-            Destroy(resultGO);
 
             MachineState = MachineState.ON_IDDLE;
             yield break;
+        }
+
+        void resetDepends()
+        {
+            igrendientsList = new List<MachineIgrendient>();
+            glassTarget = new GlassRegistered();
         }
     }
 }

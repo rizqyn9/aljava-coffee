@@ -52,7 +52,7 @@ namespace Game
         IEnumerator IThrowResult()
         {
 
-            coffeeMaker.ReqInput(MachineData.MachineType);
+            coffeeMaker.reqInput(MachineData.MachineType);
 
             yield break;
         }

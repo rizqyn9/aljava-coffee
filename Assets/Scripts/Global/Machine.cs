@@ -37,7 +37,6 @@ public abstract class Machine : MonoBehaviour, IGameState
     {
         MachineData = _machineData;
         machineType = _machineData.MachineType;
-        spawnOverlay = _machineData.useUIOverlay;
     }
 
     private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
@@ -164,10 +163,13 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public GameObject GetGameObject() => gameObject;
 
-    public void baseAnimateOnProcess()
+    public void baseAnimateOnProcess() => StartCoroutine(baseProcess());
+
+    IEnumerator baseProcess()
     {
         LeanTween.scaleX(gameObject, .9f, .2f).setEaseInOutBounce().setLoopPingPong(5);
         LeanTween.scaleY(gameObject, .85f, .4f).setEaseInOutBounce().setLoopPingPong(5);
+        yield return new WaitForSeconds(.4f);
     }
 
     void instanceRadiusBar()
