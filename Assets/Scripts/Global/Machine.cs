@@ -26,10 +26,8 @@ public abstract class Machine : MonoBehaviour, IGameState
     [SerializeField] protected GameObject BarMachineGO;
 
     /** CAPACITY */
-    [SerializeField] protected CapacityMachine BarCapacity;
-    [SerializeField] protected GameObject BarCapacityGO;
-    [SerializeField] protected int maxCapacity;
-    [SerializeField] protected int stateCapacity;
+    [SerializeField] protected CapacityMachine CapacityMachine;
+    [SerializeField] internal GameObject BarCapacityGO;
 
     #region FirstInit
     public void SetMachineData(MachineData _machineData)
@@ -186,23 +184,20 @@ public abstract class Machine : MonoBehaviour, IGameState
         BarMachine.time = MachineData.durationProcess;
     }
 
+    #region Bar Capacity
     void instanceBarCapacity()
     {
         BarCapacityGO = Instantiate(EnvController.Instance.capacityBarComponent, GameUIController.Instance.capacityUI);
         BarCapacityGO.name = $"{gameObject.name}--capacity-bar";
         BarCapacityGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(MachineData.posBarCapacity.x, MachineData.posBarCapacity.y, 0));
 
-        BarCapacity = BarCapacityGO.GetComponent<CapacityMachine>();
+        CapacityMachine = BarCapacityGO.GetComponent<CapacityMachine>();
+        CapacityMachine.init(this);
     }
 
-    public void grabMachine()
-    {
-        stateCapacity -= 1;
-        BarCapacity.stateCapacity = stateCapacity;
 
-    }
+    #endregion
 
-    public void setMachineState(MachineState _state) => MachineState = _state;
 
     /// <summary>
     /// for validating when player try to click gameObject

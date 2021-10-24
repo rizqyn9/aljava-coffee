@@ -21,11 +21,11 @@ namespace Game
         {
             if (EnvController.FindAndCheckTarget(MachineData.TargetMachine, out coffeeMaker))
             {
-                grabMachine();
-                if(stateCapacity <= 0)
+                if(CapacityMachine.stateCapacity == 0)
                 {
                     StartCoroutine(IDestroy());
                 }
+                CapacityMachine.getOne();
             }
         }
 
@@ -44,6 +44,8 @@ namespace Game
             }
 
             MachineState = MachineState.ON_PROCESS;
+
+            CapacityMachine.setFull();
 
             resultGO = Instantiate(MachineData.PrefabResult, resultSpawnPosition);
             resultGO.transform.LeanScale(Vector2.zero, 0);

@@ -10,42 +10,57 @@ namespace Game
         public Image filled;
 
         [Header("Debug")]
-        [SerializeField] int maxCapacity;
+        [SerializeField] RectTransform rectTransform;
         [SerializeField] Machine machine;
+        [SerializeField] int maxCapacity;
+        [SerializeField] int _stateCapacity = 0;
         [SerializeField] float deltaPerBar;
-        [SerializeField] int _stateCapacity;
+
         public int stateCapacity
         {
             get => _stateCapacity;
             set
             {
-                updateUI(_stateCapacity > value);
+                OnUpdateCapacity(_stateCapacity, value);
                 _stateCapacity = value;
-                if (_stateCapacity == 0) OnEmpty();
             }
         }
 
-        private void updateUI(bool isDecrease)
+        private void OnUpdateCapacity(int _old, int _new)
         {
-            float v = isDecrease ? (filled.fillAmount -= deltaPerBar) : (filled.fillAmount += deltaPerBar);
+            filled.fillAmount = (float)_new / maxCapacity;
         }
 
-        private void OnEmpty()
+        public void getOne()
         {
-            throw new NotImplementedException();
+            stateCapacity -= 1;
+            if(_stateCapacity <= 0)
+            {
+                print("empty");
+                OnEmpty();
+            }
         }
 
         public void setFull()
         {
-            filled.fillAmount = 1;
+            stateCapacity = maxCapacity;
+            LeanTween.alpha(rectTransform, 1, 1f);
         }
 
-        public void setMin()
+        private void OnEmpty()
         {
-            stateCapacity = -1;
+            LeanTween.alpha(rectTransform, 0, 1f);
         }
 
-        private void Start() => hide();
+        private void Start()
+        {
+            LeanTween.alpha(rectTransform, 0, 0);
+        }
+
+        private void Awake()
+        {
+            rectTransform = gameObject.GetComponent<RectTransform>();
+        }
 
         public void init(Machine _machine)
         {
@@ -53,8 +68,5 @@ namespace Game
             maxCapacity = _machine.MachineData.maxCapacity;
             deltaPerBar = 1 / maxCapacity;
         }
-
-        public void hide() => gameObject.LeanAlpha(0, 0);
-        public void show() => gameObject.LeanAlpha(0, .4f);
     }
 }
