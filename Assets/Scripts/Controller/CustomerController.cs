@@ -44,9 +44,10 @@ namespace Game
             getDepends();
         }
 
+        #region Reactive Spawn Logic
+
         public void OnGameStart()
         {
-            //print("I'm already to spawn my child");
             SpawnerState = SpawnerState.CAN_CREATE;
         }
 
@@ -56,13 +57,14 @@ namespace Game
 
             if(SpawnerState == SpawnerState.CAN_CREATE && customerCounter <= maxSpawn)
             {
-                SpawnerState = SpawnerState.VALIDATE;
                 if (isAvaibleSeat())
                 {
                     createCustomer(seatIndex[Random.Range(0, seatIndex.Count)]);
                 }
             }
         }
+
+        #endregion
 
         [SerializeField] Vector2[] spawnPosTemp;
         private void createCustomer(int _seatIndex)

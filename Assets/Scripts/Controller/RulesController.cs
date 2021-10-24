@@ -7,19 +7,23 @@ namespace Game
 {
     public class RulesController : Singleton<RulesController>, IGameState
     {
+        [Header("GameStat")]
+        public GameMode gameMode;
+        public float gameDuration = 0;
+        public int buyerInstanceTotal = 0;
+        public int menuIntanceTotal = 0;
+        public int earnMoneyTotal = 0;
+
         [Header("Debug")]
-        [SerializeField] LevelBase LevelBase;
+        [SerializeField] LevelBase levelBase;
         [SerializeField] GameState gameState;
         public void OnGameStateChanged(GameState _old, GameState _new) => gameState = _new;
 
-        private void OnEnable()
+        private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
+        private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
+        public void Init()
         {
-            MainController.OnGameStateChanged += GameStateHandler;
-        }
-
-        private void OnDisable()
-        {
-            MainController.OnGameStateChanged += GameStateHandler;
+            levelBase = LevelController.LevelBase;
         }
 
         public void GameStateHandler(GameState _gameState)
@@ -27,10 +31,9 @@ namespace Game
 
         }
 
-        public void Init()
+        public void test()
         {
-
-            LevelBase = LevelController.LevelBase;
+            print("test");
         }
 
         public void HandleGameTimeOut()
@@ -52,8 +55,8 @@ namespace Game
         [SerializeField] int buyerCounter = 0;
         public static void OnCustomerServed(BuyerPrototype _buyerPrototype)
         {
-            Instance.buyerCounter += 1;
-            Instance.updateUI();
+            //Instance.buyerCounter += 1;
+            //Instance.updateUI();
         }
 
         private void updateUI()
@@ -64,7 +67,7 @@ namespace Game
         [SerializeField] int menuCounter = 0;
         public static void OnMenuServed(LevelBase _levelBase)
         {
-            Instance.menuCounter += 1;
+            //Instance.menuCounter += 1;
         }
 
         public GameObject GetGameObject() => gameObject;

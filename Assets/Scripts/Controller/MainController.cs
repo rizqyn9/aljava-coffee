@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Game
 {
@@ -12,6 +10,8 @@ namespace Game
         public int delay = 10;
         public GameObject tempCustomer;
         public int targetCustomer = 5;
+
+        public static RulesController rulesController;
 
         [Header("Debug")]
         [SerializeField] GameState _gameState;
@@ -41,18 +41,13 @@ namespace Game
                 Instance._gameState = value;
             }
         }
-
-        private void Update()
-        {
-        }
-        
         #endregion
 
 
         public void Init()
         {
             LevelController.LevelBase = LevelBase;
-
+            rulesController = RulesController.Instance;
             print("<color=green>Init in Main Controller</color>");
 
             StartCoroutine(IStartGame());

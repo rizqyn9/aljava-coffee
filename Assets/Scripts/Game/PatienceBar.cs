@@ -9,12 +9,17 @@ namespace Game
         public bool started = false;
         public float valState = 10;
         public float duration;
-        public CustomerHandler CustomerHandler;
+        public CustomerHandler customerHandler;
+
+        public void init(CustomerHandler _customerHandler)
+        {
+            customerHandler = _customerHandler;
+        }
 
         internal void StartBar(float _duration)
         {
             duration = _duration;
-            CustomerHandler = GetComponentInParent<CustomerHandler>();
+            customerHandler = GetComponentInParent<CustomerHandler>();
             StartCoroutine(IStartBar());
         }
 
@@ -23,7 +28,7 @@ namespace Game
             yield return 0;
             filled.LeanMoveLocalY(-1f, duration).setOnComplete(() =>
             {
-                CustomerHandler.onMenusDone();
+                customerHandler.onMenusDone();
             });
             yield break;            
         }
@@ -37,7 +42,7 @@ namespace Game
                 if(filled.transform.position.y == 0)
                 {
                     print("marah");
-                    CustomerHandler.StartCoroutine(CustomerHandler.IMarah());
+                    customerHandler.StartCoroutine(customerHandler.IMarah());
                 }
             }
         }

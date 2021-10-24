@@ -30,7 +30,6 @@ namespace Game
         [SerializeField] BuyerType buyerType;
         [SerializeField] BuyerPrototype buyerPrototype;
         [SerializeField] List<buyerOrderItemHandler> orderItemHandlers;
-        [SerializeField] Transform destinationSeat;
         [SerializeField] Animator animator;
         [SerializeField] GameObject gameChar;
         //[SerializeField] EmotionalState EmotionalState;
@@ -45,12 +44,15 @@ namespace Game
             animator = gameChar.GetComponentInChildren<Animator>();
 
             renderMenu();
+            patienceBar.init(this);
 
             buyerPrototype.customerHandler = this;
 
             StartCoroutine(startCustomer());
         }
 
+
+        #region Menu Handler
         private void renderMenu()
         {
             if(buyerPrototype.menuListNames.Count == 1)
@@ -79,6 +81,15 @@ namespace Game
             orderItemHandlers.Add(itemHandler);
         }
 
+        #endregion
+
+        #region Event Customer
+
+        public void onSeat()
+        {
+
+        }
+
         /// <summary>
         /// Trigger when player success to serving a menu
         /// </summary>
@@ -99,6 +110,13 @@ namespace Game
 
             Destroy(gameObject);
         }
+
+        public void onLeaveSeat()
+        {
+
+        }
+
+        #endregion
 
         [SerializeField] float _direction;
         [SerializeField] float _duration;
