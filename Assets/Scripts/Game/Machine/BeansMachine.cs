@@ -3,37 +3,36 @@ using UnityEngine;
 
 namespace Game
 {
-    /// <summary>
-    /// TODO
-    /// On first init trigger UI overlay
-    /// Add Prefab overlay
-    /// FIXME
-    /// Machine State
-    /// </summary>
     public class BeansMachine : Machine
     {
         [Header("Debug")]
         [SerializeField] CoffeeMaker coffeeMaker;
         [SerializeField] bool firstInit = true;
 
-        public override void OnMachineStateChanged(MachineState _old, MachineState _new)
-        {
-            base.OnMachineStateChanged(_old, _new);
-        }
-
         public void OnMouseDown()
         {
-            if (gameState != GameState.START) return;
+            if (!isInteractable()) return;
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
+            
         }
 
         private void validate()
         {
             if (EnvController.FindAndCheckTarget(MachineData.TargetMachine, out coffeeMaker))
             {
-                StartCoroutine(IDestroy());
+                if(CapacityMachine.stateCapacity == 0)
+                {
+                    StartCoroutine(IDestroy());
+                }
+                CapacityMachine.getOne();
             }
+        }
+
+        private void firstInitHandler()
+        {
+            GameUIController.Instance.reqUseMachineOverlay(this);
+            firstInit = false;
         }
 
         IEnumerator ISpawn()
@@ -44,8 +43,9 @@ namespace Game
                 yield break;
             }
 
-            print("Spawn beans");
             MachineState = MachineState.ON_PROCESS;
+
+            CapacityMachine.setFull();
 
             resultGO = Instantiate(MachineData.PrefabResult, resultSpawnPosition);
             resultGO.transform.LeanScale(Vector2.zero, 0);
@@ -55,31 +55,6 @@ namespace Game
 
             MachineState = MachineState.ON_DONE;
             yield break;
-        }
-
-        //public override void OnMachineProcess()
-        //{
-        //    base.OnMachineProcess();
-
-        //    baseAnimateOnProcess();
-        //    BarMachine.StartBar();
-        //}
-
-        public override void OnMachineDone()
-        {
-            base.OnMachineDone();
-        }
-
-        public override void OnMachineClearance()
-        {
-            base.OnMachineClearance();
-        }
-
-        private void firstInitHandler()
-        {
-            //print("firstInit machine");
-            GameUIController.Instance.reqUseMachineOverlay(MachineData);
-            firstInit = false;
         }
 
         IEnumerator IDestroy()

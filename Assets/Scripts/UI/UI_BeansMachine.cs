@@ -6,9 +6,8 @@ namespace Game
 {
     public class UI_BeansMachine : MachineUI
     {
-        public void Btn_MachineClick()
-        {
-
-        }
+        public void Btn_SimApprove() => isApproved = true;
+        public void Btn_SimReject() => isApproved = false;
+        public void Btn_Check() => handleCheck();
     }
 }

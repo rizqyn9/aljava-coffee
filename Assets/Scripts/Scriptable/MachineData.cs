@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,13 +14,22 @@ public class MachineData : ScriptableObject
     public MachineClass MachineClass;
     public MachineIgrendient MachineType;
     public MachineIgrendient TargetMachine;
-    public bool autoRun = false;
     public GameObject PrefabManager;
     public GameObject PrefabResult;
+
     [Tooltip("Instance UI overlay when machine touched on first time")]
     public GameObject PrefabUIOverlay;
+
+    [Header("Duration Component")]
+    public bool autoRun = false;
+    public Vector2 posBarDuration = new Vector2(1, 1);
     public float durationProcess = .5f;
-    public bool useBarComponent = true;
+    //public bool useBarComponent = true;
+
+    [Header("Capacity")]
+    public Vector2 posBarCapacity = new Vector2(-.5f, .6f);
+    public bool useBarCapacity = true;
+    public int maxCapacity = 2;
 }
 
 #if UNITY_EDITOR

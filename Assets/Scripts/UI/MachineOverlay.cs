@@ -6,39 +6,35 @@ namespace Game
     {
         [Header("Properties")]
         [SerializeField] float yOffset;
+        [SerializeField] GameObject closeBtn;
 
         [Header("Debug")]
         [SerializeField] bool isOverlayActive = false;
+        [SerializeField] Machine machine;
         [SerializeField] MachineData machineData;
         [SerializeField] MachineUI machineUI;
         [SerializeField] GameObject spawnGO;
 
-        private void OnEnable()
-        {
-            defaultPosition();
-        }
+        private void OnEnable() => defaultPosition();
 
         public void defaultPosition()
         {
             transform.position = new Vector2(transform.position.x, yOffset);
         }
 
-        public bool reqOverlay(MachineData _machineData)
+        public bool reqOverlay(Machine _machine)
         {
             if (isOverlayActive) return false;
 
-            spawnGO = Instantiate(_machineData.PrefabUIOverlay, gameObject.transform);
+            machineData = _machine.MachineData;
+            spawnGO = Instantiate(machineData.PrefabUIOverlay, gameObject.transform);
             machineUI = spawnGO.GetComponent<MachineUI>();
-            machineData = _machineData;
+            machineUI.setData(_machine, this);
 
             setOverlayActive();
             return true;
         }
 
-        public void reset()
-        {
-
-        }
 
         void setOverlayActive()
         {
@@ -60,5 +56,21 @@ namespace Game
         {
             setOverlayNonActive();
         }
+
+        #region MachineUI Controller
+
+        public void handleApprove(bool isApprove)
+        {
+            if (isApprove)
+            {
+                setOverlayNonActive();
+            }
+            else
+            {
+                Debug.LogWarning("rejected");
+            }
+        }
+
+        #endregion
     }
 }

@@ -31,9 +31,12 @@ namespace Game
 
         IEnumerator IStartBar()
         {
-            filled.LeanMoveLocalY(-1f, duration);
-            yield return new WaitForSeconds(duration);
-            CustomerHandler.onMenusDone();
+            yield return 0;
+            filled.LeanMoveLocalY(-1f, duration).setOnComplete(() =>
+            {
+                CustomerHandler.onMenusDone();
+            });
+            yield break;            
         }
 
         public float val = 0;
