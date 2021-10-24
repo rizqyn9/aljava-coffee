@@ -59,6 +59,7 @@ namespace Game
             {
                 if (isAvaibleSeat())
                 {
+                    customerPresence(instance: 1);
                     createCustomer(seatIndex[Random.Range(0, seatIndex.Count)]);
                 }
             }
@@ -73,6 +74,7 @@ namespace Game
 
         #endregion
 
+        #region Buyer Factory
         [SerializeField] Vector2[] spawnPosTemp;
         private void createCustomer(int _seatIndex)
         {
@@ -95,6 +97,24 @@ namespace Game
             customer.initBuyer(buyerPrototype);
 
             StartCoroutine(IReactiveSpawner());
+        }
+
+        #endregion
+
+        [SerializeField] int buyerInstanceTotal = 0;
+        [SerializeField] int buyerSuccessTotal = 0;
+        [SerializeField] int buyerRunOutTotal = 0;
+        public void customerPresence(
+            int instance = 0,
+            int success = 0,
+            int runOut = 0
+            )
+        {
+            buyerInstanceTotal += instance;
+            buyerSuccessTotal += success;
+            buyerRunOutTotal += runOut;
+
+            RulesController.Instance.customerPresence(instance, success, runOut);
         }
 
         private void getDepends()
@@ -127,7 +147,7 @@ namespace Game
             return res;
         }
 
-        public void OnCustomerDone(BuyerPrototype _cust)
+        public void OnLeave(BuyerPrototype _cust)
         {
             TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
         }

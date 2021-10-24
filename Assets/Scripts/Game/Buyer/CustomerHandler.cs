@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace Game
 {
@@ -106,33 +105,37 @@ namespace Game
         /// </summary>
         public void onMenusDone()
         {
-            CustomerController.Instance.OnCustomerDone(buyerPrototype);
+            CustomerController.Instance.OnLeave(buyerPrototype);
 
-            RulesController.OnCustomerServed(buyerPrototype);
-
-            Destroy(gameObject);
+            onLeaveSeat(false);
         }
 
         public void onPatienceAngry()
         {
-            print("===MARAH");
+            StartCoroutine(IMarah());
         }
 
         public void onPatienceRunOut()
         {
-            print("===onPatienceRunOut");
-
+            onLeaveSeat(true);
         }
 
-        public void onLeaveSeat()
+        public void onLeaveSeat(bool isOnAngry)
         {
-
+            CustomerController.Instance.customerPresence(
+                success: isOnAngry ? 0 : 1,
+                runOut: isOnAngry ? 1 : 0
+                );
+            CustomerController.Instance.OnLeave(buyerPrototype);
+            StartCoroutine(ILeaveSeat());
         }
 
         #endregion
 
+        #region IEnumerator Controller
         [SerializeField] float _direction;
         [SerializeField] float _duration;
+
         IEnumerator IWalkSeat()
         {
             // Walk to seat position
@@ -178,5 +181,19 @@ namespace Game
             yield break;
         }
 
+        public IEnumerator ILeaveSeat()
+        {
+            bubbles.LeanScale(Vector2.zero, .5f).setEaseInBounce();
+            yield return new WaitForSeconds(.5f);
+
+            gameObject.LeanMove(buyerPrototype.spawnPos, _duration).setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
+
+            yield break;
+        }
+
+        #endregion
     }
 }
