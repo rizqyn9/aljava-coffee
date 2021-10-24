@@ -22,11 +22,11 @@ public abstract class Machine : MonoBehaviour, IGameState
     [SerializeField] protected BoxCollider2D boxCollider2D;
 
     /** RADIUS BAR */
-    [SerializeField] protected BarMachine BarMachine;
-    [SerializeField] protected GameObject BarMachineGO;
+    [SerializeField] internal BarMachine BarMachine;
+    [SerializeField] internal GameObject BarMachineGO;
 
     /** CAPACITY */
-    [SerializeField] protected CapacityMachine CapacityMachine;
+    [SerializeField] internal CapacityMachine CapacityMachine;
     [SerializeField] internal GameObject BarCapacityGO;
 
     #region FirstInit
@@ -38,6 +38,7 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
     private void OnDisable() => MainController.OnGameStateChanged -= GameStateHandler;
+
     private void Awake() => boxCollider2D = GetComponent<BoxCollider2D>();
 
     private void Start()
@@ -146,25 +147,16 @@ public abstract class Machine : MonoBehaviour, IGameState
         BarMachine.isActive = true;
     }
 
-    public virtual void OnMachineDone()
-    {
-
-    }
+    public virtual void OnMachineDone() { }
 
     public virtual void OnMachineClearance()
     {
         BarMachine.isActive = false;
     }
+
     public virtual void OnMachineIddle() { }
 
     #endregion
-
-    IEnumerator ISpawn()
-    {
-        yield return 1;
-        gameObject.LeanMoveLocalY(basePos.y, GlobalController.Instance.startingAnimLenght/2);
-        gameObject.LeanAlpha(1, GlobalController.Instance.startingAnimLenght);
-    }
 
     public GameObject GetGameObject() => gameObject;
 
@@ -179,12 +171,23 @@ public abstract class Machine : MonoBehaviour, IGameState
         BarMachineGO = Instantiate(EnvController.Instance.radBarComponent, GameUIController.Instance.radiusUI);
         BarMachineGO.name = $"{gameObject.name}--radius-bar";
         BarMachineGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(MachineData.posBarDuration.x, MachineData.posBarDuration.y, 0));
+
         BarMachine = BarMachineGO.GetComponent<BarMachine>();
-        BarMachine.machine = this;
-        BarMachine.time = MachineData.durationProcess;
+        BarMachine.init(this);
+    }
+
+    public void barMachineDone()
+    {
+        MachineState = MachineState.ON_DONE;
+
+        if (MachineData.useBarCapacity)
+        {
+            CapacityMachine.setFull();
+        }
     }
 
     #region Bar Capacity
+
     void instanceBarCapacity()
     {
         BarCapacityGO = Instantiate(EnvController.Instance.capacityBarComponent, GameUIController.Instance.capacityUI);
@@ -195,6 +198,10 @@ public abstract class Machine : MonoBehaviour, IGameState
         CapacityMachine.init(this);
     }
 
+    internal void emptyCapacity()
+    {
+        MachineState = MachineState.ON_IDDLE;
+    }
 
     #endregion
 
@@ -211,4 +218,12 @@ public abstract class Machine : MonoBehaviour, IGameState
             ) return false;
         else return true;
     }
+
+    IEnumerator ISpawn()
+    {
+        yield return 1;
+        gameObject.LeanMoveLocalY(basePos.y, GlobalController.Instance.startingAnimLenght / 2);
+        gameObject.LeanAlpha(1, GlobalController.Instance.startingAnimLenght);
+    }
+
 }

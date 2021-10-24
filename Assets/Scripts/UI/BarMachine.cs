@@ -10,8 +10,8 @@ namespace Game
         [SerializeField] Image bar;
 
         [Header("Debug")]
-        public float time;
-        public Machine machine;
+        [SerializeField] float time;
+        [SerializeField] Machine machine;
         [SerializeField] bool _isActive;
         public bool isActive
         {
@@ -28,6 +28,12 @@ namespace Game
             }
         }
 
+        public void init(Machine _machine)
+        {
+            machine = _machine;
+            time = machine.MachineData.durationProcess;
+        }
+
         private void runProgress()
         {
             StartCoroutine(IStart());
@@ -42,6 +48,9 @@ namespace Game
             LeanTween.value(0, 100, time).setOnUpdate((float val) =>
             {
                 bar.fillAmount = val / 100;
+            }).setOnComplete(()=>
+            {
+                machine.barMachineDone();
             });
         }
 
