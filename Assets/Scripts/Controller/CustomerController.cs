@@ -82,7 +82,6 @@ namespace Game
             GameObject custGO = Instantiate(tempCustomerPrefab, buyerPrototype.spawnPos, Quaternion.identity, transform);
             CustomerHandler customer = custGO.GetComponent<CustomerHandler>();
 
-
             // reference buyer
             customer.initBuyer(buyerPrototype);
 

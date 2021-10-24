@@ -54,6 +54,7 @@ namespace Game
             glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, _multipleIgrendients: igrendientsList);
             glassTarget.glass.process();
 
+            resetDepends();
 
             MachineState = MachineState.ON_IDDLE;
             yield break;
@@ -62,7 +63,6 @@ namespace Game
         void resetDepends()
         {
             igrendientsList = new List<MachineIgrendient>();
-            glassTarget = new GlassRegistered();
         }
     }
 }

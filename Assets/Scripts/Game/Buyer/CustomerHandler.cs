@@ -10,7 +10,6 @@ namespace Game
         public static readonly string NGOMONG = "ngomong";
         public static readonly string MARAH = "marah";
         public static readonly string SENANG = "senang";
-
     }
 
     public class CustomerHandler : MonoBehaviour
@@ -19,7 +18,7 @@ namespace Game
         public GameObject bubbles;
         public SpriteRenderer[] menuSpawnRenderer;
         public SpriteRenderer singleMenuSpawnRenderer;
-        public PatienceBar PatienceBar;
+        public PatienceBar patienceBar;
         public enum EmotionalState
         {
             NGOMONG,
@@ -28,20 +27,22 @@ namespace Game
         }
 
         [Header("Debug")]
+        [SerializeField] BuyerType buyerType;
         [SerializeField] BuyerPrototype buyerPrototype;
         [SerializeField] List<buyerOrderItemHandler> orderItemHandlers;
         [SerializeField] Transform destinationSeat;
-        [SerializeField] Animator Animator;
-        [SerializeField] GameObject GameChar;
+        [SerializeField] Animator animator;
+        [SerializeField] GameObject gameChar;
         //[SerializeField] EmotionalState EmotionalState;
 
         public void initBuyer(BuyerPrototype _buyerPrototype)
         {
             buyerPrototype = _buyerPrototype;
+            buyerType = _buyerPrototype.buyerType;
             gameObject.name = _buyerPrototype.customerCode;
 
-            GameChar = Instantiate(_buyerPrototype.buyerType.buyerPrefab, spawnCharTransform);
-            Animator = GameChar.GetComponentInChildren<Animator>();
+            gameChar = Instantiate(_buyerPrototype.buyerType.buyerPrefab, spawnCharTransform);
+            animator = gameChar.GetComponentInChildren<Animator>();
 
             renderMenu();
 
@@ -78,11 +79,18 @@ namespace Game
             orderItemHandlers.Add(itemHandler);
         }
 
+        /// <summary>
+        /// Trigger when player success to serving a menu
+        /// </summary>
+        /// <param name="_menu"></param>
         public void onServeMenu(MenuType _menu)
         {
             orderItemHandlers.Find(val => val.menu == _menu).itemGO.SetActive(false);
         }
 
+        /// <summary>
+        /// Trigger when player success to serve all menus
+        /// </summary>
         public void onMenusDone()
         {
             CustomerController.Instance.OnCustomerDone(buyerPrototype);
@@ -110,7 +118,7 @@ namespace Game
             //yield return new WaitForSeconds(_duration/2);
             bubbles.SetActive(true);
 
-            PatienceBar.gameObject.SetActive(true);
+            patienceBar.gameObject.SetActive(true);
 
             Vector2 defScale = bubbles.transform.localScale;
             bubbles.transform.localScale = Vector2.zero;
@@ -118,25 +126,25 @@ namespace Game
 
             yield return new WaitForSeconds(2);
             StartCoroutine(INgomong(false));
-            PatienceBar.StartBar(15f);
+            patienceBar.StartBar(15f);
             yield break;
 
             // Animate when Customer already spawned
         }
 
-        IEnumerator INgomong(bool isActive)
+        public IEnumerator INgomong(bool isActive)
         {
-            Animator.SetBool(ANIM.NGOMONG, isActive);
+            animator.SetBool(ANIM.NGOMONG, isActive);
             yield return new WaitForSeconds(2);
-            if(isActive) Animator.SetBool(ANIM.NGOMONG, !isActive);
+            if(isActive) animator.SetBool(ANIM.NGOMONG, !isActive);
             yield break;
         }
 
         public IEnumerator IMarah()
         {
-            Animator.SetBool(ANIM.MARAH, true);
+            animator.SetBool(ANIM.MARAH, true);
             yield return new WaitForSeconds(5f);
-            Animator.SetBool(ANIM.MARAH, false);
+            animator.SetBool(ANIM.MARAH, false);
             yield break;
         }
 

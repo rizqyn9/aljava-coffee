@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -12,21 +11,11 @@ namespace Game
         public float duration;
         public CustomerHandler CustomerHandler;
 
-        [ContextMenu("set")]
-        public void setBar()
-        {
-            //filled.LeanScaleY(0, 3f);
-            filled.LeanMoveLocalY(-1f, 3f);
-        }
-
         internal void StartBar(float _duration)
         {
             duration = _duration;
             CustomerHandler = GetComponentInParent<CustomerHandler>();
             StartCoroutine(IStartBar());
-            //StartCoroutine(IRunBar());
-
-            //LeanTween.value(out )
         }
 
         IEnumerator IStartBar()
@@ -52,20 +41,5 @@ namespace Game
                 }
             }
         }
-
-        [ContextMenu("test")]
-        public void Test()
-        {
-            //StartCoroutine(IRunBar());
-        }
-
-        //IEnumerator IRunBar()
-        //{
-        //    filled.LeanMoveLocalY(-1f, duration);
-        //    while (valState < float.MinValue)
-        //    {
-        //        filled.transform.pos
-        //    }
-        //}
     }
 }

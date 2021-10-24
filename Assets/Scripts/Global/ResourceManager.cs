@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -79,13 +78,11 @@ public class ResourceManager : Singleton<ResourceManager>
     /// <param name="_igrendients"></param>
     public bool igrendientsToMenuChecker(List<MachineIgrendient> _igrendients, out MenuType resultMenu)
     {
-        Debug.Log("igrendientsToMenuChecker on trigger");
         bool res = false;
         resultMenu = notValidMenu;
         for(int i = 0; i < MenuTypes.Count; i++)
         {
             res = MenuTypes[i].Igrendients.SequenceEqual(_igrendients);
-            Debug.Log(res);
             if (res) {
                 resultMenu = MenuTypes[i];
                 Debug.Log("Found Menu Result");

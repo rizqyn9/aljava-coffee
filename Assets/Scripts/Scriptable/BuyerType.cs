@@ -8,5 +8,4 @@ public class BuyerType : ScriptableObject
     public enumBuyerType enumBuyerType;
     public string buyerName;
     public GameObject buyerPrefab;
-    
 }
