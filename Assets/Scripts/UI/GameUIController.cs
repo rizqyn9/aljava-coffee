@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
+
 namespace Game
 {
     public class GameUIController : Singleton<GameUIController>, IGameState
@@ -33,6 +34,12 @@ namespace Game
         {
             gameState = _gameState;
             GameStateController.UpdateGameState(this, gameState);
+        }
+
+        [ContextMenu("test")]
+        public void test()
+        {
+            MainController.rulesController.test();
         }
 
         public void OnGameInit()
@@ -79,7 +86,7 @@ namespace Game
                 CountDown -= 1;
             }
             timerIsRunning = false;
-            if (CountDown <= 0) RulesController.Instance.HandleGameTimeOut();
+            //if (CountDown <= 0) MainController.rulesController.HandleGameTimeOut();
             yield break;
         }
 

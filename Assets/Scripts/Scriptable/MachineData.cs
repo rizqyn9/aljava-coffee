@@ -18,7 +18,6 @@ public class MachineData : ScriptableObject
     public GameObject PrefabResult;
 
     [Tooltip("Instance UI overlay when machine touched on first time")]
-    public bool useUIOverlay = true;
     public GameObject PrefabUIOverlay;
 
     [Header("Duration Component")]

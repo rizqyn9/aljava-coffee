@@ -13,7 +13,7 @@ namespace Game
         [SerializeField] transformSeatData[] TransformSeatDatas;
 
         [Header("Debug")]
-        [SerializeField] OrderController OrderController;
+        [SerializeField] OrderController orderController;
         [SerializeField] LevelBase LevelBase = null;
         [SerializeField] List<BuyerType> BuyerTypes = new List<BuyerType>();
         [SerializeField] List<MenuType> MenuTypes = new List<MenuType>();
@@ -36,7 +36,7 @@ namespace Game
 
         public void OnGameBeforeStart()
         {
-            OrderController = OrderController.Instance;
+            orderController = OrderController.Instance;
 
             // TODO
             maxSpawn = LevelController.LevelBase.minBuyer;
@@ -44,9 +44,10 @@ namespace Game
             getDepends();
         }
 
+        #region Reactive Spawn Logic
+
         public void OnGameStart()
         {
-            //print("I'm already to spawn my child");
             SpawnerState = SpawnerState.CAN_CREATE;
         }
 
@@ -56,13 +57,21 @@ namespace Game
 
             if(SpawnerState == SpawnerState.CAN_CREATE && customerCounter <= maxSpawn)
             {
-                SpawnerState = SpawnerState.VALIDATE;
                 if (isAvaibleSeat())
                 {
                     createCustomer(seatIndex[Random.Range(0, seatIndex.Count)]);
                 }
             }
         }
+
+        IEnumerator IReactiveSpawner()
+        {
+            SpawnerState = SpawnerState.REACTIVE;
+            yield return new WaitForSeconds(MainController.Instance.LevelBase.delayPerCustomer);
+            SpawnerState = SpawnerState.CAN_CREATE;
+        }
+
+        #endregion
 
         [SerializeField] Vector2[] spawnPosTemp;
         private void createCustomer(int _seatIndex)
@@ -82,18 +91,10 @@ namespace Game
             GameObject custGO = Instantiate(tempCustomerPrefab, buyerPrototype.spawnPos, Quaternion.identity, transform);
             CustomerHandler customer = custGO.GetComponent<CustomerHandler>();
 
-
             // reference buyer
             customer.initBuyer(buyerPrototype);
 
             StartCoroutine(IReactiveSpawner());
-        }
-
-        IEnumerator IReactiveSpawner()
-        {
-            SpawnerState = SpawnerState.REACTIVE;
-            yield return new WaitForSeconds(4);
-            SpawnerState = SpawnerState.CAN_CREATE;
         }
 
         private void getDepends()
@@ -126,36 +127,24 @@ namespace Game
             return res;
         }
 
-        public void SetPlaceAvaibility(int _seatIndex, bool _isAvaible)
-        {
-        }
-
         public void OnCustomerDone(BuyerPrototype _cust)
         {
             TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
         }
 
+        #region GAME STATE
         public GameObject GetGameObject() => gameObject;
 
         public void OnGameIddle() { }
 
-        public void OnGamePause()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void OnGamePause() { }
 
-        public void OnGameClearance()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void OnGameClearance() { }
 
-        public void OnGameFinish()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void OnGameFinish() { }
 
-        public void OnGameInit()
-        {
-        }
+        public void OnGameInit() { }
+
+        #endregion
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -10,62 +9,40 @@ namespace Game
         public bool started = false;
         public float valState = 10;
         public float duration;
-        public CustomerHandler CustomerHandler;
+        public CustomerHandler customerHandler;
 
-        [ContextMenu("set")]
-        public void setBar()
+        public void init(CustomerHandler _customerHandler)
         {
-            //filled.LeanScaleY(0, 3f);
-            filled.LeanMoveLocalY(-1f, 3f);
+            gameObject.SetActive(true);
+            gameObject.LeanAlpha(0, 0);
+            customerHandler = _customerHandler;
         }
 
-        internal void StartBar(float _duration)
+        internal void startBar(float _duration)
         {
+            gameObject.LeanAlpha(1, .5f);
             duration = _duration;
-            CustomerHandler = GetComponentInParent<CustomerHandler>();
-            StartCoroutine(IStartBar());
-            //StartCoroutine(IRunBar());
 
-            //LeanTween.value(out )
+            StartCoroutine(IStartBar());
         }
 
+        [SerializeField] float _valPatience;
+        [SerializeField] bool canAngry = true;
         IEnumerator IStartBar()
         {
             yield return 0;
-            filled.LeanMoveLocalY(-1f, duration).setOnComplete(() =>
+            filled.LeanMoveLocalY(-1f, duration).setOnUpdate((float val) =>
             {
-                CustomerHandler.onMenusDone();
+                if (val > .8f && canAngry)
+                {
+                    canAngry = false;
+                    customerHandler.onPatienceAngry();
+                }
+            }).setOnComplete(() =>
+            {
+                customerHandler.onPatienceRunOut();
             });
             yield break;            
         }
-
-        public float val = 0;
-        private void Update()
-        {
-            if (filled.transform.hasChanged)
-            {
-                val = filled.transform.position.y;
-                if(filled.transform.position.y == 0)
-                {
-                    print("marah");
-                    CustomerHandler.StartCoroutine(CustomerHandler.IMarah());
-                }
-            }
-        }
-
-        [ContextMenu("test")]
-        public void Test()
-        {
-            //StartCoroutine(IRunBar());
-        }
-
-        //IEnumerator IRunBar()
-        //{
-        //    filled.LeanMoveLocalY(-1f, duration);
-        //    while (valState < float.MinValue)
-        //    {
-        //        filled.transform.pos
-        //    }
-        //}
     }
 }

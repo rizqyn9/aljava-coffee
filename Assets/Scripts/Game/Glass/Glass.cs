@@ -50,13 +50,11 @@ namespace Game
         {
             if (isValidMenu && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer))
             {
-                Debug.Log("Find customer menu");
                 targetBuyer.customerHandler.onServeMenu(getMenuState);
 
                 GlassContainer.Instance.glassOnDestroy(glassRegistered);
                 StartCoroutine(IDestroy());
             }
-
         }
 
         IEnumerator IDestroy()

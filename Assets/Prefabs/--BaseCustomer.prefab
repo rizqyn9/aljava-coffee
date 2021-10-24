@@ -620,6 +620,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filled: {fileID: 5293687268828243643}
+  started: 0
+  valState: 10
+  duration: 0
+  customerHandler: {fileID: 0}
+  val: 0
 --- !u!1 &5376542571190793433
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,13 +741,19 @@ MonoBehaviour:
   - {fileID: 8950110672030764466}
   - {fileID: 2772763501108575429}
   singleMenuSpawnRenderer: {fileID: 1397187800247792004}
-  PatienceBar: {fileID: 5293687270025191564}
+  patienceBar: {fileID: 5293687270025191564}
+  buyerType: {fileID: 0}
   buyerPrototype:
     customerCode: 
     buyerType: {fileID: 0}
     buyerState: 0
     seatIndex: 0
+    spawnPos: {x: 0, y: 0}
+    seatPos: {x: 0, y: 0}
     menuListNames: []
     customerHandler: {fileID: 0}
   orderItemHandlers: []
-  destinationSeat: {fileID: 0}
+  animator: {fileID: 0}
+  gameChar: {fileID: 0}
+  _direction: 0
+  _duration: 0
