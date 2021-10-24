@@ -7,14 +7,24 @@ namespace Game
     {
         [Header("Debug")]
         [SerializeField] CoffeeMaker coffeeMaker;
-        [SerializeField] bool firstInit = true;
 
         public void OnMouseDown()
         {
             if (!isInteractable()) return;
+            if (spawnOverlay)
+            {
+                handleSpawnOverlay();
+                return;
+            }
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
-            
+        }
+
+        public override void OnMachineInit()
+        {
+            base.OnMachineInit();
+            registUIOverlay();
+            spawnOverlay = true;
         }
 
         private void validate()
@@ -27,12 +37,10 @@ namespace Game
             }
         }
 
-        private void firstInitHandler()
+        void handleSpawnOverlay()
         {
-            GameUIController.Instance.reqUseMachineOverlay(this);
-            firstInit = false;
+            machineUI.reqInstance();
         }
-
 
         IEnumerator ISpawn()
         {

@@ -15,7 +15,7 @@ namespace Game
         [SerializeField] TMP_Text timeUI;
         [SerializeField] bool timerIsRunning = false;
         [SerializeField] GameObject noClickArea;
-        [SerializeField] MachineOverlay machineOverlay;
+        public MachineOverlay machineOverlay;
         public Transform radiusUI;
         public Transform capacityUI;
 
@@ -161,8 +161,6 @@ namespace Game
         {
             throw new NotImplementedException();
         }
-
-        public bool reqUseMachineOverlay(Machine machine) => machineOverlay.reqOverlay(machine);
 
         #region NoClickArea
         public void setNoClickArea(bool isActive) => noClickArea.SetActive(isActive);

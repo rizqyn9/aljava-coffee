@@ -41,6 +41,7 @@ namespace Game
 
         IEnumerator IStart()
         {
+            bar.fillAmount = 0;
             gameObject.LeanAlpha(1, .5f);
             gameObject.LeanScale(new Vector2(1, 1), .5f).setEaseInBounce();
             yield return new WaitForSeconds(.5f);

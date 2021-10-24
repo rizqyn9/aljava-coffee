@@ -1,7 +1,6 @@
 using UnityEngine;
 using Game;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour, IGameState
@@ -15,6 +14,7 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     [Header("Debug")]
     public MachineData MachineData;
+    public bool spawnOverlay = false;
     [SerializeField] Vector2 basePos;
     [SerializeField] MachineState _machineState;
     [SerializeField] protected GameState gameState;
@@ -29,11 +29,15 @@ public abstract class Machine : MonoBehaviour, IGameState
     [SerializeField] internal CapacityMachine CapacityMachine;
     [SerializeField] internal GameObject BarCapacityGO;
 
+    /** OVERLAY */
+    [SerializeField] internal MachineUI machineUI;
+
     #region FirstInit
     public void SetMachineData(MachineData _machineData)
     {
         MachineData = _machineData;
         machineType = _machineData.MachineType;
+        spawnOverlay = _machineData.useUIOverlay;
     }
 
     private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
@@ -205,6 +209,13 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     #endregion
 
+    #region Spawn Overlay
+    public void registUIOverlay()
+    {
+        GameUIController.Instance.machineOverlay.registMachine(this, out machineUI);
+    }
+
+    #endregion
 
     /// <summary>
     /// for validating when player try to click gameObject
