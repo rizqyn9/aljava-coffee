@@ -36,12 +36,6 @@ namespace Game
             GameStateController.UpdateGameState(this, gameState);
         }
 
-        [ContextMenu("test")]
-        public void test()
-        {
-            MainController.rulesController.test();
-        }
-
         public void OnGameInit()
         {
             setComponentUI();

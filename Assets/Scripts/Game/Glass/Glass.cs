@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,13 +47,18 @@ namespace Game
 
         private void OnMouseDown()
         {
-            if (isValidMenu && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer))
+            boxCollider2D.enabled = false;
+            if (isValidMenu
+                && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer)
+                )
             {
                 targetBuyer.customerHandler.onServeMenu(getMenuState);
 
                 GlassContainer.Instance.glassOnDestroy(glassRegistered);
                 StartCoroutine(IDestroy());
+                return;
             }
+            boxCollider2D.enabled = true;
         }
 
         IEnumerator IDestroy()

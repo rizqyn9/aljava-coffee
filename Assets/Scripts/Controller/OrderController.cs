@@ -67,32 +67,26 @@ namespace Game
         public bool isExistQueue(MenuType _menuName, out BuyerPrototype _buyerPrototype)
         {
             _buyerPrototype = new BuyerPrototype();
-            try
+            for (int i = 0; i < deliveryQueueMenu.Count; i++)
             {
-                for (int i = 0; i < deliveryQueueMenu.Count; i++)
+                if (deliveryQueueMenu[i].menuListNames.Contains(_menuName))
                 {
-                    if (deliveryQueueMenu[i].menuListNames.Contains(_menuName))
+                    _buyerPrototype = deliveryQueueMenu[i];
+                    _buyerPrototype.menuListNames.Remove(_menuName);
+                    if (_buyerPrototype.menuListNames.Count < 1)
                     {
-                        _buyerPrototype = deliveryQueueMenu[i];
-                        _buyerPrototype.menuListNames.Remove(_menuName);
-                        if (_buyerPrototype.menuListNames.Count < 1)
-                        {
-                            Debug.Log("Clear");
-                            _buyerPrototype.customerHandler.onMenusDone();
-                        }
-                        clearQueue(deliveryQueueMenu[i]);
-                        return true;
+                        _buyerPrototype.customerHandler.onMenusDone();
                     }
+                    return true;
                 }
-                throw new System.Exception();
             }
-            catch
-            {
-                return false;
-            }
+            return false;
         }
 
-        private void clearQueue(BuyerPrototype _buyerPrototype) { }
+        public void OnCustLeave(BuyerPrototype _buyerPrototype)
+        {
+            deliveryQueueMenu.Remove(deliveryQueueMenu.Find(val => val.customerCode == _buyerPrototype.customerCode));
+        }
 
         public GameObject GetGameObject() => gameObject;
     }

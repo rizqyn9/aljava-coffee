@@ -10,8 +10,12 @@ namespace Game
         [Header("GameStat")]
         public GameMode gameMode;
         public float gameDuration = 0;
+
         public int buyerInstanceTotal = 0;
-        public int menuIntanceTotal = 0;
+        public int buyerSuccessTotal = 0;
+        public int buyerRunOutTotal = 0;
+
+        public int menuInstanceTotal = 0;
         public int earnMoneyTotal = 0;
 
         [Header("Debug")]
@@ -26,16 +30,21 @@ namespace Game
             levelBase = LevelController.LevelBase;
         }
 
-        public void GameStateHandler(GameState _gameState)
-        {
+        public void GameStateHandler(GameState _gameState) { }
 
+        public void customerPresence(
+            int instance = 0,
+            int success = 0,
+            int runOut = 0
+            )
+        {
+            print("Presence Update");
+            buyerInstanceTotal += instance;
+            buyerSuccessTotal += success;
+            buyerRunOutTotal += runOut;
         }
 
-        public void test()
-        {
-            print("test");
-        }
-
+        #region Rules Condition
         public void HandleGameTimeOut()
         {
             print("Game was time out!!");
@@ -51,60 +60,15 @@ namespace Game
         {
 
         }
-
-        [SerializeField] int buyerCounter = 0;
-        public static void OnCustomerServed(BuyerPrototype _buyerPrototype)
-        {
-            //Instance.buyerCounter += 1;
-            //Instance.updateUI();
-        }
-
-        private void updateUI()
-        {
-            GameUIController.Instance.Counter = buyerCounter;
-        }
-
-        [SerializeField] int menuCounter = 0;
-        public static void OnMenuServed(LevelBase _levelBase)
-        {
-            //Instance.menuCounter += 1;
-        }
+        #endregion 
 
         public GameObject GetGameObject() => gameObject;
-
-        public void OnGameIddle()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameBeforeStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameStart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGamePause()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameClearance()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameFinish()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameInit()
-        {
-            throw new NotImplementedException();
-        }
+        public void OnGameIddle() { }
+        public void OnGameBeforeStart() { }
+        public void OnGameStart() { }
+        public void OnGamePause() { }
+        public void OnGameClearance() { }
+        public void OnGameFinish() { }
+        public void OnGameInit() { }
     }
 }
