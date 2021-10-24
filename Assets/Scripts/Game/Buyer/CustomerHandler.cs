@@ -105,8 +105,6 @@ namespace Game
         /// </summary>
         public void onMenusDone()
         {
-            CustomerController.Instance.OnLeave(buyerPrototype);
-
             onLeaveSeat(false);
         }
 
@@ -122,6 +120,7 @@ namespace Game
 
         public void onLeaveSeat(bool isOnAngry)
         {
+            OrderController.Instance.OnCustLeave(buyerPrototype);
             CustomerController.Instance.customerPresence(
                 success: isOnAngry ? 0 : 1,
                 runOut: isOnAngry ? 1 : 0
