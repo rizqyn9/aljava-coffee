@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -14,12 +11,21 @@ namespace Game
         [SerializeField] Machine machine;
         [SerializeField] MachineOverlay machineOverlay;
 
-        public void setData(Machine _machine, MachineOverlay _machineOverlay)
+        public void init(Machine _machine, MachineOverlay _machineOverlay)
         {
             machine = _machine;
             machineOverlay = _machineOverlay;
+            gameObject.SetActive(false);
         }
 
+        public bool reqInstance()
+        {
+            if (machineOverlay.isOverlayActive) return false;
+
+            gameObject.SetActive(true);
+            machineOverlay.setOverlayActive();
+            return true;
+        }
 
         [SerializeField] bool _isApproved;
         public bool isApproved
@@ -36,6 +42,7 @@ namespace Game
         public void handleCheck()
         {
             machineOverlay.handleApprove(isApproved);
+            machine.spawnOverlay = !isApproved;
         }
 
         public virtual void OnApprovalChange() { }

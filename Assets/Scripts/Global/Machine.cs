@@ -1,7 +1,6 @@
 using UnityEngine;
 using Game;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour, IGameState
@@ -15,6 +14,7 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     [Header("Debug")]
     public MachineData MachineData;
+    public bool spawnOverlay = false;
     [SerializeField] Vector2 basePos;
     [SerializeField] MachineState _machineState;
     [SerializeField] protected GameState gameState;
@@ -22,22 +22,27 @@ public abstract class Machine : MonoBehaviour, IGameState
     [SerializeField] protected BoxCollider2D boxCollider2D;
 
     /** RADIUS BAR */
-    [SerializeField] protected BarMachine BarMachine;
-    [SerializeField] protected GameObject BarMachineGO;
+    [SerializeField] internal BarMachine BarMachine;
+    [SerializeField] internal GameObject BarMachineGO;
 
     /** CAPACITY */
-    [SerializeField] protected CapacityMachine CapacityMachine;
+    [SerializeField] internal CapacityMachine CapacityMachine;
     [SerializeField] internal GameObject BarCapacityGO;
+
+    /** OVERLAY */
+    [SerializeField] internal MachineUI machineUI;
 
     #region FirstInit
     public void SetMachineData(MachineData _machineData)
     {
         MachineData = _machineData;
         machineType = _machineData.MachineType;
+        spawnOverlay = _machineData.useUIOverlay;
     }
 
     private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
     private void OnDisable() => MainController.OnGameStateChanged -= GameStateHandler;
+
     private void Awake() => boxCollider2D = GetComponent<BoxCollider2D>();
 
     private void Start()
@@ -146,25 +151,16 @@ public abstract class Machine : MonoBehaviour, IGameState
         BarMachine.isActive = true;
     }
 
-    public virtual void OnMachineDone()
-    {
-
-    }
+    public virtual void OnMachineDone() { }
 
     public virtual void OnMachineClearance()
     {
         BarMachine.isActive = false;
     }
+
     public virtual void OnMachineIddle() { }
 
     #endregion
-
-    IEnumerator ISpawn()
-    {
-        yield return 1;
-        gameObject.LeanMoveLocalY(basePos.y, GlobalController.Instance.startingAnimLenght/2);
-        gameObject.LeanAlpha(1, GlobalController.Instance.startingAnimLenght);
-    }
 
     public GameObject GetGameObject() => gameObject;
 
@@ -179,12 +175,23 @@ public abstract class Machine : MonoBehaviour, IGameState
         BarMachineGO = Instantiate(EnvController.Instance.radBarComponent, GameUIController.Instance.radiusUI);
         BarMachineGO.name = $"{gameObject.name}--radius-bar";
         BarMachineGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(MachineData.posBarDuration.x, MachineData.posBarDuration.y, 0));
+
         BarMachine = BarMachineGO.GetComponent<BarMachine>();
-        BarMachine.machine = this;
-        BarMachine.time = MachineData.durationProcess;
+        BarMachine.init(this);
+    }
+
+    public void barMachineDone()
+    {
+        MachineState = MachineState.ON_DONE;
+
+        if (MachineData.useBarCapacity)
+        {
+            CapacityMachine.setFull();
+        }
     }
 
     #region Bar Capacity
+
     void instanceBarCapacity()
     {
         BarCapacityGO = Instantiate(EnvController.Instance.capacityBarComponent, GameUIController.Instance.capacityUI);
@@ -195,9 +202,20 @@ public abstract class Machine : MonoBehaviour, IGameState
         CapacityMachine.init(this);
     }
 
+    internal void emptyCapacity()
+    {
+        MachineState = MachineState.ON_IDDLE;
+    }
 
     #endregion
 
+    #region Spawn Overlay
+    public void registUIOverlay()
+    {
+        GameUIController.Instance.machineOverlay.registMachine(this, out machineUI);
+    }
+
+    #endregion
 
     /// <summary>
     /// for validating when player try to click gameObject
@@ -211,4 +229,12 @@ public abstract class Machine : MonoBehaviour, IGameState
             ) return false;
         else return true;
     }
+
+    IEnumerator ISpawn()
+    {
+        yield return 1;
+        gameObject.LeanMoveLocalY(basePos.y, GlobalController.Instance.startingAnimLenght / 2);
+        gameObject.LeanAlpha(1, GlobalController.Instance.startingAnimLenght);
+    }
+
 }

@@ -36,7 +36,6 @@ namespace Game
             stateCapacity -= 1;
             if(_stateCapacity <= 0)
             {
-                print("empty");
                 OnEmpty();
             }
         }
@@ -50,6 +49,7 @@ namespace Game
         private void OnEmpty()
         {
             LeanTween.alpha(rectTransform, 0, 1f);
+            machine.emptyCapacity();
         }
 
         private void Start()

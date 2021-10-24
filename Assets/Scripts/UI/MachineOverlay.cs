@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -9,11 +10,8 @@ namespace Game
         [SerializeField] GameObject closeBtn;
 
         [Header("Debug")]
-        [SerializeField] bool isOverlayActive = false;
-        [SerializeField] Machine machine;
-        [SerializeField] MachineData machineData;
-        [SerializeField] MachineUI machineUI;
-        [SerializeField] GameObject spawnGO;
+        [SerializeField] internal bool isOverlayActive = false;
+        [SerializeField] List<MachineUI> listMachineUI = new List<MachineUI>();
 
         private void OnEnable() => defaultPosition();
 
@@ -22,21 +20,31 @@ namespace Game
             transform.position = new Vector2(transform.position.x, yOffset);
         }
 
-        public bool reqOverlay(Machine _machine)
+        public void registMachine(Machine _machine ,out MachineUI _machineUI)
         {
-            if (isOverlayActive) return false;
+            GameObject go = Instantiate(_machine.MachineData.PrefabUIOverlay, transform);
+            _machineUI = go.GetComponent<MachineUI>();
+            _machineUI.init(_machine, this);
 
-            machineData = _machine.MachineData;
-            spawnGO = Instantiate(machineData.PrefabUIOverlay, gameObject.transform);
-            machineUI = spawnGO.GetComponent<MachineUI>();
-            machineUI.setData(_machine, this);
-
-            setOverlayActive();
-            return true;
+            listMachineUI.Add(_machineUI);
         }
 
 
-        void setOverlayActive()
+        //public bool reqOverlay(Machine _machine)
+        //{
+        //    if (isOverlayActive) return false;
+
+        //    machineData = _machine.MachineData;
+        //    spawnGO = Instantiate(machineData.PrefabUIOverlay, gameObject.transform);
+        //    machineUI = spawnGO.GetComponent<MachineUI>();
+        //    machineUI.setData(_machine, this);
+
+        //    setOverlayActive();
+        //    return true;
+        //}
+
+
+        internal void setOverlayActive()
         {
             if (isOverlayActive) return ;
             GameUIController.Instance.setNoClickArea(true);
