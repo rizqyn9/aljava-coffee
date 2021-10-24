@@ -43,12 +43,14 @@ namespace Game
             gameChar = Instantiate(_buyerPrototype.buyerType.buyerPrefab, spawnCharTransform);
             animator = gameChar.GetComponentInChildren<Animator>();
 
+            bubbles.SetActive(false);
+
             renderMenu();
             patienceBar.init(this);
 
             buyerPrototype.customerHandler = this;
 
-            StartCoroutine(startCustomer());
+            StartCoroutine(IWalkSeat());
         }
 
 
@@ -87,7 +89,7 @@ namespace Game
 
         public void onSeat()
         {
-
+            StartCoroutine(IOnSeat());
         }
 
         /// <summary>
@@ -111,6 +113,17 @@ namespace Game
             Destroy(gameObject);
         }
 
+        public void onPatienceAngry()
+        {
+            print("===MARAH");
+        }
+
+        public void onPatienceRunOut()
+        {
+            print("===onPatienceRunOut");
+
+        }
+
         public void onLeaveSeat()
         {
 
@@ -120,34 +133,33 @@ namespace Game
 
         [SerializeField] float _direction;
         [SerializeField] float _duration;
-        IEnumerator startCustomer()
+        IEnumerator IWalkSeat()
         {
+            // Walk to seat position
             _direction = buyerPrototype.spawnPos.x - buyerPrototype.seatPos.x;
             _direction = _direction < 0 ? _direction * -1 : _direction;
             _duration = _direction / 5;
 
+            gameObject.transform.LeanMove(buyerPrototype.seatPos, _duration).setOnComplete(() => {
+                onSeat();
+            });
 
-            gameObject.transform.LeanMove(buyerPrototype.seatPos, _duration);
-            yield return new WaitForSeconds(_duration);
+            yield break;
+        }
 
+        IEnumerator IOnSeat()
+        {
             StartCoroutine(INgomong(true));
-
             OrderController.Instance.deliveryQueueMenu.Add(buyerPrototype);
-            //yield return new WaitForSeconds(_duration/2);
-            bubbles.SetActive(true);
-
-            patienceBar.gameObject.SetActive(true);
 
             Vector2 defScale = bubbles.transform.localScale;
             bubbles.transform.localScale = Vector2.zero;
+            bubbles.SetActive(true);
             bubbles.LeanScale(defScale, .5f).setEaseInBounce();
 
-            yield return new WaitForSeconds(2);
+            patienceBar.startBar(buyerPrototype.buyerType.patienceDuration);
             StartCoroutine(INgomong(false));
-            patienceBar.StartBar(15f);
             yield break;
-
-            // Animate when Customer already spawned
         }
 
         public IEnumerator INgomong(bool isActive)

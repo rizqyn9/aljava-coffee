@@ -84,7 +84,6 @@ public enum SpawnerState
 {
     IDDLE,
     REACTIVE,
-    VALIDATE,
     CAN_CREATE,
     MAX_SEAT,
     MAX_ORDER

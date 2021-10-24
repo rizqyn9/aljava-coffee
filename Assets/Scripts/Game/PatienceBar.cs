@@ -13,38 +13,36 @@ namespace Game
 
         public void init(CustomerHandler _customerHandler)
         {
+            gameObject.SetActive(true);
+            gameObject.LeanAlpha(0, 0);
             customerHandler = _customerHandler;
         }
 
-        internal void StartBar(float _duration)
+        internal void startBar(float _duration)
         {
+            gameObject.LeanAlpha(1, .5f);
             duration = _duration;
-            customerHandler = GetComponentInParent<CustomerHandler>();
+
             StartCoroutine(IStartBar());
         }
 
+        [SerializeField] float _valPatience;
+        [SerializeField] bool canAngry = true;
         IEnumerator IStartBar()
         {
             yield return 0;
-            filled.LeanMoveLocalY(-1f, duration).setOnComplete(() =>
+            filled.LeanMoveLocalY(-1f, duration).setOnUpdate((float val) =>
             {
-                customerHandler.onMenusDone();
+                if (val > .8f && canAngry)
+                {
+                    canAngry = false;
+                    customerHandler.onPatienceAngry();
+                }
+            }).setOnComplete(() =>
+            {
+                customerHandler.onPatienceRunOut();
             });
             yield break;            
-        }
-
-        public float val = 0;
-        private void Update()
-        {
-            if (filled.transform.hasChanged)
-            {
-                val = filled.transform.position.y;
-                if(filled.transform.position.y == 0)
-                {
-                    print("marah");
-                    customerHandler.StartCoroutine(customerHandler.IMarah());
-                }
-            }
         }
     }
 }
