@@ -42,12 +42,14 @@ namespace Game
             buyerInstanceTotal += instance;
             buyerSuccessTotal += success;
             buyerRunOutTotal += runOut;
+
+            GameUIController.Instance.OnUpdatePresence();
         }
 
         #region Rules Condition
         public void HandleGameTimeOut()
         {
-            print("Game was time out!!");
+            Debug.LogWarning("Game was Time Out");
             GameLose();
         }
 

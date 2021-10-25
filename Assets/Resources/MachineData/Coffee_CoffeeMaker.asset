@@ -20,7 +20,7 @@ MonoBehaviour:
   PrefabUIOverlay: {fileID: 0}
   autoRun: 0
   posBarDuration: {x: 1, y: 1}
-  durationProcess: 5
+  durationProcess: 1
   posBarCapacity: {x: -0.5, y: 0.6}
   useBarCapacity: 0
   maxCapacity: 2
