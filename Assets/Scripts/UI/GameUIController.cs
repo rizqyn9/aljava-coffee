@@ -14,15 +14,15 @@ namespace Game
         [SerializeField] float offsetTopBar = 40;
         [SerializeField] TMP_Text progressHandler;
         [SerializeField] TMP_Text timeUI;
-        [SerializeField] bool timerIsRunning = false;
         [SerializeField] GameObject noClickArea;
         public MachineOverlay machineOverlay;
         public Transform radiusUI;
         public Transform capacityUI;
 
         [Header("Debug")]
+        [SerializeField] bool timerIsRunning = false;
         [SerializeField] Vector2 basePos;
-        [SerializeField] LevelBase LevelBase;
+        [SerializeField] LevelBase levelBase;
 
         #region GAME STATE
         [SerializeField] GameState gameState;
@@ -45,15 +45,24 @@ namespace Game
         {
             machineOverlay.defaultPosition();
             machineOverlay.gameObject.SetActive(true);
+
             spawnTopUI();
         }
 
         public void OnGameStart()
         {
-            StartUI();
+            StartCoroutine(ICountDown());
         }
 
 
+        #endregion
+
+        #region Listen on Presence
+
+        public void OnUpdatePresence()
+        {
+            updateUI();
+        }
 
         #endregion
 
@@ -68,10 +77,8 @@ namespace Game
                 timeUI.text = _countDown.ToString();
             }
         }
-
-        #endregion
         
-        IEnumerator ITimer()
+        IEnumerator ICountDown()
         {
             while (CountDown > 0)
             {
@@ -80,31 +87,15 @@ namespace Game
                 CountDown -= 1;
             }
             timerIsRunning = false;
-            //if (CountDown <= 0) MainController.rulesController.HandleGameTimeOut();
+            if (CountDown <= 0) MainController.rulesController.HandleGameTimeOut();
             yield break;
         }
 
-        void StartGame()
-        {
-            print("Start Timer");
-            StartCoroutine(ITimer());
+        #endregion
 
-        }
 
         #region Top Bar Controller
         [SerializeField] int targetCounter;
-        [SerializeField] int _counter;
-        public int Counter {
-            get => _counter;
-            set
-            {
-                if (_counter == value) return;
-                _counter = value;
-                updateUI();
-            }
-        }
-
-        public GameState GameState { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private void updateUI()
         {
@@ -112,19 +103,13 @@ namespace Game
         }
 
         #endregion
-        internal void Init()
-        {
-        }
-
-
 
         private void setComponentUI()
         {
-            LevelBase = LevelController.LevelBase;
-            CountDown = LevelBase.gameDuration;
+            levelBase = LevelController.LevelBase;
+            CountDown = levelBase.gameDuration;
 
-            Counter = 0;
-            targetCounter = LevelBase.minBuyer;
+            targetCounter = levelBase.minBuyer;
             updateUI();
         }
 
@@ -134,34 +119,13 @@ namespace Game
             PauseGO.transform.LeanMoveLocalX(360, GlobalController.Instance.startingAnimLenght).setEaseInOutBounce();
         }
 
-        internal void StartUI()
-        {
-            StartGame();
-        }
-
-        string getText()
-        {
-            return $"{Counter} / {targetCounter} buyer";
-        }
+        string getText() => $"{RulesController.Instance.buyerSuccessTotal} / {targetCounter} buyer";
 
         public GameObject GetGameObject() => gameObject;
-
         public void OnGameIddle() { }
-
-        public void OnGamePause()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameClearance()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnGameFinish()
-        {
-            throw new NotImplementedException();
-        }
+        public void OnGamePause() { }
+        public void OnGameClearance() { }
+        public void OnGameFinish() { }
 
         #region NoClickArea
         public void setNoClickArea(bool isActive) => noClickArea.SetActive(isActive);
