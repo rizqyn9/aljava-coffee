@@ -82,3 +82,6 @@ Thumbs.db
 
 .vsconfig
 .vs/
+
+# For Persistant data
+/[Aa]ssets/Persistant/*

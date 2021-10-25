@@ -280,17 +280,16 @@ MonoBehaviour:
   offsetTopBar: 40
   progressHandler: {fileID: 580109022}
   timeUI: {fileID: 1660174399}
-  timerIsRunning: 1
   noClickArea: {fileID: 1542160399}
   machineOverlay: {fileID: 1669209337}
   radiusUI: {fileID: 440649100}
   capacityUI: {fileID: 719936642}
+  timerIsRunning: 1
   basePos: {x: 0, y: 0}
-  LevelBase: {fileID: 0}
+  levelBase: {fileID: 0}
   gameState: 0
   _countDown: 0
   targetCounter: 0
-  _counter: 0
 --- !u!1 &135687793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,6 +1629,7 @@ GameObject:
   - component: {fileID: 1532892880}
   - component: {fileID: 1532892879}
   - component: {fileID: 1532892881}
+  - component: {fileID: 1532892882}
   m_Layer: 0
   m_Name: --MainController
   m_TagString: Untagged
@@ -1653,7 +1653,6 @@ MonoBehaviour:
   delay: 2
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   targetCustomer: 5
-  _rulesController: {fileID: 1617386667}
   _gameState: 0
   _levelBase: {fileID: 0}
   isGameEnd: 0
@@ -1690,6 +1689,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDDOL: 0
   startingAnimLenght: 0.1
+--- !u!114 &1532892882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532892878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13d4753561314ad38342c6a93d43c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1542160399
 GameObject:
   m_ObjectHideFlags: 0
@@ -2001,10 +2012,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b33a40b9c4eb64eedb001e0479462836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelBase: {fileID: 0}
+  isDDOL: 0
+  gameMode: 0
+  gameDuration: 0
+  buyerInstanceTotal: 0
+  buyerSuccessTotal: 0
+  buyerRunOutTotal: 0
+  menuInstanceTotal: 0
+  earnMoneyTotal: 0
+  levelBase: {fileID: 0}
   gameState: 0
-  buyerCounter: 0
-  menuCounter: 0
 --- !u!1 &1648981621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,7 +2841,7 @@ MonoBehaviour:
     transform: {fileID: 267634333}
   - isSeatAvaible: 1
     transform: {fileID: 2061301118}
-  OrderController: {fileID: 2113947056}
+  orderController: {fileID: 0}
   LevelBase: {fileID: 0}
   BuyerTypes: []
   MenuTypes: []
@@ -2840,6 +2857,9 @@ MonoBehaviour:
   spawnPosTemp:
   - {x: -10, y: -1}
   - {x: 10, y: -1}
+  buyerInstanceTotal: 0
+  buyerSuccessTotal: 0
+  buyerRunOutTotal: 0
   seatIndex: 
 --- !u!114 &2113947056
 MonoBehaviour:
