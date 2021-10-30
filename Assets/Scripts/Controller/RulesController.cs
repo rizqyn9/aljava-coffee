@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -38,7 +35,6 @@ namespace Game
             int runOut = 0
             )
         {
-            print("Presence Update");
             buyerInstanceTotal += instance;
             buyerSuccessTotal += success;
             buyerRunOutTotal += runOut;

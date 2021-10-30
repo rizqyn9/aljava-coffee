@@ -22,8 +22,9 @@ namespace Game
 
         public override void OnMachineInit()
         {
-            base.OnMachineInit();
-            registUIOverlay();
+            useRadiusBar();
+            useBarCapacity();
+            useMachineOverlay();
             spawnOverlay = true;
         }
 

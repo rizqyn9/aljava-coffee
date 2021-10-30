@@ -52,7 +52,7 @@ namespace Game
                 bar.fillAmount = val / 100;
             }).setOnComplete(()=>
             {
-                if (!machine.useCapacityComp)
+                if (!machine.isUseBarCapacity)
                 {
                     hadleCheckList(true);
                 }
@@ -62,7 +62,7 @@ namespace Game
 
         private void hadleCheckList(bool isActive)
         {
-            print("check list active");
+            checkListGO.SetActive(isActive);
         }
 
         private void resetProgress()
