@@ -6,15 +6,20 @@ using System.Collections;
 public abstract class Machine : MonoBehaviour, IGameState
 {
     [Header("Propertie Machine")]
-    public GameObject resultPrefab;
-    public Transform resultSpawnPosition;
+    public GameObject resultPrefab;         // Will depreceated
+    public Transform resultSpawnPosition;   // Will depreceated
     public MachineIgrendient machineType;
     public Transform posProgressBar;
     public Transform posBarCapacity;
 
+    [Header("Component")]
+    public bool useCapacityComp;
+    public bool useMachineOverlay;
+
     [Header("Debug")]
     public MachineData MachineData;
     public bool spawnOverlay = false;
+
     [SerializeField] Vector2 basePos;
     [SerializeField] MachineState _machineState;
     [SerializeField] protected GameState gameState;
@@ -138,7 +143,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     public virtual void OnMachineInit()
     {
         instanceRadiusBar();
-        if (MachineData.useBarCapacity)
+        if(MachineData.useBarCapacity || useCapacityComp)
         {
             instanceBarCapacity();
         }

@@ -8,6 +8,7 @@ namespace Game
     {
         [Header("Properties")]
         [SerializeField] Image bar;
+        [SerializeField] GameObject checkListGO;
 
         [Header("Debug")]
         [SerializeField] float time;
@@ -51,8 +52,17 @@ namespace Game
                 bar.fillAmount = val / 100;
             }).setOnComplete(()=>
             {
+                if (!machine.useCapacityComp)
+                {
+                    hadleCheckList(true);
+                }
                 machine.barMachineDone();
             });
+        }
+
+        private void hadleCheckList(bool isActive)
+        {
+            print("check list active");
         }
 
         private void resetProgress()
