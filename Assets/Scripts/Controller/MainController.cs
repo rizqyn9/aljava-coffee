@@ -46,8 +46,11 @@ namespace Game
 
         public void Init()
         {
+            // Level Generator
             LevelController.LevelBase = LevelBase;
             rulesController = RulesController.Instance;
+
+
             print("<color=green>Init in Main Controller</color>");
 
             StartCoroutine(IStartGame());
