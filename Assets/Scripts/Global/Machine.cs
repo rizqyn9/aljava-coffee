@@ -6,30 +6,36 @@ using System.Collections;
 public abstract class Machine : MonoBehaviour, IGameState
 {
     [Header("Propertie Machine")]
-    public GameObject resultPrefab;
-    public Transform resultSpawnPosition;
+    public GameObject resultPrefab;         // Will depreceated
+    public Transform resultSpawnPosition;   // Will depreceated
     public MachineIgrendient machineType;
     public Transform posProgressBar;
     public Transform posBarCapacity;
 
+
     [Header("Debug")]
     public MachineData MachineData;
     public bool spawnOverlay = false;
+
     [SerializeField] Vector2 basePos;
     [SerializeField] MachineState _machineState;
     [SerializeField] protected GameState gameState;
     [SerializeField] protected GameObject resultGO;
     [SerializeField] protected BoxCollider2D boxCollider2D;
 
+    [Header("Component")]
     /** RADIUS BAR */
+    [SerializeField] internal bool isUseRadiusBar = false;
     [SerializeField] internal BarMachine BarMachine;
     [SerializeField] internal GameObject BarMachineGO;
 
     /** CAPACITY */
+    [SerializeField] internal bool isUseBarCapacity = false;
     [SerializeField] internal CapacityMachine CapacityMachine;
     [SerializeField] internal GameObject BarCapacityGO;
 
     /** OVERLAY */
+    [SerializeField] internal bool isUseMachineOverlay = false;
     [SerializeField] internal MachineUI machineUI;
 
     #region FirstInit
@@ -135,29 +141,25 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public virtual void OnMachineOff() { }
 
-    public virtual void OnMachineInit()
-    {
-        instanceRadiusBar();
-        if (MachineData.useBarCapacity)
-        {
-            instanceBarCapacity();
-        }
-    }
+    public virtual void OnMachineInit() { }
 
     public virtual void OnMachineProcess()
     {
         baseAnimateOnProcess();
-        BarMachine.isActive = true;
+        if (isUseRadiusBar) BarMachine.runProgress();
     }
 
     public virtual void OnMachineDone() { }
 
     public virtual void OnMachineClearance()
     {
-        BarMachine.isActive = false;
+        BarMachine.resetProgress();
     }
 
-    public virtual void OnMachineIddle() { }
+    public virtual void OnMachineIddle()
+    {
+        if (isUseRadiusBar) BarMachine.resetProgress();
+    }
 
     #endregion
 
@@ -172,8 +174,11 @@ public abstract class Machine : MonoBehaviour, IGameState
         yield return new WaitForSeconds(.4f);
     }
 
+    public void useRadiusBar() => instanceRadiusBar();
     void instanceRadiusBar()
     {
+        isUseRadiusBar = true;
+
         BarMachineGO = Instantiate(EnvController.Instance.radBarComponent, GameUIController.Instance.radiusUI);
         BarMachineGO.name = $"{gameObject.name}--radius-bar";
         BarMachineGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(MachineData.posBarDuration.x, MachineData.posBarDuration.y, 0));
@@ -186,16 +191,20 @@ public abstract class Machine : MonoBehaviour, IGameState
     {
         MachineState = MachineState.ON_DONE;
 
-        if (MachineData.useBarCapacity)
+        if (isUseBarCapacity)
         {
             CapacityMachine.setFull();
+            BarMachine.resetProgress();
         }
     }
 
     #region Bar Capacity
 
+    public void useBarCapacity() => instanceBarCapacity();
     void instanceBarCapacity()
     {
+        isUseBarCapacity = true;
+
         BarCapacityGO = Instantiate(EnvController.Instance.capacityBarComponent, GameUIController.Instance.capacityUI);
         BarCapacityGO.name = $"{gameObject.name}--capacity-bar";
         BarCapacityGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(MachineData.posBarCapacity.x, MachineData.posBarCapacity.y, 0));
@@ -212,8 +221,12 @@ public abstract class Machine : MonoBehaviour, IGameState
     #endregion
 
     #region Spawn Overlay
-    public void registUIOverlay()
+
+    public void useMachineOverlay() => registUIOverlay();
+
+    void registUIOverlay()
     {
+        isUseMachineOverlay = true;
         GameUIController.Instance.machineOverlay.registMachine(this, out machineUI);
     }
 

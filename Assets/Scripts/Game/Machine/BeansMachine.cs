@@ -22,9 +22,10 @@ namespace Game
 
         public override void OnMachineInit()
         {
-            base.OnMachineInit();
-            registUIOverlay();
-            spawnOverlay = true;
+            useRadiusBar();
+            useBarCapacity();
+            useMachineOverlay();
+            spawnOverlay = true;    // ensure spawn overlay on init
         }
 
         private void validate()
@@ -51,7 +52,6 @@ namespace Game
 
         IEnumerator IThrowResult()
         {
-
             coffeeMaker.reqInput(MachineData.MachineType);
 
             yield break;
