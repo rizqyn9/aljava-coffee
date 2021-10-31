@@ -23,7 +23,8 @@ namespace Game
 
         public void runProgress()
         {
-            if (isActive) return;
+            Debug.LogWarning("active progress");
+            //if (isActive) return;
             StartCoroutine(IStart());
         }
 
@@ -59,6 +60,8 @@ namespace Game
 
         public void resetProgress()
         {
+            Debug.LogWarning("REST");
+
             isActive = false;
 
             hadleCheckList(false);

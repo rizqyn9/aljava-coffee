@@ -85,7 +85,7 @@ public class ResourceManager : Singleton<ResourceManager>
             res = MenuTypes[i].Igrendients.SequenceEqual(_igrendients);
             if (res) {
                 resultMenu = MenuTypes[i];
-                Debug.Log("Found Menu Result");
+                //Debug.Log("Found Menu Result");
                 break;
             }
         }

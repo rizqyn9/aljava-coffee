@@ -21,9 +21,8 @@ namespace Game
 
         private void OnMouseDown()
         {
-            if (MachineState == MachineState.ON_DONE
-                && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.COFEE_MAKER, out glassTarget)
-                )
+            if (MachineState != MachineState.ON_DONE) return;
+            if (GlassContainer.IsGlassTargetAvaible(MachineIgrendient.COFEE_MAKER, out glassTarget))
             {
                 spawnToGlass();
             }
@@ -50,6 +49,7 @@ namespace Game
         IEnumerator ISpawn()
         {
             MachineState = MachineState.ON_PROCESS;
+            Debug.LogWarning("Machine process");
 
             yield break;
         }
@@ -57,6 +57,7 @@ namespace Game
         IEnumerator IDestroy()
         {
             MachineState = MachineState.ON_IDDLE;
+            BarMachine.resetProgress();
 
             spawnResult();
 
