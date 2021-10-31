@@ -13,6 +13,7 @@ namespace Game
         [SerializeField] TMP_Text progressHandler;
         [SerializeField] TMP_Text timeUI;
         [SerializeField] GameObject noClickArea;
+        [SerializeField] Win_UI win_UI; 
         public MachineOverlay machineOverlay;
         public Transform radiusUI;
         public Transform capacityUI;
@@ -53,6 +54,11 @@ namespace Game
         }
 
 
+        public GameObject GetGameObject() => gameObject;
+        public void OnGameIddle() { }
+        public void OnGamePause() { }
+        public void OnGameClearance() { }
+        public void OnGameFinish() { }
         #endregion
 
         #region Listen on Presence
@@ -119,15 +125,31 @@ namespace Game
 
         string getText() => $"{RulesController.Instance.buyerSuccessTotal} / {targetCounter} buyer";
 
-        public GameObject GetGameObject() => gameObject;
-        public void OnGameIddle() { }
-        public void OnGamePause() { }
-        public void OnGameClearance() { }
-        public void OnGameFinish() { }
-
         #region NoClickArea
         public void setNoClickArea(bool isActive) => noClickArea.SetActive(isActive);
         public void Btn_NoClickAre() => print("click");
         #endregion
+
+        #region Win Controller
+        public void initWinUI()
+        {
+            win_UI.gameObject.SetActive(true);
+            win_UI.init();
+        }
+        
+        #endregion
+
+        [ContextMenu("Simulate Win")]
+        public void simWin()
+        {
+            Debug.LogWarning("WIN SIMULATE");
+            initWinUI();
+        }
+
+        [ContextMenu("Simulate Lose")]
+        public void simLose()
+        {
+
+        }
     }
 }

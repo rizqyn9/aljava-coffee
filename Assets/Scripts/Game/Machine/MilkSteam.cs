@@ -49,7 +49,7 @@ namespace Game
         IEnumerator ISpawn()
         {
             MachineState = MachineState.ON_PROCESS;
-            Debug.LogWarning("Machine process");
+            //Debug.LogWarning("Machine process");
 
             yield break;
         }

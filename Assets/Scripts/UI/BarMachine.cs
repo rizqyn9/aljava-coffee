@@ -23,7 +23,7 @@ namespace Game
 
         public void runProgress()
         {
-            Debug.LogWarning("active progress");
+            //Debug.LogWarning("active progress");
             //if (isActive) return;
             StartCoroutine(IStart());
         }
@@ -60,7 +60,7 @@ namespace Game
 
         public void resetProgress()
         {
-            Debug.LogWarning("REST");
+            //Debug.LogWarning("REST");
 
             isActive = false;
 
