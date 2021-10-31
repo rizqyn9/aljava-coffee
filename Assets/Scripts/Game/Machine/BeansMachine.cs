@@ -25,7 +25,7 @@ namespace Game
             useRadiusBar();
             useBarCapacity();
             useMachineOverlay();
-            spawnOverlay = true;
+            spawnOverlay = true;    // ensure spawn overlay on init
         }
 
         private void validate()
@@ -52,7 +52,6 @@ namespace Game
 
         IEnumerator IThrowResult()
         {
-
             coffeeMaker.reqInput(MachineData.MachineType);
 
             yield break;

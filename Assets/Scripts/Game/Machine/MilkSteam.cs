@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +11,11 @@ namespace Game
 
         [Header("Debug")]
         public GlassRegistered glassTarget;
+
+        public override void OnMachineInit()
+        {
+            useRadiusBar();
+        }
 
         public override void OnMachineIddle() => spawnResult();
 
@@ -47,24 +51,15 @@ namespace Game
         {
             MachineState = MachineState.ON_PROCESS;
 
-            resultGO = Instantiate(resultPrefab, resultSpawnPosition);
-            resultGO.transform.localScale = Vector2.zero;
-            resultGO.LeanScale(new Vector2(1, 1), MachineData.durationProcess);
-
-            yield return new WaitForSeconds(MachineData.durationProcess);
-
-            MachineState = MachineState.ON_DONE;
             yield break;
         }
 
         IEnumerator IDestroy()
         {
-            MachineState = MachineState.ON_PROCESS;
+            MachineState = MachineState.ON_IDDLE;
 
-            Destroy(resultGO);
             spawnResult();
 
-            MachineState = MachineState.ON_IDDLE;
             yield break;
         }
     }

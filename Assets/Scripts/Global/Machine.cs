@@ -146,17 +146,20 @@ public abstract class Machine : MonoBehaviour, IGameState
     public virtual void OnMachineProcess()
     {
         baseAnimateOnProcess();
-        if (isUseRadiusBar) BarMachine.isActive = true;
+        if (isUseRadiusBar) BarMachine.runProgress();
     }
 
     public virtual void OnMachineDone() { }
 
     public virtual void OnMachineClearance()
     {
-        BarMachine.isActive = false;
+        BarMachine.resetProgress();
     }
 
-    public virtual void OnMachineIddle() { }
+    public virtual void OnMachineIddle()
+    {
+        if (isUseRadiusBar) BarMachine.resetProgress();
+    }
 
     #endregion
 
@@ -188,9 +191,10 @@ public abstract class Machine : MonoBehaviour, IGameState
     {
         MachineState = MachineState.ON_DONE;
 
-        if (MachineData.useBarCapacity)
+        if (isUseBarCapacity)
         {
             CapacityMachine.setFull();
+            BarMachine.resetProgress();
         }
     }
 

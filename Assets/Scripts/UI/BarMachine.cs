@@ -13,21 +13,7 @@ namespace Game
         [Header("Debug")]
         [SerializeField] float time;
         [SerializeField] Machine machine;
-        [SerializeField] bool _isActive;
-        public bool isActive
-        {
-            get => _isActive;
-            set
-            {
-                if (value)
-                {
-                    runProgress();
-                } else
-                {
-                    resetProgress();
-                }
-            }
-        }
+        [SerializeField] bool isActive;
 
         public void init(Machine _machine)
         {
@@ -35,13 +21,16 @@ namespace Game
             time = machine.MachineData.durationProcess;
         }
 
-        private void runProgress()
+        public void runProgress()
         {
+            if (isActive) return;
             StartCoroutine(IStart());
         }
 
         IEnumerator IStart()
         {
+            isActive = true;
+
             bar.fillAmount = 0;
             gameObject.LeanAlpha(1, .5f);
             gameObject.LeanScale(new Vector2(1, 1), .5f).setEaseInBounce();
@@ -55,18 +44,25 @@ namespace Game
                 if (!machine.isUseBarCapacity)
                 {
                     hadleCheckList(true);
+                } else
+                {
+                    resetProgress();
                 }
                 machine.barMachineDone();
             });
         }
 
-        private void hadleCheckList(bool isActive)
+        void hadleCheckList(bool isActive)
         {
             checkListGO.SetActive(isActive);
         }
 
-        private void resetProgress()
+        public void resetProgress()
         {
+            isActive = false;
+
+            hadleCheckList(false);
+
             gameObject.LeanAlpha(0, .3f);
             transform.LeanScale(Vector2.zero, .3f);
         }
