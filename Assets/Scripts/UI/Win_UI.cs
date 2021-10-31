@@ -26,7 +26,7 @@ namespace Game
             canvasGroup.alpha = 0;
             mainContainer.localScale = Vector2.zero;
 
-            init();
+            //init();
         }
 
         public void init()
@@ -38,6 +38,9 @@ namespace Game
 
         private void testAnim(int starSpawn)
         {
+            canvasGroup.alpha = 1;
+            canvasGroup.interactable = true;
+
             LeanTween.alphaCanvas(canvasGroup, 1f, .6f);
             LeanTween.scale(mainContainer, new Vector2(1f, 1f), .6f).setEase(LeanTweenType.easeOutBack);
 
@@ -61,7 +64,7 @@ namespace Game
 
                 animStar(total);
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(.5f);
                 total--;
             }
             yield break;
@@ -69,7 +72,7 @@ namespace Game
 
         public void animStar(int target)
         {
-            LeanTween.scale(stars[target-1].go, new Vector2(1f, 1f), 1f);
+            LeanTween.scale(stars[target - 1].go, new Vector2(1f, 1f), 1f).setEaseInBounce();
         }
     }
 }
