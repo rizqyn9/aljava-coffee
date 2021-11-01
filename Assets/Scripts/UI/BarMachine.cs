@@ -14,6 +14,11 @@ namespace Game
         [SerializeField] float time;
         [SerializeField] Machine machine;
         [SerializeField] bool isActive;
+        public enum BarType
+        {
+            OVERCOOK,
+            DEFAULT
+        }
 
         public void init(Machine _machine)
         {
@@ -21,14 +26,14 @@ namespace Game
             time = machine.MachineData.durationProcess;
         }
 
-        public void runProgress()
+        public void runProgress(BarType _barType)
         {
             //Debug.LogWarning("active progress");
             //if (isActive) return;
-            StartCoroutine(IStart());
+            StartCoroutine(IStart(_barType));
         }
 
-        IEnumerator IStart()
+        IEnumerator IStart(BarType _barType)
         {
             isActive = true;
 
@@ -37,6 +42,14 @@ namespace Game
             gameObject.LeanScale(new Vector2(1, 1), .5f).setEaseInBounce();
             yield return new WaitForSeconds(.5f);
 
+            if (_barType == BarType.OVERCOOK)
+            {
+                bar.color = Color.red;
+            } else
+            {
+                bar.color = Color.black;
+            }
+
             LeanTween.value(0, 100, time).setOnUpdate((float val) =>
             {
                 bar.fillAmount = val / 100;
@@ -44,13 +57,28 @@ namespace Game
             {
                 if (!machine.isUseBarCapacity)
                 {
-                    hadleCheckList(true);
+                    if (machine.isUseOverCook)
+                    {
+                        if(_barType == BarType.OVERCOOK)
+                        {
+                            machine.initRepair();
+                            return;
+                        }
+                        print("Instance Overcook");
+                        resetProgress();
+                        machine.initOverCook();
+                    } else
+                    {
+                        hadleCheckList(true);
+                    }
                 } else
                 {
                     resetProgress();
                 }
                 machine.barMachineDone();
             });
+
+            yield break;
         }
 
         void hadleCheckList(bool isActive)

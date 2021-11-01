@@ -27,6 +27,7 @@ namespace Game
         public override void OnMachineInit()
         {
             useRadiusBar();
+            useOverCook();
         }
 
         public void reqInput(MachineIgrendient _MachineIgrendient)

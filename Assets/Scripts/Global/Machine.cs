@@ -1,6 +1,7 @@
 using UnityEngine;
 using Game;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour, IGameState
@@ -37,6 +38,10 @@ public abstract class Machine : MonoBehaviour, IGameState
     /** OVERLAY */
     [SerializeField] internal bool isUseMachineOverlay = false;
     [SerializeField] internal MachineUI machineUI;
+
+    /** OVERLAY */
+    [SerializeField] internal bool isUseOverCook = false;
+    //[SerializeField] internal MachineUI machineUI;
 
     #region FirstInit
     public void SetMachineData(MachineData _machineData)
@@ -134,10 +139,20 @@ public abstract class Machine : MonoBehaviour, IGameState
             case MachineState.ON_CLEARANCE:
                 OnMachineClearance();
                 break;
+            case MachineState.ON_OVERCOOK:
+                OnMachineOverCook();
+                break;
+            case MachineState.ON_REPAIR:
+                OnMachineRepair();
+                break;
             default:
                 break;
         }
     }
+
+    public virtual void OnMachineRepair() { }
+
+    public virtual void OnMachineOverCook() { }
 
     public virtual void OnMachineOff() { }
 
@@ -146,7 +161,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     public virtual void OnMachineProcess()
     {
         baseAnimateOnProcess();
-        if (isUseRadiusBar) BarMachine.runProgress();
+        if (isUseRadiusBar) BarMachine.runProgress(BarMachine.BarType.DEFAULT);
     }
 
     public virtual void OnMachineDone() { }
@@ -228,6 +243,32 @@ public abstract class Machine : MonoBehaviour, IGameState
     {
         isUseMachineOverlay = true;
         GameUIController.Instance.machineOverlay.registMachine(this, out machineUI);
+    }
+
+    #endregion
+
+    #region OVERCOOK
+
+    public void useOverCook()
+    {
+        isUseOverCook = true;
+    }
+
+    public void initOverCook()
+    {
+        print("Over cook on going");
+        BarMachine.runProgress(BarMachine.BarType.OVERCOOK);
+        MachineState = MachineState.ON_OVERCOOK;
+    }
+
+    #endregion
+
+    #region REPAIR
+
+    public void initRepair()
+    {
+        MachineState = MachineState.ON_REPAIR;
+        print("Machine Need Repair");
     }
 
     #endregion

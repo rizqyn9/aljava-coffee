@@ -122,6 +122,8 @@ public enum MachineState : byte
     OFF,            // OFF, CANT HANDLING ANY REQUEST
     INIT,
     ON_IDDLE,       // OUTPUT EMPTY
+    ON_OVERCOOK,
+    ON_REPAIR,
     ON_PROCESS,     // MACHINE GOING PROCESS
     ON_CLEARANCE,
     ON_DONE,        // PROCESSING DONE, BUT OUTPUT NOT EQUALS NULL
