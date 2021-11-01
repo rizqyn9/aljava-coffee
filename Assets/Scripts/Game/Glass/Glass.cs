@@ -36,29 +36,46 @@ namespace Game
             boxCollider2D = GetComponent<BoxCollider2D>();
         }
 
-        private void Start()
-        {
-            StartCoroutine(InputListener());
-
-            glassState = GlassState.EMPTY;
-        }
+        private void Start() => glassState = GlassState.EMPTY;
 
         private void checkedMenu() => isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
 
+        int tap = 0;
+        float interval = .5f;
         private void OnMouseDown()
         {
-            boxCollider2D.enabled = false;
-            if (isValidMenu
-                && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer)
-                )
-            {
-                targetBuyer.customerHandler.onServeMenu(getMenuState);
+            tap++;
 
-                GlassContainer.Instance.glassOnDestroy(glassRegistered);
-                StartCoroutine(IDestroy());
-                return;
+            if(tap == 1)
+            {
+                StartCoroutine(IDoubleClick());
+            } else if(tap>1)
+            {
+                tap = 0;    // reset
+                print("Double");
             }
-            boxCollider2D.enabled = true;
+            //boxCollider2D.enabled = false;      // Prevent brute force
+            //if (isValidMenu
+            //    && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer)
+            //    )
+            //{
+            //    targetBuyer.customerHandler.onServeMenu(getMenuState);
+
+            //    GlassContainer.Instance.glassOnDestroy(glassRegistered);
+            //    StartCoroutine(IDestroy());
+            //    return;
+            //}
+            //boxCollider2D.enabled = true;
+        }
+
+        IEnumerator IDoubleClick()
+        {
+            yield return new WaitForSeconds(interval);
+            if(tap == 1)
+            {
+                print("single");
+            }
+            tap = 0;
         }
 
         IEnumerator IDestroy()
@@ -113,43 +130,6 @@ namespace Game
 
         private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(2.5f, 2.5f), .3f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
 
-        private IEnumerator InputListener()
-        {
-            while (enabled)
-            { 
-                if (boxCollider2D.isTrigger)
-                    yield return ClickEvent();
-
-                yield return null;
-            }
-        }
-
-        private IEnumerator ClickEvent()
-        {
-            yield return new WaitForEndOfFrame();
-
-            float count = 0f;
-            while (count < doubleClickTimeLimit)
-            {
-                if (boxCollider2D.isTrigger)
-                {
-                    DoubleClick();
-                    yield break;
-                }
-                count += Time.deltaTime;
-                yield return null;
-            }
-            SingleClick();
-        }
-
-        private void SingleClick()
-        {
-        }
-
-        private void DoubleClick()
-        {
-            Debug.Log("Double Click");
-        }
 
         #endregion
     }
