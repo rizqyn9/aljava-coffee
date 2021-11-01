@@ -26,7 +26,7 @@ public class SaveData : MonoBehaviour
     {
         return new LevelModel
         {
-            level = MainController.Instance.LevelBase.level,
+            level = MainController.Instance.levelBase.level,
             playerInstance = RulesController.Instance.buyerInstanceTotal,
             isWin = false,
         };

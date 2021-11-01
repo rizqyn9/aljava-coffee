@@ -97,7 +97,6 @@ namespace Game
 
         #endregion
 
-
         #region Top Bar Controller
         [SerializeField] int targetCounter;
 

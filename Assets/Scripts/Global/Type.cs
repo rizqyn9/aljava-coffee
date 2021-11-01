@@ -27,8 +27,15 @@ public interface IMenuClassManager
 }
 
 [System.Serializable]
-public struct GameOptions
+public struct InLevelUserData
 {
+    public List<MachineLevel> machineLevels;
+}
+
+[System.Serializable]
+public struct MachineLevel
+{
+    public MachineIgrendient machineIgrendient;
     public int level;
 }
 
@@ -38,6 +45,15 @@ public struct SpriteColorCustom
     public string target;
     public MachineIgrendient targetIgrendients;
     public Color color;
+}
+
+[System.Serializable]
+public struct MachineProperties
+{
+    public int level;
+    public int maxCapacity;
+    public float processDuration;
+    public Sprite sprite;
 }
 
 public enum MachineClass

@@ -68,7 +68,7 @@ namespace Game
         IEnumerator IReactiveSpawner()
         {
             SpawnerState = SpawnerState.REACTIVE;
-            yield return new WaitForSeconds(MainController.Instance.LevelBase.delayPerCustomer);
+            yield return new WaitForSeconds(MainController.Instance.levelBase.delayPerCustomer);
             SpawnerState = SpawnerState.CAN_CREATE;
         }
 
