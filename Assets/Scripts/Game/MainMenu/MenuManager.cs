@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     public GameObject OrderBox;
     public GameObject UpgradeBox;
     public GameObject UpgradeWindow;
+    public GameObject LevelSelect;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class MenuManager : MonoBehaviour
         OrderBox.SetActive(false);
         UpgradeBox.SetActive(false);
         UpgradeWindow.SetActive(false);
+        LevelSelect.SetActive(false);
     }
 
     // Update is called once per frame
@@ -66,10 +68,6 @@ public class MenuManager : MonoBehaviour
     {
         AboutBox.SetActive(false);
     }
-    public void ExitGame()
-    {
-        Application.Quit();
-    }
     public void OpenBuy()
     {
         OrderBox.SetActive(true);
@@ -94,6 +92,14 @@ public class MenuManager : MonoBehaviour
     {
         UpgradeWindow.SetActive(false);
     }
+    public void LevelOpen()
+    {
+        LevelSelect.SetActive(true);
+    }
+    public void LevelClose()
+    {
+        LevelSelect.SetActive(false);
+    }
     public void OpenMaps()
     {
         Application.OpenURL("https://www.google.com/maps/place/Aljava+Cafe/@-6.8079354,110.8404192,15z/data=!4m5!3m4!1s0x0:0x695b061a6027cab2!8m2!3d-6.8080939!4d110.8403623");
@@ -105,5 +111,9 @@ public class MenuManager : MonoBehaviour
     public void OpenGrabFood()
     {
         Application.OpenURL("https://food.grab.com/id/en/restaurant/aljava-cafe-demaan-delivery/6-C2E1RFKATUKJJN");
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
