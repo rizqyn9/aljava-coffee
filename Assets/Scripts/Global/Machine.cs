@@ -17,6 +17,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     public MachineData machineData;
     public MachineProperties machineProperties;
     public bool spawnOverlay = false;
+    public int machineLevel = 0;
 
     [SerializeField] Vector2 basePos;
     [SerializeField] MachineState _machineState;
@@ -44,10 +45,18 @@ public abstract class Machine : MonoBehaviour, IGameState
     //[SerializeField] internal MachineUI machineUI;
 
     #region FirstInit
-    public void setMachineData(MachineData _machineData)
+    public void setMachineData(MachineData _machineData, int _machineLevel)
     {
         machineData = _machineData;
         machineType = _machineData.machineType;
+        machineLevel = _machineLevel;
+
+        if (_machineLevel >= _machineData.properties.Count)
+        {
+            _machineLevel = _machineData.properties.Count; // Prevent too much value
+            Debug.LogWarning("Much Value");
+        }
+        machineProperties = machineData.properties[_machineLevel - 1];
     }
 
     private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
@@ -58,7 +67,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     private void Start()
     {
         MachineState = MachineState.INIT;
-        gameObject.LeanAlpha(0, 0);
+        gameObject.LeanAlpha(0, 0);                                 // Prevent machine render on first instance
 
         basePos = transform.position;
 

@@ -20,14 +20,6 @@ namespace Game
             if (MachineState == MachineState.ON_DONE) validate();
         }
 
-        public override void OnMachineInit()
-        {
-            useRadiusBar();
-            useBarCapacity();
-            useMachineOverlay();
-            spawnOverlay = true;    // ensure spawn overlay on init
-        }
-
         private void validate()
         {
             if (CapacityMachine.stateCapacity == 0) return;
