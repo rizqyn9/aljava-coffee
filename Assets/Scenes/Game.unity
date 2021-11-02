@@ -3859,8 +3859,10 @@ MonoBehaviour:
   tempCustomer: {fileID: 7251544077541574245, guid: c157816f674d84c62a6be5325723405a, type: 3}
   targetCustomer: 5
   _gameState: 0
-  _levelBase: {fileID: 0}
   isGameEnd: 0
+  levelBase: {fileID: 0}
+  inLevelUserData:
+    machineLevels: []
 --- !u!4 &1532892880
 Transform:
   m_ObjectHideFlags: 0
@@ -5260,6 +5262,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelBase: {fileID: 11400000, guid: 8c0cd825d45e444fbbe3dd4f88d43133, type: 2}
   isDevMode: 1
+  useDummyData: 0
+  dummyData:
+    machineLevels:
+    - machineIgrendient: 3
+      level: 2
   gameState: 0
 --- !u!4 &1804226147
 Transform:

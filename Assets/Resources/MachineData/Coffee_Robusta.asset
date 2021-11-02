@@ -24,3 +24,13 @@ MonoBehaviour:
   posBarCapacity: {x: -0.5, y: 0.6}
   useBarCapacity: 1
   maxCapacity: 2
+  isUpgradeable: 1
+  properties:
+  - level: 1
+    maxCapacity: 1
+    processDuration: 3
+    sprite: {fileID: 0}
+  - level: 2
+    maxCapacity: 2
+    processDuration: 5
+    sprite: {fileID: 0}

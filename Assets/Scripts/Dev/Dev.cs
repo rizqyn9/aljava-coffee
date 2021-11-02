@@ -8,11 +8,13 @@ public class Dev : MonoBehaviour
     public LevelBase levelBase;
     public bool isDevMode = true;
 
+    [SerializeField] bool useDummyData;
+    public InLevelUserData dummyData;
+
     public void Start()
     {
         if (!isDevMode) return;
-        MainController.Instance.LevelBase = levelBase;
-        MainController.Instance.Init();
+        MainController.Instance.Init(levelBase, dummyData);
     }
 
     [SerializeField] GameState gameState;

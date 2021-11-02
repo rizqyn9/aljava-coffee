@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -24,12 +25,15 @@ public class MachineData : ScriptableObject
     public bool autoRun = false;
     public Vector2 posBarDuration = new Vector2(1, 1);
     public float durationProcess = .5f;
-    //public bool useBarComponent = true;
 
     [Header("Capacity")]
     public Vector2 posBarCapacity = new Vector2(-.5f, .6f);
     public bool useBarCapacity = true;
     public int maxCapacity = 2;
+
+    [Header("Machine Properties")]
+    public bool isUpgradeable = true;
+    public List<MachineProperties> properties = new List<MachineProperties>();
 }
 
 #if UNITY_EDITOR
@@ -39,8 +43,8 @@ public class editScript : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        EditorGUILayout.LabelField("haha");
-        GUILayout.Button("asdsad");
+        EditorGUILayout.LabelField("Validate");
+        GUILayout.Button("Validate Data");
     }
 }
 #endif

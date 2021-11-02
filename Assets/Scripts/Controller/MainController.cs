@@ -15,12 +15,11 @@ namespace Game
 
         [Header("Debug")]
         [SerializeField] GameState _gameState;
-        [SerializeField] LevelBase _levelBase;
         [SerializeField] bool isGameEnd = false;
+        public LevelBase levelBase;
+        public InLevelUserData inLevelUserData;
 
         public static event Action<GameState> OnGameStateChanged;
-
-        public LevelBase LevelBase { get => _levelBase; set => _levelBase = value; }
 
         #region Prevent sprite
         private bool _onUI = false;
@@ -44,10 +43,13 @@ namespace Game
         #endregion
 
 
-        public void Init()
+        public void Init(LevelBase _levelBase, InLevelUserData _inLevelUserData)
         {
             // Level Generator
-            LevelController.LevelBase = LevelBase;
+            levelBase = _levelBase;
+            inLevelUserData = _inLevelUserData;
+
+            LevelController.LevelBase = _levelBase;
             rulesController = RulesController.Instance;
 
 
