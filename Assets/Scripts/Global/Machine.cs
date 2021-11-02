@@ -44,7 +44,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     //[SerializeField] internal MachineUI machineUI;
 
     #region FirstInit
-    public void SetMachineData(MachineData _machineData)
+    public void setMachineData(MachineData _machineData)
     {
         machineData = _machineData;
         machineType = _machineData.machineType;

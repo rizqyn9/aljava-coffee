@@ -50,10 +50,7 @@ public class editScript : Editor
         EditorGUILayout.LabelField("Validate");
         if(GUILayout.Button("Validate " + target.name))
         {
-            if (validateData())
-            {
-                Debug.Log("Once");
-            }
+            validateData();
         }
     }
 
@@ -62,27 +59,26 @@ public class editScript : Editor
         // Validate use case component
         try
         {
+            Debug.Log($"<color=yellow> Validating {target.name} </color>");
+
             machine = machineData.basePrefab.GetComponent<Machine>();
 
-            if (
-                machineData.properties.Count <= 0
-                || (machineData.isUpgradeable && machineData.properties.Count == 1)
-                || (!machineData.isUpgradeable && machineData.properties.Count > 1)
-                || (machineData.isUseMachineOverlay && machineData.prefabUIOverlay == null)
-                ) throw new Exception("Properties Rejected");
+            if (machineData.properties.Count <= 0) throw new Exception("Properties cant be empty");
+            if (machineData.isUseMachineOverlay && machineData.prefabUIOverlay == null) throw new Exception("Will use overlay, but dont have overlay prefab");
+            if (!machineData.isUpgradeable && machineData.properties.Count > 1) throw new Exception("Not Upgradeable have multiple Properties");
+            if (machineData.isUpgradeable && machineData.properties.Count == 1) throw new Exception("Upgradeable but only one Properties");
 
-            foreach(MachineProperties properties in machineData.properties)
+            for(int i = 0; i < machineData.properties.Count; i++)
             {
-                if(machineData.isUseBarCapacity && properties.maxCapacity == 0)
-                {
+                if(machineData.properties[i].level != i+1) 
+                    throw new Exception("Wrong format level");
+                if(machineData.isUseBarCapacity && machineData.properties[i].maxCapacity == 0)
                     throw new Exception("Max Capacity");
-                }
-                if(machineData.isUseRadiusBar && properties.processDuration == 0 )
-                {
+                if(machineData.isUseRadiusBar && machineData.properties[i].processDuration == 0 )
                     throw new Exception("Processing time error Capacity");
-                }
-
             }
+
+            Debug.Log($"<color=green> Validate success {target.name} </color>");
 
             return true;
 

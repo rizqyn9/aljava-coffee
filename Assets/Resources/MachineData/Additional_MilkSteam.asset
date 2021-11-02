@@ -12,21 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7c27a4871cd45a687e186f86879fcd, type: 3}
   m_Name: Additional_MilkSteam
   m_EditorClassIdentifier: 
-  MachineClass: 2
-  MachineType: 17
-  TargetMachine: 0
-  PrefabManager: {fileID: 4087089822136809635, guid: 594eeb4f2fb6045fbba9c1f6bb250c1d, type: 3}
+  machineClass: 2
+  machineType: 17
+  targetMachine: 0
+  basePrefab: {fileID: 4087089822136809635, guid: 594eeb4f2fb6045fbba9c1f6bb250c1d, type: 3}
   PrefabResult: {fileID: 0}
-  PrefabUIOverlay: {fileID: 0}
-  autoRun: 0
-  posBarDuration: {x: 1, y: 1}
-  durationProcess: 3
-  posBarCapacity: {x: -0.5, y: 0.6}
-  useBarCapacity: 1
-  maxCapacity: 2
+  isUseMachineOverlay: 0
+  prefabUIOverlay: {fileID: 0}
+  isUseRadiusBar: 1
+  isUseBarCapacity: 1
   isUpgradeable: 1
+  isAutoRun: 1
   properties:
   - level: 1
-    maxCapacity: 0
-    processDuration: 0
+    maxCapacity: 2
+    processDuration: 2
+    sprite: {fileID: 0}
+  - level: 2
+    maxCapacity: 4
+    processDuration: 1
     sprite: {fileID: 0}

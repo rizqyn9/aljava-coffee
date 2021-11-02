@@ -88,8 +88,9 @@ namespace Game
 
         public static void InstanceMachine(MachineData _machineData, Transform _transform, out Machine _machine)
         {
+            print("instance");
             _machine = Instantiate(_machineData.basePrefab, _transform).GetComponent<Machine>();
-            _machine.SetMachineData(_machineData);
+            _machine.setMachineData(_machineData);
         }
 
         public static bool FindAndCheckTarget<T>(MachineIgrendient machineType, out T _out) where T : class
