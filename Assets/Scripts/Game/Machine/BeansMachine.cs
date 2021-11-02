@@ -31,7 +31,7 @@ namespace Game
         private void validate()
         {
             if (CapacityMachine.stateCapacity == 0) return;
-            if (EnvController.FindAndCheckTarget(machineData.TargetMachine, out coffeeMaker))
+            if (EnvController.FindAndCheckTarget(machineData.targetMachine, out coffeeMaker))
             {
                 CapacityMachine.getOne();
                 StartCoroutine(IThrowResult());
@@ -52,7 +52,7 @@ namespace Game
 
         IEnumerator IThrowResult()
         {
-            coffeeMaker.reqInput(machineData.MachineType);
+            coffeeMaker.reqInput(machineData.machineType);
 
             yield break;
         }

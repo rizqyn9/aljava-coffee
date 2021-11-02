@@ -65,7 +65,7 @@ public class LevelController : Singleton<LevelController>, IGameState
                 if (!MachineTypes.Contains(_machineType))
                 {
                     MachineTypes.Add(_machineType);
-                    MachineDatas.Add(ResourceManager.ListMachine().Find(val => val.MachineType == _machineType));
+                    MachineDatas.Add(ResourceManager.ListMachine().Find(val => val.machineType == _machineType));
                 }
             }
         }

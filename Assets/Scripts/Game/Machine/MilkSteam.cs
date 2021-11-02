@@ -38,7 +38,7 @@ namespace Game
         {
             bool isArabica = glassTarget.glass.igrendients.Contains(MachineIgrendient.BEANS_ARABICA);
             SpriteColorCustom _sprite = colorResult.Find(val => val.targetIgrendients == (isArabica ? MachineIgrendient.BEANS_ARABICA : MachineIgrendient.BEANS_ROBUSTA));
-            glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, machineData.MachineType);
+            glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, machineData.machineType);
             glassTarget.glass.process();
 
             StartCoroutine(IDestroy());

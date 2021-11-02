@@ -5266,7 +5266,7 @@ MonoBehaviour:
   dummyData:
     machineLevels:
     - machineIgrendient: 3
-      level: 2
+      level: 1
   gameState: 0
 --- !u!4 &1804226147
 Transform:

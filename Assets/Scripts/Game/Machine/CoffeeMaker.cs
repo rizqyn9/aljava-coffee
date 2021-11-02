@@ -34,7 +34,7 @@ namespace Game
         {
             StartCoroutine(ISpawn());
             igrendientsList.Add(_MachineIgrendient);
-            igrendientsList.Add(machineData.MachineType);
+            igrendientsList.Add(machineData.machineType);
         }
 
         IEnumerator ISpawn()

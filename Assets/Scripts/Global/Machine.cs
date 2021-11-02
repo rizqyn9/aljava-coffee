@@ -9,8 +9,8 @@ public abstract class Machine : MonoBehaviour, IGameState
     public GameObject resultPrefab;         // Will depreceated
     public Transform resultSpawnPosition;   // Will depreceated
     public MachineIgrendient machineType;
-    public Transform posProgressBar;
-    public Transform posBarCapacity;
+    public Transform capacityBarPos;
+    public Transform radiusBarPos;
 
 
     [Header("Debug")]
@@ -47,7 +47,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     public void SetMachineData(MachineData _machineData)
     {
         machineData = _machineData;
-        machineType = _machineData.MachineType;
+        machineType = _machineData.machineType;
     }
 
     private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
@@ -196,7 +196,7 @@ public abstract class Machine : MonoBehaviour, IGameState
 
         BarMachineGO = Instantiate(EnvController.Instance.radBarComponent, GameUIController.Instance.radiusUI);
         BarMachineGO.name = $"{gameObject.name}--radius-bar";
-        BarMachineGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(machineData.posBarDuration.x, machineData.posBarDuration.y, 0));
+        BarMachineGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(radiusBarPos.position.x, radiusBarPos.position.y, 0));
 
         BarMachine = BarMachineGO.GetComponent<BarMachine>();
         BarMachine.init(this);
@@ -222,7 +222,7 @@ public abstract class Machine : MonoBehaviour, IGameState
 
         BarCapacityGO = Instantiate(EnvController.Instance.capacityBarComponent, GameUIController.Instance.capacityUI);
         BarCapacityGO.name = $"{gameObject.name}--capacity-bar";
-        BarCapacityGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(machineData.posBarCapacity.x, machineData.posBarCapacity.y, 0));
+        BarCapacityGO.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(capacityBarPos.position.x, capacityBarPos.position.y, 0));
 
         CapacityMachine = BarCapacityGO.GetComponent<CapacityMachine>();
         CapacityMachine.init(this);

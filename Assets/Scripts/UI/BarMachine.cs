@@ -23,7 +23,7 @@ namespace Game
         public void init(Machine _machine)
         {
             machine = _machine;
-            time = machine.machineData.durationProcess;
+            time = machine.machineProperties.processDuration;
         }
 
         public void runProgress(BarType _barType)

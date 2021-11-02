@@ -15,9 +15,18 @@ MonoBehaviour:
   MachineClass: 2
   MachineType: 17
   TargetMachine: 0
-  autoRun: 0
   PrefabManager: {fileID: 4087089822136809635, guid: 594eeb4f2fb6045fbba9c1f6bb250c1d, type: 3}
   PrefabResult: {fileID: 0}
   PrefabUIOverlay: {fileID: 0}
+  autoRun: 0
+  posBarDuration: {x: 1, y: 1}
   durationProcess: 3
-  useBarComponent: 1
+  posBarCapacity: {x: -0.5, y: 0.6}
+  useBarCapacity: 1
+  maxCapacity: 2
+  isUpgradeable: 1
+  properties:
+  - level: 1
+    maxCapacity: 0
+    processDuration: 0
+    sprite: {fileID: 0}

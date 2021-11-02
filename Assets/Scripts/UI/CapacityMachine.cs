@@ -65,7 +65,7 @@ namespace Game
         public void init(Machine _machine)
         {
             machine = _machine;
-            maxCapacity = _machine.machineData.maxCapacity;
+            maxCapacity = _machine.machineProperties.maxCapacity;
             deltaPerBar = 1 / maxCapacity;
         }
     }

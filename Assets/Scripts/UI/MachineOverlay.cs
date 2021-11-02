@@ -22,7 +22,7 @@ namespace Game
 
         public void registMachine(Machine _machine ,out MachineUI _machineUI)
         {
-            GameObject go = Instantiate(_machine.machineData.PrefabUIOverlay, transform);
+            GameObject go = Instantiate(_machine.machineData.prefabUIOverlay, transform);
             _machineUI = go.GetComponent<MachineUI>();
             _machineUI.init(_machine, this);
 

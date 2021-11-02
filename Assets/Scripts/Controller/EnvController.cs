@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -83,13 +82,13 @@ namespace Game
             foreach (IMenuClassManager _menuClassManager in IMenuClassManagers)
             {
                 //_menuClassManager
-                _menuClassManager.InstanceMachine(LevelController.Instance.MachineDatas.FindAll(val=> val.MachineClass == _menuClassManager.GetMachineClass()));
+                _menuClassManager.InstanceMachine(LevelController.Instance.MachineDatas.FindAll(val=> val.machineClass == _menuClassManager.GetMachineClass()));
             }
         }
 
         public static void InstanceMachine(MachineData _machineData, Transform _transform, out Machine _machine)
         {
-            _machine = Instantiate(_machineData.PrefabManager, _transform).GetComponent<Machine>();
+            _machine = Instantiate(_machineData.basePrefab, _transform).GetComponent<Machine>();
             _machine.SetMachineData(_machineData);
         }
 
