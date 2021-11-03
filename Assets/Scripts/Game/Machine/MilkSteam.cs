@@ -12,11 +12,6 @@ namespace Game
         [Header("Debug")]
         public GlassRegistered glassTarget;
 
-        public override void OnMachineInit()
-        {
-            useRadiusBar();
-        }
-
         public override void OnMachineIddle() => spawnResult();
 
         private void OnMouseDown()
@@ -57,7 +52,7 @@ namespace Game
         IEnumerator IDestroy()
         {
             MachineState = MachineState.ON_IDDLE;
-            BarMachine.resetProgress();
+            barMachine.resetProgress();
 
             spawnResult();
 

@@ -24,12 +24,6 @@ namespace Game
             }
         }
 
-        public override void OnMachineInit()
-        {
-            useRadiusBar();
-            useOverCook();
-        }
-
         public void reqInput(MachineIgrendient _MachineIgrendient)
         {
             StartCoroutine(ISpawn());
@@ -43,7 +37,7 @@ namespace Game
 
             yield return 1;
 
-            baseAnimateOnProcess();
+            //baseAnimateOnProcess();
 
             yield break;
         }

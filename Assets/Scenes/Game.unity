@@ -5267,8 +5267,10 @@ MonoBehaviour:
     machineLevels:
     - machineIgrendient: 3
       level: 1
-    - machineIgrendient: 3
-      level: 1
+    - machineIgrendient: 17
+      level: 2
+    - machineIgrendient: 17
+      level: 2
   gameState: 0
 --- !u!4 &1804226147
 Transform:

@@ -27,6 +27,7 @@ public class MachineData : ScriptableObject
     [Header("Component")]
     public bool isUseRadiusBar = false;
     public bool isUseBarCapacity = false;
+    public bool isUseOverCook = false;
 
     [Header("Machine Properties")]
     public bool isUpgradeable = true;
@@ -72,14 +73,22 @@ public class editScript : Editor
             {
                 if(machineData.properties[i].level != i+1) 
                     throw new Exception("Wrong format level");
-                if(machineData.isUseBarCapacity && machineData.properties[i].maxCapacity == 0)
+                if(
+                    machineData.isUseBarCapacity
+                    && machineData.properties[i].maxCapacity == 0
+                    || !machine.capacityBarPos
+                    )
                     throw new Exception("Max Capacity");
-                if(machineData.isUseRadiusBar && machineData.properties[i].processDuration == 0 )
+                if(
+                    machineData.isUseRadiusBar
+                    && machineData.properties[i].processDuration == 0
+                    || !machine.radiusBarPos
+                    )
                     throw new Exception("Processing time error Capacity");
             }
 
-            Debug.Log($"<color=green> Validate success {target.name} </color>");
 
+            Debug.Log($"<color=green> Validate success {target.name} </color>");
             return true;
 
         } catch (Exception e)

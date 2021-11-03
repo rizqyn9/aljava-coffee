@@ -95,7 +95,7 @@ namespace Game
         public static int GetMachineLevel(MachineData _machine)
         {
             int res = MainController.Instance.inLevelUserData.machineLevels.Find(val => val.machineIgrendient == _machine.machineType).level;
-            return res == null || res == 0 ? 1 : res;
+            return res == 0 ? 1 : res;
         }
 
         public static bool FindAndCheckTarget<T>(MachineIgrendient machineType, out T _out) where T : class

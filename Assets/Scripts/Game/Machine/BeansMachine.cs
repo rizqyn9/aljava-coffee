@@ -16,16 +16,18 @@ namespace Game
                 handleSpawnOverlay();
                 return;
             }
+
             if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
             if (MachineState == MachineState.ON_DONE) validate();
         }
 
         private void validate()
         {
-            if (CapacityMachine.stateCapacity == 0) return;
+            if (capacityMachine.stateCapacity == 0) return;
             if (EnvController.FindAndCheckTarget(machineData.targetMachine, out coffeeMaker))
             {
-                CapacityMachine.getOne();
+                capacityMachine.getOne();
+                OnMachineServe();
                 StartCoroutine(IThrowResult());
             }
         }

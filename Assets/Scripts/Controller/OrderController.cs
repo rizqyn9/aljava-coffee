@@ -42,7 +42,7 @@ namespace Game
         public void OnGameInit() { }
         #endregion
 
-        protected void Awake()
+        private void Awake()
         {
             CustomerController = CustomerController.Instance;
         }

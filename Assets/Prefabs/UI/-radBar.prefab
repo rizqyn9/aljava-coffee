@@ -145,7 +145,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.715
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -477,4 +477,4 @@ MonoBehaviour:
   checkListGO: {fileID: 2786388206312779879}
   time: 0
   machine: {fileID: 0}
-  _isActive: 0
+  isActive: 0

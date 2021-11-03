@@ -4,6 +4,9 @@ using System.Collections;
 
 namespace Game
 {
+    /// <summary>
+    /// Radius Bar
+    /// </summary>
     public class BarMachine : MonoBehaviour
     {
         [Header("Properties")]
@@ -20,9 +23,17 @@ namespace Game
             DEFAULT
         }
 
+        private void Start()
+        {
+            bar.fillAmount = 0; // Ensure fill equals to zero
+        }
+
         public void init(Machine _machine)
         {
             machine = _machine;
+            gameObject.name = $"{_machine.gameObject.name}--radius-bar";
+            transform.position = Camera.main.WorldToScreenPoint(_machine.radiusBarPos.position);
+
             time = machine.machineProperties.processDuration;
         }
 
@@ -55,6 +66,7 @@ namespace Game
                 bar.fillAmount = val / 100;
             }).setOnComplete(()=>
             {
+                resetProgress();
                 if (!machine.isUseBarCapacity)
                 {
                     if (machine.isUseOverCook)
@@ -62,11 +74,14 @@ namespace Game
                         if(_barType == BarType.OVERCOOK)
                         {
                             machine.initRepair();
+                            print("Instance Overcook");
+                            resetProgress();
                             return;
+                        } else
+                        {
+                            resetProgress();
+                            machine.initOverCook();
                         }
-                        print("Instance Overcook");
-                        resetProgress();
-                        machine.initOverCook();
                     } else
                     {
                         hadleCheckList(true);
@@ -92,6 +107,7 @@ namespace Game
 
             isActive = false;
 
+            bar.fillAmount = 0;
             hadleCheckList(false);
 
             gameObject.LeanAlpha(0, .3f);
