@@ -183,10 +183,10 @@ MonoBehaviour:
   resultGO: {fileID: 2547080873137925463, guid: 67d405e30af6e4443bebc4de58f5ed40, type: 3}
   boxCollider2D: {fileID: 0}
   isUseRadiusBar: 0
-  BarMachine: {fileID: 0}
+  barMachine: {fileID: 0}
   BarMachineGO: {fileID: 0}
   isUseBarCapacity: 0
-  CapacityMachine: {fileID: 0}
+  capacityMachine: {fileID: 0}
   BarCapacityGO: {fileID: 0}
   isUseMachineOverlay: 0
   machineUI: {fileID: 0}

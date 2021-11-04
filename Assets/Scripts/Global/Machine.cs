@@ -1,6 +1,7 @@
 using UnityEngine;
 using Game;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour, IGameState
@@ -22,7 +23,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     [SerializeField] MachineState _machineState;
     [SerializeField] protected GameState gameState;
     [SerializeField] protected GameObject resultGO;
-    [SerializeField] protected BoxCollider2D boxCollider2D;
+    public BoxCollider2D boxCollider2D;
 
     [Header("Component")]
     /** RADIUS BAR */
@@ -166,7 +167,7 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public virtual void OnMachineIddle()
     {
-        if (isUseRadiusBar) barMachine.resetProgress();
+        if (isUseRadiusBar) barMachine.stopBar(); ;
         setColliderEnabled();
     }
 
@@ -203,9 +204,13 @@ public abstract class Machine : MonoBehaviour, IGameState
         MachineState = MachineState.ON_PROCESS;
     }
 
-    public virtual void OnValidate()
+    public virtual void OnMachineValidate()
     {
         setColliderDisabled();
+        if (isUseOverCook)
+        {
+            barMachine.stopBar();
+        }
         validateLogic();
         setColliderEnabled();
     }
@@ -252,11 +257,16 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public void useOverCook(bool _isUse) => isUseOverCook = _isUse;
 
-    public void initOverCook()
+    public IEnumerator I_InitOverCook()
     {
         print("Over cook on going");
-        barMachine.runProgress(BarMachine.BarType.OVERCOOK);
         MachineState = MachineState.ON_OVERCOOK;
+        yield return new WaitForSeconds(1f);
+        if(MachineState == MachineState.ON_OVERCOOK)
+        {
+            barMachine.runProgress(BarMachine.BarType.OVERCOOK);
+        }
+        yield break;
     }
 
     #endregion
@@ -291,6 +301,7 @@ public abstract class Machine : MonoBehaviour, IGameState
         isUseMachineOverlay = _isUse;
         if (!isUseMachineOverlay) return;
 
+        spawnOverlay = true;
         isUseMachineOverlay = true;
         GameUIController.Instance.machineOverlay.registMachine(this, out machineUI);
     }
@@ -332,6 +343,10 @@ public abstract class Machine : MonoBehaviour, IGameState
         useBarCapacity(machineData.isUseBarCapacity);
         useMachineOverlay(machineData.isUseMachineOverlay);
     }
+
+    public virtual void reqInput(MachineIgrendient _machineIgrendient) { }
+    public virtual void reqInput(MachineIgrendient _machineIgrendient, Machine _machine) { }
+    public virtual void reqInput(List<MachineIgrendient> _listMachineIgrendient) { }
 
     #endregion
 

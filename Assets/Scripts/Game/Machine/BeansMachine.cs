@@ -18,12 +18,16 @@ namespace Game
             }
 
             if (MachineState == MachineState.ON_IDDLE) OnMachineSpawn();
-            if (MachineState == MachineState.ON_DONE) OnValidate();
+            if (MachineState == MachineState.ON_DONE) OnMachineValidate();
         }
 
         public override void validateLogic()
         {
-            if (capacityMachine.stateCapacity == 0) return;
+            if (capacityMachine.stateCapacity == 0)
+            {
+                MachineState = MachineState.ON_IDDLE;
+                return;
+            }
             if (EnvController.FindAndCheckTarget(machineData.targetMachine, out coffeeMaker))
             {
                 OnMachineServe();

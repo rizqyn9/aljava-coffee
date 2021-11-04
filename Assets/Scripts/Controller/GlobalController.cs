@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -8,5 +6,8 @@ namespace Game
     {
         [Header("AnimationController")]
         public float startingAnimLenght = .1f;
+
+        [Header("Properties")]
+        public float overCookDuration = 1f;
     }
 }

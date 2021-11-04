@@ -87,7 +87,6 @@ public class editScript : Editor
                     throw new Exception("Processing time error Capacity");
             }
 
-
             Debug.Log($"<color=green> Validate success {target.name} </color>");
             return true;
 

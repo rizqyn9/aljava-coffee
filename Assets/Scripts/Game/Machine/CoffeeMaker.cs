@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,42 +14,32 @@ namespace Game
 
         private void OnMouseDown()
         {
-            if (MachineState == MachineState.ON_DONE
+            if ((MachineState == MachineState.ON_DONE || MachineState == MachineState.ON_OVERCOOK)
                 && GlassContainer.IsGlassTargetAvaible(MachineIgrendient.NULL, out glassTarget)
                 && igrendientsList.Count >= 0
                 )
             {
-                StartCoroutine(IDestroy());
+                OnMachineValidate();
             }
         }
 
-        public void reqInput(MachineIgrendient _MachineIgrendient)
+        public override void reqInput(MachineIgrendient _MachineIgrendient)
         {
-            StartCoroutine(ISpawn());
+            MachineState = MachineState.ON_PROCESS;
+
             igrendientsList.Add(_MachineIgrendient);
             igrendientsList.Add(machineData.machineType);
         }
 
-        IEnumerator ISpawn()
+        public override void validateLogic()
         {
-            MachineState = MachineState.ON_PROCESS;
-
-            yield return 1;
-
-            //baseAnimateOnProcess();
-
-            yield break;
-        }
-
-        IEnumerator IDestroy()
-        {
+            Debug.LogWarning("testts");
             glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, _multipleIgrendients: igrendientsList);
             glassTarget.glass.process();
 
             resetDepends();
-
+            barMachine.stopBar();
             MachineState = MachineState.ON_IDDLE;
-            yield break;
         }
 
         void resetDepends()

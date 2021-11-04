@@ -475,6 +475,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 6949388706861786740}
   checkListGO: {fileID: 2786388206312779879}
+  colors:
+  - serializedVersion: 2
+    rgba: 4288476022
+  - serializedVersion: 2
+    rgba: 4285361625
   time: 0
   machine: {fileID: 0}
   isActive: 0
