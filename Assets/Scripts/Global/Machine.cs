@@ -1,7 +1,6 @@
 using UnityEngine;
 using Game;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour, IGameState
@@ -70,6 +69,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     {
         MachineState = MachineState.INIT;
         gameObject.LeanAlpha(0, 0);                                 // Prevent machine render on first instance
+        setColliderDisabled();
 
         basePos = transform.position;
 
@@ -88,7 +88,6 @@ public abstract class Machine : MonoBehaviour, IGameState
     #endregion
 
     #region GAME STATE
-
     public GameObject GetGameObject() => gameObject;
 
     public void GameStateHandler(GameState _gameState)
@@ -97,28 +96,17 @@ public abstract class Machine : MonoBehaviour, IGameState
         GameStateController.UpdateGameState(this, _gameState);
         OnGameStateChanged();
     }
-
     public virtual void OnGameStateChanged() { }
-
-    public virtual void OnGameIddle()
-    {
-        boxCollider2D.enabled = false;
-    }
 
     public virtual void OnGameBeforeStart() => StartCoroutine(ISpawn());
 
-    public virtual void OnGameStart()
-    {
-        boxCollider2D.enabled = true;
-        MachineState = MachineState.ON_IDDLE;
-    }
+    public virtual void OnGameStart() => MachineState = MachineState.ON_IDDLE;
+
+    public virtual void OnGameIddle() { }
     public virtual void OnGamePause() { }
     public virtual void OnGameClearance() { }
     public virtual void OnGameFinish() { }
-    public virtual void OnGameInit()
-    {
-        boxCollider2D.enabled = false;
-    }
+    public virtual void OnGameInit() { }
     #endregion
 
     #region MACHINE STATE
@@ -137,11 +125,11 @@ public abstract class Machine : MonoBehaviour, IGameState
     {
         switch (_machineState)
         {
-            case MachineState.OFF:
-                OnMachineOff();
-                break;
             case MachineState.INIT:
                 OnMachineInit();
+                break;
+            case MachineState.OFF:
+                OnMachineOff();
                 break;
             case MachineState.ON_IDDLE:
                 OnMachineIddle();
@@ -166,17 +154,19 @@ public abstract class Machine : MonoBehaviour, IGameState
         }
     }
 
-    public virtual void OnMachineRepair() { }
-
-    public virtual void OnMachineOverCook() { }
+    public virtual void OnMachineInit()
+    {
+        setColliderDisabled();
+    }
 
     public virtual void OnMachineOff()
     {
         setColliderDisabled();
     }
 
-    public virtual void OnMachineInit()
+    public virtual void OnMachineIddle()
     {
+        if (isUseRadiusBar) barMachine.resetProgress();
         setColliderEnabled();
     }
 
@@ -197,18 +187,39 @@ public abstract class Machine : MonoBehaviour, IGameState
         barMachine.resetProgress();
     }
 
-    public virtual void OnMachineIddle()
-    {
-        if (isUseRadiusBar) barMachine.resetProgress();
-    }
-
     /// <summary>
     /// Call every user try to decrement capacity machine
     /// </summary>
     public virtual void OnMachineServe()
     {
         if (isUseRadiusBar) barMachine.resetProgress();
+        if (isUseBarCapacity)
+            capacityMachine.getOne();
+        print("Machine Serve");
     }
+
+    public virtual void OnMachineSpawn()
+    {
+        MachineState = MachineState.ON_PROCESS;
+    }
+
+    public virtual void OnValidate()
+    {
+        setColliderDisabled();
+        validateLogic();
+        setColliderEnabled();
+    }
+
+    public virtual void OnMachineRepair() { }
+
+    public virtual void OnMachineOverCook() { }
+
+    public virtual void OnMachineSpawnOverlay()
+    {
+        machineUI.reqInstance();
+    }
+
+    public virtual void validateLogic() { }
 
     #endregion
 
@@ -268,6 +279,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     internal void emptyCapacity()
     {
         MachineState = MachineState.ON_IDDLE;
+        print("empty");
     }
 
     #endregion

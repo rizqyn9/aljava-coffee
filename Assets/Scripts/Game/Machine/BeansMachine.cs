@@ -13,41 +13,28 @@ namespace Game
             if (!isInteractable()) return;
             if (spawnOverlay)
             {
-                handleSpawnOverlay();
+                OnMachineSpawnOverlay();
                 return;
             }
 
-            if (MachineState == MachineState.ON_IDDLE) StartCoroutine(ISpawn());
-            if (MachineState == MachineState.ON_DONE) validate();
+            if (MachineState == MachineState.ON_IDDLE) OnMachineSpawn();
+            if (MachineState == MachineState.ON_DONE) OnValidate();
         }
 
-        private void validate()
+        public override void validateLogic()
         {
             if (capacityMachine.stateCapacity == 0) return;
             if (EnvController.FindAndCheckTarget(machineData.targetMachine, out coffeeMaker))
             {
-                capacityMachine.getOne();
                 OnMachineServe();
-                StartCoroutine(IThrowResult());
+                //StartCoroutine(IThrowResult());
+                coffeeMaker.reqInput(machineData.machineType);
             }
         }
 
-        void handleSpawnOverlay()
-        {
-            machineUI.reqInstance();
-        }
-
-        IEnumerator ISpawn()
-        {
-            MachineState = MachineState.ON_PROCESS;
-
-            yield break;
-        }
-
+        // Can depreceated
         IEnumerator IThrowResult()
         {
-            coffeeMaker.reqInput(machineData.machineType);
-
             yield break;
         }
     }
