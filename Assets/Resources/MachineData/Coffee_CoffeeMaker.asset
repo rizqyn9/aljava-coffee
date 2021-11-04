@@ -21,10 +21,11 @@ MonoBehaviour:
   prefabUIOverlay: {fileID: 0}
   isUseRadiusBar: 1
   isUseBarCapacity: 0
+  isUseOverCook: 1
   isUpgradeable: 0
   isAutoRun: 0
   properties:
   - level: 1
     maxCapacity: 0
-    processDuration: 2
+    processDuration: 3
     sprite: {fileID: 0}

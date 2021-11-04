@@ -26,7 +26,7 @@ MonoBehaviour:
   isAutoRun: 0
   properties:
   - level: 1
-    maxCapacity: 4
+    maxCapacity: 2
     processDuration: 0.5
     sprite: {fileID: 0}
   - level: 2

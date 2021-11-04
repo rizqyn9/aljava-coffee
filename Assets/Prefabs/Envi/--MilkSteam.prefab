@@ -203,12 +203,12 @@ MonoBehaviour:
   _machineState: 0
   gameState: 0
   resultGO: {fileID: 0}
-  boxCollider2D: {fileID: 0}
+  boxCollider2D: {fileID: 4087089822136809633}
   isUseRadiusBar: 0
-  BarMachine: {fileID: 0}
+  barMachine: {fileID: 0}
   BarMachineGO: {fileID: 0}
   isUseBarCapacity: 0
-  CapacityMachine: {fileID: 0}
+  capacityMachine: {fileID: 0}
   BarCapacityGO: {fileID: 0}
   isUseMachineOverlay: 0
   machineUI: {fileID: 0}

@@ -3896,6 +3896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDDOL: 0
   startingAnimLenght: 0.1
+  overCookDuration: 3
 --- !u!114 &1532892882
 MonoBehaviour:
   m_ObjectHideFlags: 0
