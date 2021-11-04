@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,10 +30,7 @@ namespace Game
 
         public GameObject GetGameObject() => gameObject;
 
-        public void OnGameIddle()
-        {
-
-        }
+        public void OnGameIddle() { }
 
         public void OnGameBeforeStart() { }
 
@@ -49,6 +45,12 @@ namespace Game
         public void OnGameInit() { }
 
         #endregion
+
+        public void OnTrash(Glass _glass)
+        {
+            Debug.LogWarning($"Throw on trash GLASS:{_glass.glassRegistered.glassCode}");
+            _glass.destroyGlass();
+        }
 
         private void Start()
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,42 +53,60 @@ namespace Game
             } else if(tap>1)
             {
                 tap = 0;    // reset
-                print("Double");
+                OnDoubleClick();
             }
-            //boxCollider2D.enabled = false;      // Prevent brute force
-            //if (isValidMenu
-            //    && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer)
-            //    )
-            //{
-            //    targetBuyer.customerHandler.onServeMenu(getMenuState);
-
-            //    GlassContainer.Instance.glassOnDestroy(glassRegistered);
-            //    StartCoroutine(IDestroy());
-            //    return;
-            //}
-            //boxCollider2D.enabled = true;
         }
+
+        private void OnDoubleClick()
+        {
+            if (lastIgrendients == MachineIgrendient.NULL) return;
+            OnTrash();   
+        }
+
+        private void OnTrash()
+        {
+            EnvController.Instance.OnTrash(this);
+        }
+
+        private void OnSingleClick()
+        {
+            boxCollider2D.enabled = false;      // Prevent brute force
+            if (isValidMenu
+                && OrderController.Instance.isExistQueue(getMenuState, out targetBuyer)
+                )
+            {
+                targetBuyer.customerHandler.onServeMenu(getMenuState);
+                destroyGlass();
+                GlassContainer.Instance.glassOnDestroy(glassRegistered);
+                return;
+            }
+            boxCollider2D.enabled = true;
+        }
+
 
         IEnumerator IDoubleClick()
         {
             yield return new WaitForSeconds(interval);
             if(tap == 1)
             {
-                print("single");
+                OnSingleClick();
             }
             tap = 0;
         }
 
+        public void destroyGlass() => StartCoroutine(IDestroy());
         IEnumerator IDestroy()
         {
             gameObject.LeanScale(Vector2.zero, .5f);
             yield return new WaitForSeconds(1f);
 
-            GlassContainer.Instance.reqGlassSpawn(glassRegistered.seatIndex);
+            reqSpawnGlassContainer();
 
             Destroy(gameObject);
             yield break;
         }
+
+        void reqSpawnGlassContainer() => GlassContainer.Instance.reqGlassSpawn(glassRegistered.seatIndex);
 
         #region Depends
         /// <summary>

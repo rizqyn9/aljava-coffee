@@ -289,7 +289,6 @@ public abstract class Machine : MonoBehaviour, IGameState
     internal void emptyCapacity()
     {
         MachineState = MachineState.ON_IDDLE;
-        print("empty");
     }
 
     #endregion
