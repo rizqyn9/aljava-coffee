@@ -129,15 +129,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a91e0a1b04c54f0ab1f84dc2eaab852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  glassCode: 
+  baseSprite: {fileID: 7270138836927946054}
   igrendientTransform: {fileID: 5550873257776790427}
-  igrendients: 
   baseIgrendientsGO: {fileID: 7872203161730326916, guid: 0000527f98c7d43f38c7c7ec2d1eb06b, type: 3}
+  glassState: 0
+  igrendients: 
   getMenuState: {fileID: 0}
   isValidMenu: 0
+  glassRegistered:
+    glassCode: 
+    glass: {fileID: 0}
+    seatIndex: 0
+  igrendientRenderer: {fileID: 0}
+  targetBuyer:
+    customerCode: 
+    buyerType: {fileID: 0}
+    buyerState: 0
+    seatIndex: 0
+    spawnPos: {x: 0, y: 0}
+    seatPos: {x: 0, y: 0}
+    menuListNames: []
+    customerHandler: {fileID: 0}
+  _lastIgrendients: 1
   doubleClickTimeLimit: 0.1
-  listIgrendientsGO: []
-  GO: {fileID: 0}
 --- !u!61 &342386735176832798
 BoxCollider2D:
   m_ObjectHideFlags: 0

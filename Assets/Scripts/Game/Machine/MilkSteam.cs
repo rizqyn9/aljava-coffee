@@ -6,9 +6,6 @@ namespace Game
 {
     public class MilkSteam : Machine
     {
-        [Header("Properties")]
-        public List<SpriteColorCustom> colorResult;
-
         [Header("Debug")]
         public GlassRegistered glassTarget;
 
@@ -31,9 +28,8 @@ namespace Game
         /// </summary>
         private void spawnToGlass()
         {
-            bool isArabica = glassTarget.glass.igrendients.Contains(MachineIgrendient.BEANS_ARABICA);
-            SpriteColorCustom _sprite = colorResult.Find(val => val.targetIgrendients == (isArabica ? MachineIgrendient.BEANS_ARABICA : MachineIgrendient.BEANS_ROBUSTA));
-            glassTarget.glass.changeSpriteAddIgrendients(_sprite.color, machineData.machineType);
+            Sprite _sprite = getSprite(glassTarget.glass.igrendients[0]);
+            glassTarget.glass.changeSpriteAddIgrendients(_sprite);
             glassTarget.glass.process();
 
             StartCoroutine(IDestroy());

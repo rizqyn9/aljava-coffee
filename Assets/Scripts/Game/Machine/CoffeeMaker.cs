@@ -33,8 +33,8 @@ namespace Game
 
         public override void validateLogic()
         {
-            Debug.LogWarning("testts");
-            glassTarget.glass.changeSpriteAddIgrendients(colorIgrendientsOutput, _multipleIgrendients: igrendientsList);
+            Sprite _sprite = getSprite(igrendientsList[0]);
+            glassTarget.glass.changeSpriteAddIgrendients(_sprite, _multipleIgrendients: igrendientsList);
             glassTarget.glass.process();
 
             resetDepends();

@@ -169,6 +169,10 @@ MonoBehaviour:
   machineType: 0
   capacityBarPos: {fileID: 9148968212107856848}
   radiusBarPos: {fileID: 6566893857574107345}
+  spriteGlassStates:
+  - name: 
+    igrendient: 3
+    sprite: {fileID: 21300000, guid: f1c2f04943af3014e9b7683fc01ae7c6, type: 3}
   machineData: {fileID: 0}
   machineProperties:
     level: 0

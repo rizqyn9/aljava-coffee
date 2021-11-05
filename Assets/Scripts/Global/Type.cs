@@ -44,7 +44,7 @@ public struct SpriteColorCustom
 {
     public string target;
     public MachineIgrendient targetIgrendients;
-    public Color color;
+    public Sprite sprite;
 }
 
 [System.Serializable]
@@ -53,6 +53,14 @@ public struct MachineProperties
     public int level;
     public int maxCapacity;
     public float processDuration;
+    public Sprite sprite;
+}
+
+[System.Serializable]
+public struct SpriteGlassState
+{
+    public string name;
+    public MachineIgrendient igrendient;
     public Sprite sprite;
 }
 

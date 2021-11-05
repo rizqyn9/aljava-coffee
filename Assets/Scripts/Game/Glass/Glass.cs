@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +7,7 @@ namespace Game
     public class Glass : MonoBehaviour
     {
         [Header("Properties")]
+        public SpriteRenderer baseSprite;
         public Transform igrendientTransform;
         public GameObject baseIgrendientsGO;
 
@@ -108,7 +108,9 @@ namespace Game
 
         void reqSpawnGlassContainer() => GlassContainer.Instance.reqGlassSpawn(glassRegistered.seatIndex);
 
+
         #region Depends
+
         /// <summary>
         /// Add Igrendients and rendering Sprite result
         /// _igrendiets automatically set as lastIgrendients
@@ -118,19 +120,49 @@ namespace Game
         /// <param name="_multipleIgrendients (optional)"></param>
         public void changeSpriteAddIgrendients(Color _color, MachineIgrendient _igrendients = MachineIgrendient.NULL, List<MachineIgrendient> _multipleIgrendients = null)
         {
-            if (!igrendientRenderer) igrendientRenderer = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
+            baseChange(_igrendients, _multipleIgrendients, MethodChange.CHANGE_CHILD);
+
+            igrendientRenderer.color = new Color(_color.r, _color.g, _color.b, 1);
+        }
+
+        /// <summary>
+        /// Add Igrendients and rendering Sprite result
+        /// _igrendiets automatically set as lastIgrendients
+        /// </summary>
+        /// <param name="sprite"></param>
+        /// <param name="_igrendients"></param>
+        /// <param name="_multipleIgrendients"></param>
+        public void changeSpriteAddIgrendients(Sprite _sprite, MachineIgrendient _igrendients = MachineIgrendient.NULL, List<MachineIgrendient> _multipleIgrendients = null)
+        {
+            baseChange(_igrendients, _multipleIgrendients, MethodChange.CHANGE_BASE);
+
+            baseSprite.sprite = _sprite;
+        }
+
+        enum MethodChange
+        {
+            CHANGE_BASE,
+            CHANGE_CHILD
+        }
+        private void baseChange(MachineIgrendient _igrendients, List<MachineIgrendient> _multipleIgrendients, MethodChange methodChange)
+        {
+            if(methodChange == MethodChange.CHANGE_BASE)
+            {
+                if (igrendientRenderer) igrendientRenderer.enabled = false;
+            } else
+            {
+                if (!igrendientRenderer) igrendientRenderer = Instantiate(baseIgrendientsGO, igrendientTransform).GetComponent<SpriteRenderer>();
+            }
             if (_multipleIgrendients != null)
             {
                 igrendients.AddRange(_multipleIgrendients);
                 lastIgrendients = _multipleIgrendients[_multipleIgrendients.Count - 1];
             }
-            if(_igrendients != MachineIgrendient.NULL)
+            if (_igrendients != MachineIgrendient.NULL)
             {
                 igrendients.Add(_igrendients);
                 lastIgrendients = _igrendients;
             }
-
-            igrendientRenderer.color = new Color(_color.r, _color.g, _color.b, 1);
         }
 
         public void process()

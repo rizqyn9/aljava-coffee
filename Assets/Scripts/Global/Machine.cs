@@ -12,6 +12,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     public MachineIgrendient machineType;
     public Transform capacityBarPos;
     public Transform radiusBarPos;
+    public List<SpriteGlassState> spriteGlassStates;
 
     [Header("Debug")]
     public MachineData machineData;
@@ -318,6 +319,11 @@ public abstract class Machine : MonoBehaviour, IGameState
     #endregion
 
     #region Dependency
+
+    public Sprite getSprite(MachineIgrendient machineIgrendient)
+    {
+        return spriteGlassStates.Find(val => val.igrendient == machineIgrendient).sprite;
+    }
 
     /// <summary>
     /// for validating when player try to click gameObject
