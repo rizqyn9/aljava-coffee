@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -29,7 +28,7 @@ namespace Game
         private void spawnToGlass()
         {
             Sprite _sprite = getSprite(glassTarget.glass.igrendients[0]);
-            glassTarget.glass.changeSpriteAddIgrendients(_sprite);
+            glassTarget.glass.changeSpriteAddIgrendients(_sprite, machineType);
             glassTarget.glass.process();
 
             StartCoroutine(IDestroy());

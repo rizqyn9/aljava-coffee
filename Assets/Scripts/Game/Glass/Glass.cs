@@ -42,7 +42,7 @@ namespace Game
         private void checkedMenu() => isValidMenu = ResourceManager.Instance.igrendientsToMenuChecker(igrendients, out getMenuState);
 
         int tap = 0;
-        float interval = .5f;
+        float interval = .3f;
         private void OnMouseDown()
         {
             tap++;
