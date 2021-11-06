@@ -2,6 +2,7 @@ using UnityEngine;
 using Game;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 [System.Serializable]
 public struct LevelModel
@@ -50,8 +51,8 @@ public class SaveData : MonoBehaviour
     {
         try
         {
-            string potion = JsonUtility.ToJson(grabData());
-            File.WriteAllText(saveFilePath, potion);
+            string res = JsonUtility.ToJson(userData);
+            File.WriteAllText(saveFilePath, res);
             print($"<color=green> Game saved </color>");
         } catch
         {
@@ -70,12 +71,23 @@ public class SaveData : MonoBehaviour
     {
         if (File.Exists(saveFilePath))
         {
+            print($"<color=green> File exist </color>");
             userData = JsonUtility.FromJson<UserData>(File.ReadAllText(saveFilePath));
         }
         else
         {
             Debug.LogWarning("File not exist");
+            createTemp();
+            SaveIntoJson();
         }
+    }
+
+    public void createTemp()
+    {
+        userData = new UserData
+        {
+            userName = "Temp"
+        };
     }
 
     internal void loadUserData()
