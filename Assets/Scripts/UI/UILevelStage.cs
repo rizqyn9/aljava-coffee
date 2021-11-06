@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class UILevelStage : MonoBehaviour
 {
+    [Header("Properties")]
     public GameObject levelPrefab;
-    public List<GameObject> LevelGO;
+
+    [Header("Debug")]
+    public List<UILevelChild> LevelGO;
+    public bool isAcceptable = true;      // Prevent brute force req
 
     private void Start()
     {
@@ -17,7 +21,14 @@ public class UILevelStage : MonoBehaviour
 
     void instanceLevelChild(int _index)
     {
-        GameObject go = Instantiate(levelPrefab, transform);
-        go.name = $"Level-{_index}";
+        UILevelChild lev = Instantiate(levelPrefab, transform).GetComponent<UILevelChild>();
+        LevelGO.Add(lev);
+        lev.init(_index);
+    }
+
+    public void reqFromChild(int _index)
+    {
+        isAcceptable = false;
+        print($"req from child{_index}");
     }
 }
