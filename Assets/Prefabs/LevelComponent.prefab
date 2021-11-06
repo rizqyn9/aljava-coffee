@@ -171,9 +171,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSprite: {fileID: 2760181248748880839}
+  baseLocked:
+    serializedVersion: 2
+    rgba: 4283801807
   text: {fileID: 6969983947245969885}
   btn: {fileID: 6969983946847676669}
   isOpened: 0
+  levelBase: {fileID: 0}
+  level: 0
+  uILevelStage: {fileID: 0}
 --- !u!1 &6969983947245969887
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDDOL: 1
+  Levels:
+  - {fileID: 11400000, guid: 8c0cd825d45e444fbbe3dd4f88d43133, type: 2}
   BuyerTypes:
   - {fileID: 11400000, guid: cb15ed2e980db48579ab82745cd71553, type: 2}
   - {fileID: 11400000, guid: 1b099d06ba321489ea97a3a18188419f, type: 2}

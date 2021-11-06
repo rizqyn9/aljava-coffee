@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game;
 
 public class UILevelStage : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class UILevelStage : MonoBehaviour
     [Header("Debug")]
     public List<UILevelChild> LevelGO;
     public bool isAcceptable = true;      // Prevent brute force req
+    public int resourceLevelCount;
 
     private void OnEnable()
     {
@@ -18,7 +20,9 @@ public class UILevelStage : MonoBehaviour
 
     private void Start()
     {
-        for(int i = 0; i < 20; i++)
+        resourceLevelCount = ResourceManager.ListLevels().Count;
+        int render = GlobalController.Instance.minLevelRender > resourceLevelCount ? GlobalController.Instance.minLevelRender : resourceLevelCount;
+        for (int i = 0; i < render; i++)
         {
             instanceLevelChild(i);
         }
@@ -28,7 +32,18 @@ public class UILevelStage : MonoBehaviour
     {
         UILevelChild lev = Instantiate(levelPrefab, transform).GetComponent<UILevelChild>();
         LevelGO.Add(lev);
-        lev.init(_index);
+
+        lev.init(
+            this,
+            _index,
+            getLevelBase(_index)
+            );
+    }
+
+    public LevelBase getLevelBase(int _index)
+    {
+        if (_index >= resourceLevelCount) return null;
+        return ResourceManager.ListLevels()[_index];
     }
 
     public void reqFromChild(int _level)

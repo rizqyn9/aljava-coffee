@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class ResourceManager : Singleton<ResourceManager>
 {
     [Header("Properties")]
+    [SerializeField] List<LevelBase> Levels = new List<LevelBase>();
     [SerializeField] List<BuyerType> BuyerTypes = new List<BuyerType>();
     [SerializeField] List<MenuType> MenuTypes = new List<MenuType>();
     [SerializeField] List<MenuClassificationData> MenuClassificationDatas = new List<MenuClassificationData>();
@@ -20,17 +21,28 @@ public class ResourceManager : Singleton<ResourceManager>
     public static List<MenuType> ListMenu() => Instance.MenuTypes;
     public static List<MachineData> ListMachine() => Instance.MachineDatas;
     public static List<MenuClassificationData> ListMenuClass() => Instance.MenuClassificationDatas;
+    public static List<LevelBase> ListLevels() => Instance.Levels;
 
     #endregion
 
+    #if UNITY_EDITOR
+
+    [MenuItem("AlJava/Validate Resouces")]
+    public static void test()
+    {
+    }
+
+    #endif
     #region CONTEXT MENU
     [ContextMenu("Validate All")]
     public void validateAll()
     {
-        Debug.Log("Validate all reources");
+        Debug.Log("Validate all resources");
         validateBuyer();
         ValidateMenuClassification();
         ValidateMachineData();
+        validateMenu();
+        validateLevel();
     }
 
     [ContextMenu("Validate Buyer")]
@@ -60,6 +72,13 @@ public class ResourceManager : Singleton<ResourceManager>
             MenuTypes.Remove(_notValid);
             notValidMenu = _notValid;
         }
+    }
+
+    public void validateLevel()
+    {
+        Levels = Resources.LoadAll<LevelBase>("Level").ToList();
+        Debug.Log($"Validated Level");
+
     }
 
     [ContextMenu("Validate Menu Classification")]
