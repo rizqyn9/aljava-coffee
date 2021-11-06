@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDDOL: 1
+  gameScene: Game
   saveData: {fileID: 63953285}
 --- !u!114 &63953285
 MonoBehaviour:

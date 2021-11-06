@@ -11,6 +11,11 @@ public class UILevelStage : MonoBehaviour
     public List<UILevelChild> LevelGO;
     public bool isAcceptable = true;      // Prevent brute force req
 
+    private void OnEnable()
+    {
+        isAcceptable = true;
+    }
+
     private void Start()
     {
         for(int i = 0; i < 20; i++)
@@ -26,9 +31,10 @@ public class UILevelStage : MonoBehaviour
         lev.init(_index);
     }
 
-    public void reqFromChild(int _index)
+    public void reqFromChild(int _level)
     {
         isAcceptable = false;
-        print($"req from child{_index}");
+        print($"req from child {_level}");
+        GameManager.Instance.loadLevel(_level);
     }
 }
