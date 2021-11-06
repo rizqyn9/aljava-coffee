@@ -5319,7 +5319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &883966776
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11089,6 +11089,7 @@ MonoBehaviour:
   levelPrefab: {fileID: 6969983946847676671, guid: 0222ce01331e64e60a36b2acb0974294, type: 3}
   LevelGO: []
   isAcceptable: 1
+  resourceLevelCount: 0
 --- !u!1 &1905870846
 GameObject:
   m_ObjectHideFlags: 0
