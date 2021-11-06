@@ -250,8 +250,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDDOL: 1
+  resourcePrefab: {fileID: 1082538355378788644, guid: a7ad6966c33374e629d9dd6287f92645, type: 3}
   gameScene: Game
   saveData: {fileID: 63953285}
+  resourceManager: {fileID: 0}
 --- !u!114 &63953285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7700,7 +7702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90036c0d8398e42b48057575e2c477a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDDOL: 0
+  isDDOL: 1
   levelBase: {fileID: 0}
   isDevMode: 0
   useDummyData: 0

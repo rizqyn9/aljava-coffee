@@ -1,6 +1,8 @@
 using System.IO;
 using UnityEngine;
 using Game;
+using UnityEngine.SceneManagement;
+using System;
 
 public class Dev : Singleton<Dev>
 {
@@ -13,6 +15,22 @@ public class Dev : Singleton<Dev>
     public void Start()
     {
         if (!isDevMode) return;
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            devHandleGame();
+        } else
+        {
+            devHandleStart();
+        }
+    }
+
+    private void devHandleStart()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void devHandleGame()
+    {
         MainController.Instance.Init(levelBase, dummyData);
     }
 
