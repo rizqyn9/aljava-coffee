@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class RulesController : Singleton<RulesController>, IGameState
+    public class RulesController : MonoBehaviour, IGameState
     {
         [Header("GameStat")]
         public GameMode gameMode;
@@ -16,9 +16,10 @@ namespace Game
         public int earnMoneyTotal = 0;
 
         [Header("Debug")]
+        public bool isWin = false;
         [SerializeField] LevelBase levelBase;
         [SerializeField] GameState gameState;
-        public void OnGameStateChanged(GameState _old, GameState _new) => gameState = _new;
+        public SaveData saveData;
 
         private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
         private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
@@ -27,7 +28,11 @@ namespace Game
             levelBase = LevelController.LevelBase;
         }
 
-        public void GameStateHandler(GameState _gameState) { }
+        public void GameStateHandler(GameState _gameState)
+        {
+            gameState = _gameState;
+            GameStateController.UpdateGameState(this, gameState);
+        }
 
         public void customerPresence(
             int instance = 0,
@@ -49,11 +54,13 @@ namespace Game
             GameLose();
         }
 
+        [ContextMenu("win")]
         void GameWin()
         {
-
+            saveData.SaveIntoJson();
         }
 
+        [ContextMenu("lose")]
         void GameLose()
         {
 
@@ -62,7 +69,12 @@ namespace Game
 
         public GameObject GetGameObject() => gameObject;
         public void OnGameIddle() { }
-        public void OnGameBeforeStart() { }
+
+        public void OnGameBeforeStart()
+        {
+            saveData = FindObjectOfType<SaveData>();
+        }
+
         public void OnGameStart() { }
         public void OnGamePause() { }
         public void OnGameClearance() { }

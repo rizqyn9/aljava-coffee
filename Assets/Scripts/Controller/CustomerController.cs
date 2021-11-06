@@ -114,7 +114,7 @@ namespace Game
             buyerSuccessTotal += success;
             buyerRunOutTotal += runOut;
 
-            RulesController.Instance.customerPresence(instance, success, runOut);
+            MainController.RulesController.customerPresence(instance, success, runOut);
         }
 
         private void getDepends()

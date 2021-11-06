@@ -11,7 +11,7 @@ namespace Game
         public GameObject tempCustomer;
         public int targetCustomer = 5;
 
-        public static RulesController rulesController;
+        public static RulesController RulesController;
 
         [Header("Debug")]
         [SerializeField] GameState _gameState;
@@ -50,7 +50,7 @@ namespace Game
             inLevelUserData = _inLevelUserData;
 
             LevelController.LevelBase = _levelBase;
-            rulesController = RulesController.Instance;
+            RulesController = FindObjectOfType<RulesController>();
 
 
             print("<color=green>Init in Main Controller</color>");

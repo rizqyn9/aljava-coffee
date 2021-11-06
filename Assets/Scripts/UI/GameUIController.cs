@@ -91,7 +91,7 @@ namespace Game
                 CountDown -= 1;
             }
             timerIsRunning = false;
-            if (CountDown <= 0) MainController.rulesController.HandleGameTimeOut();
+            if (CountDown <= 0) MainController.RulesController.HandleGameTimeOut();
             yield break;
         }
 
@@ -122,7 +122,7 @@ namespace Game
             PauseGO.transform.LeanMoveLocalX(360, GlobalController.Instance.startingAnimLenght).setEaseInOutBounce();
         }
 
-        string getText() => $"{RulesController.Instance.buyerSuccessTotal} / {targetCounter} buyer";
+        string getText() => $"{MainController.RulesController.buyerSuccessTotal} / {targetCounter} buyer";
 
         #region NoClickArea
         public void setNoClickArea(bool isActive) => noClickArea.SetActive(isActive);

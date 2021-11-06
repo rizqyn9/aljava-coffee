@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Game;
 
-public class Dev : MonoBehaviour
+public class Dev : Singleton<Dev>
 {
     public LevelBase levelBase;
     public bool isDevMode = true;
@@ -23,5 +22,22 @@ public class Dev : MonoBehaviour
     {
         print("On Debug");
         MainController.GameState = gameState;
+    }
+
+    [ContextMenu("clear persistant")]
+    public void clearPersistant()
+    {
+        string saveFilePath = Application.dataPath + "/Persistant/aljava.json";
+
+        if (File.Exists(saveFilePath))
+        {
+            File.Delete(saveFilePath);
+            Debug.LogWarning("Deleting persistant");
+            
+        }
+        else
+        {
+            Debug.LogWarning("File not exist");
+        }
     }
 }
