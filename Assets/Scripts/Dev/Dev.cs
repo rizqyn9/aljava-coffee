@@ -8,6 +8,7 @@ public class Dev : Singleton<Dev>
 {
     public LevelBase levelBase;
     public bool isDevMode = true;
+    public GameObject gameManager;
 
     [SerializeField] bool useDummyData;
     public InLevelUserData dummyData;
@@ -31,7 +32,12 @@ public class Dev : Singleton<Dev>
 
     private void devHandleGame()
     {
+        if (!FindObjectOfType<GameManager>())
+        {
+            Instantiate(gameManager);
+        }
         MainController.Instance.Init(levelBase, dummyData);
+        //GameManager.Instance.loadLevel(1);
     }
 
     [SerializeField] GameState gameState;

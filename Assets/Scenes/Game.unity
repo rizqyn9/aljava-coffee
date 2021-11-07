@@ -5468,7 +5468,8 @@ MonoBehaviour:
   isDDOL: 0
   levelBase: {fileID: 11400000, guid: 8c0cd825d45e444fbbe3dd4f88d43133, type: 2}
   isDevMode: 1
-  useDummyData: 0
+  gameManager: {fileID: 7084329412336267762, guid: 004e20491f3ae4d428997acdc88a1b19, type: 3}
+  useDummyData: 1
   dummyData:
     machineLevels:
     - machineIgrendient: 3

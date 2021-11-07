@@ -21,6 +21,11 @@ namespace Game
             {
                 OnMachineValidate();
             }
+            if(MachineState == MachineState.ON_REPAIR)
+            {
+                print("repair machine");
+                MachineState = MachineState.ON_IDDLE;
+            }
         }
 
         public override void reqInput(MachineIgrendient _MachineIgrendient)
