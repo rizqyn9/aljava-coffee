@@ -150,6 +150,14 @@ namespace Game
         public void OnLeave(BuyerPrototype _cust)
         {
             TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
+            if(gameState == GameState.CLEARANCE || gameState == GameState.FINISH)
+            {
+                if (isAvaibleSeat() && seatIndex.Count == 3)
+                {
+                    print("Finish the game");
+                    MainController.Instance.handleGameClearance();
+                }
+            }
         }
 
         #region GAME STATE
@@ -159,7 +167,10 @@ namespace Game
 
         public void OnGamePause() { }
 
-        public void OnGameClearance() { }
+        public void OnGameClearance()
+        {
+            SpawnerState = SpawnerState.IDDLE;
+        }
 
         public void OnGameFinish() { }
 

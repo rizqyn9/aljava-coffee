@@ -48,11 +48,6 @@ namespace Game
         }
 
         #region Rules Condition
-        public void HandleGameTimeOut()
-        {
-            Debug.LogWarning("Game was Time Out");
-            GameLose();
-        }
 
         [ContextMenu("win")]
         void GameWin()

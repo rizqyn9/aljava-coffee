@@ -58,7 +58,11 @@ namespace Game
         public void OnGameIddle() { }
         public void OnGamePause() { }
         public void OnGameClearance() { }
-        public void OnGameFinish() { }
+
+        public void OnGameFinish()
+        {
+            initWinUI();
+        }
         #endregion
 
         #region Listen on Presence
@@ -91,7 +95,7 @@ namespace Game
                 CountDown -= 1;
             }
             timerIsRunning = false;
-            if (CountDown <= 0) MainController.RulesController.HandleGameTimeOut();
+            if (CountDown <= 0) MainController.Instance.handleGameTimeOut();
             yield break;
         }
 
@@ -137,6 +141,8 @@ namespace Game
         }
         
         #endregion
+
+
 
         [ContextMenu("Simulate Win")]
         public void simWin()

@@ -62,9 +62,12 @@ namespace Game
         {
             GameState = GameState.INIT;
 
-            //yield return new WaitForSeconds(1);
 
             GameState = GameState.BEFORE_START;
+            if (Dev.Instance.isDevMode)
+            {
+                yield return new WaitForSeconds(GlobalController.Instance.countingBeforeStart);
+            }
 
             yield return new WaitForSeconds(GlobalController.Instance.startingAnimLenght);
             GameState = GameState.START;
@@ -75,6 +78,18 @@ namespace Game
         public void Start()
         {
             Application.targetFrameRate = 30; // Optional platform
+        }
+
+        public void handleGameTimeOut()
+        {
+            GameState = GameState.CLEARANCE;
+        }
+
+        public bool canInstanceWinLoseController = false;
+        public void handleGameClearance()
+        {
+            GameState = GameState.FINISH;
+            canInstanceWinLoseController = true;
         }
 
         IEnumerator gameFinished()
