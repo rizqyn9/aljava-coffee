@@ -36,6 +36,11 @@ public class Dev : Singleton<Dev>
         {
             Instantiate(gameManager);
         }
+        if (!FindObjectOfType<ResourceManager>())
+        {
+            Instantiate(GameManager.Instance.resourcePrefab);
+        }
+        print("SUCCCES");
         MainController.Instance.Init(levelBase, dummyData);
         //GameManager.Instance.loadLevel(1);
     }

@@ -13,10 +13,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        if (!resourceManager)
-        {
-            resourceManager = Instantiate(resourcePrefab).GetComponent<ResourceManager>();
-        }
         saveData.loadUserData();   
     }
 
