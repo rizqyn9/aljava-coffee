@@ -30,9 +30,8 @@ namespace Game
 
         public void init()
         {
-            print("Win");
             setUpComponent();
-            testAnim(3);
+            testAnim(MainController.RulesController.starTotal);
         }
 
         private void testAnim(int starSpawn)

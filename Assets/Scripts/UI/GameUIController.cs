@@ -70,11 +70,7 @@ namespace Game
         public void OnGameIddle() { }
         public void OnGamePause() { }
         public void OnGameClearance() { }
-
-        public void OnGameFinish()
-        {
-            initWinUI();
-        }
+        public void OnGameFinish() { }
         #endregion
 
         #region Pause Handler
@@ -155,24 +151,20 @@ namespace Game
         #region Win Controller
         public void initWinUI()
         {
+            print("Wn");
             win_UI.gameObject.SetActive(true);
             win_UI.init();
         }
-        
+
         #endregion
 
-        [ContextMenu("Simulate Win")]
-        public void simWin()
+        #region Lose Controller
+        public void initLoseUI()
         {
-            Debug.LogWarning("WIN SIMULATE");
-            initWinUI();
+            print("Lose");
         }
 
-        [ContextMenu("Simulate Lose")]
-        public void simLose()
-        {
-            
-        }
+        #endregion
 
         #region Health Controller
 
@@ -208,7 +200,7 @@ namespace Game
         }
         [ContextMenu("Test healt")]
         public void simDec() => changeHealth(true);
-        public void changeHealth(bool _isDecreament)
+        public void changeHealth(bool _isDecreament = true)
         {
             HealthStruct target = healths[healthActiveState - 1];
             target.go.GetComponent<RectTransform>().LeanScale(new Vector2(.5f, .5f),.2f).setLoopPingPong(2);

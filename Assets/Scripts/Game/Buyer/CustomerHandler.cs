@@ -125,7 +125,7 @@ namespace Game
                 success: isOnAngry ? 0 : 1,
                 runOut: isOnAngry ? 1 : 0
                 );
-            CustomerController.Instance.OnLeave(buyerPrototype);
+            CustomerController.Instance.OnLeave(buyerPrototype, isOnAngry);
             StartCoroutine(ILeaveSeat());
         }
 

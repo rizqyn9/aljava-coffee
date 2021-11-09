@@ -52,7 +52,6 @@ namespace Game
             LevelController.LevelBase = _levelBase;
             RulesController = FindObjectOfType<RulesController>();
 
-
             print("<color=green>Init in Main Controller</color>");
 
             StartCoroutine(IStartGame());
@@ -61,7 +60,6 @@ namespace Game
         IEnumerator IStartGame()
         {
             GameState = GameState.INIT;
-
 
             GameState = GameState.BEFORE_START;
             if (Dev.Instance.isDevMode)
@@ -82,21 +80,15 @@ namespace Game
 
         public void handleGameTimeOut()
         {
+            RulesController.isTimeOut = true;
             GameState = GameState.CLEARANCE;
         }
 
         public bool canInstanceWinLoseController = false;
         public void handleGameClearance()
         {
-            GameState = GameState.FINISH;
             canInstanceWinLoseController = true;
-        }
-
-        IEnumerator gameFinished()
-        {
-            new WaitForSeconds(4);
-            isGameEnd = true;
-            yield break;
+            GameState = GameState.FINISH;
         }
     }
 }

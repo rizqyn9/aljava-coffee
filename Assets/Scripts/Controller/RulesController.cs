@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game
@@ -15,18 +16,18 @@ namespace Game
         public int menuInstanceTotal = 0;
         public int earnMoneyTotal = 0;
 
-        [Header("Debug")]
+        public int healthActive;
+        public bool isTimeOut;
         public bool isWin = false;
+
+        public int starTotal;
+
+        [Header("Debug")]
         [SerializeField] LevelBase levelBase;
         [SerializeField] GameState gameState;
-        public SaveData saveData;
 
         private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
         private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
-        public void Init()
-        {
-            levelBase = LevelController.LevelBase;
-        }
 
         public void GameStateHandler(GameState _gameState)
         {
@@ -49,39 +50,63 @@ namespace Game
 
         public void OnHealthChanged(int _healthActiveState)
         {
-            if(_healthActiveState == 0)
+            healthActive = _healthActiveState;
+            if (_healthActiveState == 0)
             {
-                Debug.LogWarning("Health run out");
-            }
+                MainController.Instance.handleGameClearance();
+            };
         }
 
         #region Rules Condition
 
-        [ContextMenu("win")]
-        void GameWin()
+        private void calcPoint()
         {
-            saveData.SaveIntoJson();
+            calcByBuyer();
         }
 
-        [ContextMenu("lose")]
+        private void calcByBuyer()
+        {
+            float val = buyerSuccessTotal / levelBase.minBuyer * 100;
+            starTotal =
+                val >= 100 ? 3 :
+                val >= 75 ? 2 :
+                val >= 45 ? 1 :
+                0;
+        }
+
+        void GameWin()
+        {
+            GameUIController.Instance.initWinUI();
+        }
+
         void GameLose()
         {
-
+            GameUIController.Instance.initLoseUI();
         }
         #endregion 
 
         public GameObject GetGameObject() => gameObject;
         public void OnGameIddle() { }
-
         public void OnGameBeforeStart()
         {
-            saveData = FindObjectOfType<SaveData>();
+            levelBase = LevelController.LevelBase;
         }
-
         public void OnGameStart() { }
         public void OnGamePause() { }
         public void OnGameClearance() { }
-        public void OnGameFinish() { }
+
+        public void OnGameFinish()
+        {
+            calcPoint();
+            if (isWin || isTimeOut)
+            {
+                GameWin();
+            } else
+            {
+                GameLose();
+            }
+        }
+
         public void OnGameInit() { }
     }
 }

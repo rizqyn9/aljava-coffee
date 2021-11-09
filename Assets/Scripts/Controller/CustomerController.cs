@@ -39,7 +39,8 @@ namespace Game
             orderController = OrderController.Instance;
 
             // TODO
-            maxSpawn = LevelController.LevelBase.minBuyer;
+            //maxSpawn = LevelController.LevelBase.minBuyer;
+            maxSpawn = 0;
 
             getDepends();
         }
@@ -55,7 +56,7 @@ namespace Game
         {
             if (gameState != GameState.START) return;
 
-            if(SpawnerState == SpawnerState.CAN_CREATE && customerCounter <= maxSpawn)
+            if(SpawnerState == SpawnerState.CAN_CREATE && (customerCounter <= maxSpawn || maxSpawn == 0))
             {
                 if (isAvaibleSeat())
                 {
@@ -147,9 +148,13 @@ namespace Game
             return res;
         }
 
-        public void OnLeave(BuyerPrototype _cust)
+        public void OnLeave(BuyerPrototype _cust, bool _isAngry)
         {
             TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
+            if (_isAngry)
+            {
+                GameUIController.Instance.changeHealth();
+            }
             checkClearance();
         }
 
