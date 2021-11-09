@@ -87,7 +87,7 @@ namespace Game
         IEnumerator spawnGlass(GameObject _glass)
         {
             _glass.transform.localScale = Vector2.zero;
-            _glass.LeanScale(new Vector2(2f, 2f), delay).setEaseInBounce();
+            _glass.LeanScale(new Vector2(.2f, .2f), delay).setEaseInBounce();
             yield break;
 
         }

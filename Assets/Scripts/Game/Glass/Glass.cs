@@ -179,7 +179,7 @@ namespace Game
             glassState = GlassState.FILLED;
         }
 
-        private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(2.5f, 2.5f), .3f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
+        private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(.5f, .5f), .3f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
 
 
         #endregion
