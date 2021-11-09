@@ -99,9 +99,10 @@ namespace Game
             resetProgress();
         }
 
-        void handleCheckList(bool isActive)
+        public void uiHandleState(BarType _barType)
         {
-            checkListGO.SetActive(isActive);
+            repairListGO.SetActive(_barType == BarType.OVERCOOK);
+            checkListGO.SetActive(_barType == BarType.DEFAULT);
         }
 
         void uiHandleState(BarType _barType)
