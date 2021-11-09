@@ -9,15 +9,12 @@ namespace Game
         [Header("Properties")]
         public bool isActive;
 
-        //[Header("Debug")]
         public float move;
         public void Btn_Slider()
         {
-            move = !isActive ? 400 : 700;
-            LeanTween.moveLocalX(gameObject, move, .7f).setEase(LeanTweenType.easeInOutCirc);
+            LeanTween.moveX(GetComponent<RectTransform>(), isActive ? 0 : -300f, .7f);
+            GameUIController.Instance.setNoClickArea(!isActive);
             isActive = !isActive;
         }
-
-        
     }
 }
