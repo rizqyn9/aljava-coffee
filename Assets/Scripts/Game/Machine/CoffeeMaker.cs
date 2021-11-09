@@ -24,8 +24,6 @@ namespace Game
             if(MachineState == MachineState.ON_NEEDREPAIR)
             {
                 MachineState =MachineState.ON_REPAIR;
-                
-                //MachineState = MachineState.ON_IDDLE;
             }
         }
         public override void OnMachineIddle()
