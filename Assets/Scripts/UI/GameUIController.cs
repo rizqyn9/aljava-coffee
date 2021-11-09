@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 namespace Game
 {
@@ -20,6 +21,9 @@ namespace Game
         public Transform capacityUI;
         public GameObject PauseUI;
         public bool gameIsPaused = false;
+        public Transform healthContainer;
+        public GameObject healthPrefab;
+        public Sprite healthRed, healthDark;
 
         [Header("Debug")]
         [SerializeField] bool timerIsRunning = false;
@@ -31,16 +35,15 @@ namespace Game
 
         private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
         private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
-
-        private void Start()
-        {
-            PauseUI.SetActive(false);
-        }
-
         public void GameStateHandler(GameState _gameState)
         {
             gameState = _gameState;
             GameStateController.UpdateGameState(this, gameState);
+        }
+
+        private void Start()
+        {
+            PauseUI.SetActive(false);
         }
 
         public void OnGameInit()
@@ -53,6 +56,8 @@ namespace Game
             machineOverlay.defaultPosition();
             machineOverlay.gameObject.SetActive(true);
 
+            instanceHealth(levelBase.healthTotal);
+
             spawnTopUI();
         }
 
@@ -60,7 +65,6 @@ namespace Game
         {
             StartCoroutine(ICountDown());
         }
-
 
         public GameObject GetGameObject() => gameObject;
         public void OnGameIddle() { }
@@ -74,23 +78,19 @@ namespace Game
         #endregion
 
         #region Pause Handler
-
         public void Btn_Pause()
         {
             gameIsPaused = !gameIsPaused;
             PauseUI.SetActive(gameIsPaused);
             Time.timeScale = gameIsPaused ? 0f : 1f;
         }
-
         #endregion
 
         #region Listen on Presence
-
         public void OnUpdatePresence()
         {
             updateUI();
         }
-
         #endregion
 
         #region COUNTDOWN CONTROLLER
@@ -171,7 +171,40 @@ namespace Game
         [ContextMenu("Simulate Lose")]
         public void simLose()
         {
-
+            
         }
+
+        #region Health Controller
+
+        [System.Serializable]
+        public struct HealthStruct
+        {
+            public int index;
+            public bool isActive;
+            public Image image;
+            public GameObject go;
+        }
+
+        [SerializeField] List<HealthStruct> healths = new List<HealthStruct>();
+        public void instanceHealth(int _count)
+        {
+            for(int i = 0; i < _count; i++)
+            {
+                HealthStruct data = new HealthStruct
+                {
+                    go = Instantiate(healthPrefab, healthContainer),
+                    index = i,
+                    isActive = true
+                };
+                data.go.transform.localScale = Vector2.zero;
+                data.go.GetComponent<RectTransform>().localPosition = new Vector2(i * 50f, 0); ;
+                data.image = data.go.GetComponent<Image>();
+                data.image.sprite = healthRed;
+                healths.Add(data);
+                LeanTween.scale(data.go.GetComponent<RectTransform>(), new Vector2(1f, 1f), .5f);
+            }
+        }
+
+        #endregion
     }
 }

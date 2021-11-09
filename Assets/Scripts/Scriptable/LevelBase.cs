@@ -11,6 +11,7 @@ public class LevelBase : ScriptableObject
     public List<MenuListName> MenuTypeUnlock;
     public List<enumBuyerType> BuyerTypeUnlock;
     public float delayPerCustomer = 10;
+    public int healthTotal = 3;
 
     [Header("Game Mode")]
     public int gameDuration;
