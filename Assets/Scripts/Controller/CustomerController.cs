@@ -150,7 +150,12 @@ namespace Game
         public void OnLeave(BuyerPrototype _cust)
         {
             TransformSeatDatas[_cust.seatIndex].isSeatAvaible = true;
-            if(gameState == GameState.CLEARANCE || gameState == GameState.FINISH)
+            checkClearance();
+        }
+
+        private void checkClearance()
+        {
+            if (gameState == GameState.CLEARANCE || gameState == GameState.FINISH)
             {
                 if (isAvaibleSeat() && seatIndex.Count == 3)
                 {
