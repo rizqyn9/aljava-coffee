@@ -21,15 +21,10 @@ namespace Game
             {
                 OnMachineValidate();
             }
-            if(MachineState == MachineState.ON_NEEDREPAIR)
+            if(MachineState == MachineState.ON_REPAIR)
             {
                 MachineState =MachineState.ON_REPAIR;
             }
-        }
-        public override void OnMachineIddle()
-        {
-            base.OnMachineIddle();
-            igrendientsList = new List<MachineIgrendient>();
         }
 
         public override void reqInput(MachineIgrendient _MachineIgrendient)

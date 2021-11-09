@@ -225,6 +225,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+<<<<<<< HEAD
 --- !u!1 &2334603071470912663
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +301,8 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+=======
+>>>>>>> parent of 92070e3 (fix: rebase)
 --- !u!1 &2786388206312779879
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +523,6 @@ RectTransform:
   - {fileID: 426195251083665950}
   - {fileID: 8194882433041835337}
   - {fileID: 6457350203202597384}
-  - {fileID: 8542570759892932081}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -551,13 +553,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 6949388706861786740}
   checkListGO: {fileID: 2786388206312779879}
-  repairListGO: {fileID: 2334603071470912663}
   colors:
   - serializedVersion: 2
     rgba: 4288476022
   - serializedVersion: 2
     rgba: 4285361625
-  leanTweenID: 0
   time: 0
   machine: {fileID: 0}
   isActive: 0

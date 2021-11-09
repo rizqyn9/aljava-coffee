@@ -147,7 +147,6 @@ public enum MachineState : byte
     INIT,
     ON_IDDLE,       // OUTPUT EMPTY
     ON_OVERCOOK,
-    ON_NEEDREPAIR,
     ON_REPAIR,
     ON_PROCESS,     // MACHINE GOING PROCESS
     ON_CLEARANCE,

@@ -12,7 +12,6 @@ namespace Game
         [Header("Properties")]
         [SerializeField] Image bar;
         [SerializeField] GameObject checkListGO;
-        [SerializeField] GameObject repairListGO;
 
         [Tooltip("Index0: default color\nIndex1: overcook color")]
         [SerializeField] Color32[] colors;
@@ -25,8 +24,7 @@ namespace Game
         public enum BarType
         {
             OVERCOOK,
-            DEFAULT,
-            NOT_SET
+            DEFAULT
         }
 
         private void Start()
@@ -76,7 +74,6 @@ namespace Game
                         if(_barType == BarType.OVERCOOK)
                         {
                             machine.initRepair();
-                            uiHandleState(_barType);
                             //resetProgress();
                         } else
                         {
@@ -99,10 +96,9 @@ namespace Game
             resetProgress();
         }
 
-        public void uiHandleState(BarType _barType)
+        void handleCheckList(bool isActive)
         {
-            repairListGO.SetActive(_barType == BarType.OVERCOOK);
-            checkListGO.SetActive(_barType == BarType.DEFAULT);
+            checkListGO.SetActive(isActive);
         }
 
         void uiHandleState(BarType _barType)
@@ -113,10 +109,12 @@ namespace Game
 
         public void resetProgress()
         {
+            //Debug.LogWarning("REST");
+
             isActive = false;
 
             bar.fillAmount = 0;
-            uiHandleState(BarType.NOT_SET);
+            handleCheckList(false);
 
             hideBar();
         }
@@ -131,15 +129,6 @@ namespace Game
         {
             gameObject.LeanAlpha(0, 0);
             transform.LeanScale(Vector2.zero, 0);
-        }
-
-        internal void simulateRepair()
-        {
-
-            LeanTween.rotateZ(repairListGO, 30f, GlobalController.Instance.repairMachineDuration/5).setLoopPingPong(5).setOnComplete(() =>
-            {
-                machine.OnMachineSuccessRepair();
-            });
         }
     }
 }
