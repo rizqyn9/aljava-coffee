@@ -473,9 +473,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2335655452190809517}
   - component: {fileID: 7927191975128569656}
-  - component: {fileID: 2616266534214178}
+  - component: {fileID: 3825618011384333036}
   m_Layer: 0
-  m_Name: blender_anim0000
+  m_Name: liquidLv2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -546,7 +546,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &2616266534214178
+--- !u!95 &3825618011384333036
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -556,7 +556,7 @@ Animator:
   m_GameObject: {fileID: 5151003306569148095}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5b8fb7f95c427a245b6ff7551de372ad, type: 2}
+  m_Controller: {fileID: 9100000, guid: a518ab97f64d0dc41917ca88099564d6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -723,9 +723,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7399641841483833273}
   - component: {fileID: 4343650813489843410}
-  - component: {fileID: 6255075183202488266}
+  - component: {fileID: 2849516215815315877}
   m_Layer: 0
-  m_Name: blender_anim0000
+  m_Name: liquidLv3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -796,7 +796,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &6255075183202488266
+--- !u!95 &2849516215815315877
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -806,7 +806,7 @@ Animator:
   m_GameObject: {fileID: 7197775870173779891}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5b8fb7f95c427a245b6ff7551de372ad, type: 2}
+  m_Controller: {fileID: 9100000, guid: ef3ee9a40380664429b4ec3884eda729, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
