@@ -19,7 +19,11 @@ MonoBehaviour:
   BuyerTypeUnlock: 0000000001000000
   delayPerCustomer: 10
   healthTotal: 3
+<<<<<<< HEAD
   gameDuration: 999
+=======
+  gameDuration: 100
+>>>>>>> 7c789d1 (fix: machine repair)
   minPoint: 100
   minOrder: 10
   minBuyer: 10

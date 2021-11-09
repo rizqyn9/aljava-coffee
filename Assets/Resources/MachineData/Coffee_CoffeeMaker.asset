@@ -29,3 +29,7 @@ MonoBehaviour:
     maxCapacity: 0
     processDuration: 3
     sprite: {fileID: 0}
+  - level: 1
+    maxCapacity: 0
+    processDuration: 1
+    sprite: {fileID: 0}

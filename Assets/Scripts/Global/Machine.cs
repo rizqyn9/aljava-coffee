@@ -2,6 +2,7 @@ using UnityEngine;
 using Game;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Machine : MonoBehaviour, IGameState
@@ -148,12 +149,19 @@ public abstract class Machine : MonoBehaviour, IGameState
             case MachineState.ON_OVERCOOK:
                 OnMachineOverCook();
                 break;
+            case MachineState.ON_NEEDREPAIR:
+                OnMachineNeedRepair();
+                break;
             case MachineState.ON_REPAIR:
                 OnMachineRepair();
                 break;
             default:
                 break;
         }
+    }
+
+    private void OnMachineNeedRepair()
+    {
     }
 
     public virtual void OnMachineInit()
@@ -216,7 +224,10 @@ public abstract class Machine : MonoBehaviour, IGameState
         setColliderEnabled();
     }
 
-    public virtual void OnMachineRepair() { }
+    public virtual void OnMachineRepair()
+    {
+        barMachine.simulateRepair();
+    }
 
     public virtual void OnMachineOverCook() { }
 
@@ -312,8 +323,13 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public void initRepair()
     {
-        MachineState = MachineState.ON_REPAIR;
         print("Machine Need Repair");
+        MachineState = MachineState.ON_NEEDREPAIR;
+    }
+
+    public virtual void OnMachineSuccessRepair()
+    {
+        MachineState = MachineState.ON_IDDLE;
     }
 
     #endregion
