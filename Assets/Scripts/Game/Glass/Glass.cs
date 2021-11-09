@@ -146,6 +146,10 @@ namespace Game
         }
         private void baseChange(MachineIgrendient _igrendients, List<MachineIgrendient> _multipleIgrendients, MethodChange methodChange)
         {
+            if (!baseSprite.isVisible)
+            {
+                baseSprite.enabled = true;
+            }
             if(methodChange == MethodChange.CHANGE_BASE)
             {
                 if (igrendientRenderer) igrendientRenderer.enabled = false;
@@ -179,7 +183,7 @@ namespace Game
             glassState = GlassState.FILLED;
         }
 
-        private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(.5f, .5f), .3f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
+        private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(.27f, .27f), .1f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
 
 
         #endregion

@@ -194,7 +194,7 @@ MonoBehaviour:
   spriteGlassStates:
   - name: 
     igrendient: 3
-    sprite: {fileID: 21300000, guid: 9b7162df815ad2d41bb26de6b8eafdcd, type: 3}
+    sprite: {fileID: 21300000, guid: afee2cf4571e5454997ac33498082957, type: 3}
   machineData: {fileID: 0}
   machineProperties:
     level: 0
