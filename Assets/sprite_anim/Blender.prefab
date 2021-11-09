@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 6695440524102195391}
   - component: {fileID: 8123349158604597344}
   m_Layer: 0
-  m_Name: blender_anim0000
+  m_Name: liquidLv1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
