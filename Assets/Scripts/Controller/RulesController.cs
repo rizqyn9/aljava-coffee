@@ -47,6 +47,14 @@ namespace Game
             GameUIController.Instance.OnUpdatePresence();
         }
 
+        public void OnHealthChanged(int _healthActiveState)
+        {
+            if(_healthActiveState == 0)
+            {
+                Debug.LogWarning("Health run out");
+            }
+        }
+
         #region Rules Condition
 
         [ContextMenu("win")]

@@ -215,6 +215,8 @@ namespace Game
             target.image.sprite = _isDecreament ? healthDark : healthRed;
             target.isActive = !_isDecreament;
             healthActiveState = _isDecreament ? healthActiveState - 1 : healthActiveState + 1;
+
+            MainController.RulesController.OnHealthChanged(healthActiveState);
         }
 
         #endregion
