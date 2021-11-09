@@ -151,6 +151,9 @@ public abstract class Machine : MonoBehaviour, IGameState
             case MachineState.ON_REPAIR:
                 OnMachineRepair();
                 break;
+            case MachineState.ON_NEEDREPAIR:
+                OnMachineNeedRepair();
+                break;
             default:
                 break;
         }
@@ -216,7 +219,11 @@ public abstract class Machine : MonoBehaviour, IGameState
         setColliderEnabled();
     }
 
-    public virtual void OnMachineRepair() { }
+    public virtual void OnMachineRepair()
+    {
+        barMachine.simulateRepair();
+    }
+    public virtual void OnMachineNeedRepair() { }
 
     public virtual void OnMachineOverCook() { }
 
@@ -312,8 +319,13 @@ public abstract class Machine : MonoBehaviour, IGameState
 
     public void initRepair()
     {
-        MachineState = MachineState.ON_REPAIR;
+        MachineState = MachineState.ON_NEEDREPAIR;
         print("Machine Need Repair");
+    }
+
+    public virtual void OnMachineSuccessRepair()
+    {
+        MachineState = MachineState.ON_IDDLE;
     }
 
     #endregion
