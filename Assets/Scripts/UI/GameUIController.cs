@@ -186,6 +186,7 @@ namespace Game
         }
 
         [SerializeField] List<HealthStruct> healths = new List<HealthStruct>();
+        [SerializeField] int healthActiveState = 0;
         public void instanceHealth(int _count)
         {
             for(int i = 0; i < _count; i++)
@@ -201,8 +202,19 @@ namespace Game
                 data.image = data.go.GetComponent<Image>();
                 data.image.sprite = healthRed;
                 healths.Add(data);
-                LeanTween.scale(data.go.GetComponent<RectTransform>(), new Vector2(1f, 1f), .5f);
+                LeanTween.scale(data.go.GetComponent<RectTransform>(), new Vector2(1f, 1f), .5f).setDelay(i * .5f);
             }
+            healthActiveState = _count;
+        }
+        [ContextMenu("Test healt")]
+        public void simDec() => changeHealth(true);
+        public void changeHealth(bool _isDecreament)
+        {
+            HealthStruct target = healths[healthActiveState - 1];
+            target.go.GetComponent<RectTransform>().LeanScale(new Vector2(.5f, .5f),.2f).setLoopPingPong(2);
+            target.image.sprite = _isDecreament ? healthDark : healthRed;
+            target.isActive = !_isDecreament;
+            healthActiveState = _isDecreament ? healthActiveState - 1 : healthActiveState + 1;
         }
 
         #endregion
