@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enumBuyerType: 0
   buyerName: Buyer1
-  buyerPrefab: {fileID: 3775143352533811655, guid: 4d673e7df4c8ef5479e99a0b1ab7b1be, type: 3}
+  buyerPrefab: {fileID: 1666277097816029143, guid: 742425fe2b5a60a4eb36ca1ff8ea51b1, type: 3}
+  patienceDuration: 10

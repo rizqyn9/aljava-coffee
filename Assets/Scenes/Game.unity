@@ -720,6 +720,7 @@ MonoBehaviour:
   _countDown: 0
   targetCounter: 0
   healths: []
+  healthActiveState: 0
 --- !u!1 &135687793
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +862,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4008665631589979086, guid: c64af85632ace96458b51c9b5ed51c61, type: 3}
       propertyPath: m_SortingOrder
-      value: -2
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 4008665632391441944, guid: c64af85632ace96458b51c9b5ed51c61, type: 3}
       propertyPath: m_Name
@@ -996,7 +997,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838ad8e332d6e9444b4c6e1b3c4a01e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseUI: {fileID: 1562762275}
 --- !u!1 &233063207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,7 +3118,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: -4
   m_Sprite: {fileID: 21300000, guid: ffb049bcbb971ca4082876931c141e94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

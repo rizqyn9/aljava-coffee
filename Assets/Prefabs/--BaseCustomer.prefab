@@ -79,7 +79,7 @@ SpriteRenderer:
   m_Size: {x: 5.53, y: 6.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1473854813228492298
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_Size: {x: 5.53, y: 6.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2484435322807204200
@@ -325,7 +325,7 @@ SpriteRenderer:
   m_Size: {x: 5.53, y: 6.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &5293687268828243643
@@ -624,7 +624,8 @@ MonoBehaviour:
   valState: 10
   duration: 0
   customerHandler: {fileID: 0}
-  val: 0
+  _valPatience: 0
+  canAngry: 1
 --- !u!1 &5376542571190793433
 GameObject:
   m_ObjectHideFlags: 0

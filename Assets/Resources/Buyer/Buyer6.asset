@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb0ee7a16e14d41e3a01e0f9118437d0, type: 3}
-  m_Name: Buyer4
+  m_Name: Buyer6
   m_EditorClassIdentifier: 
-  enumBuyerType: 3
-  buyerName: 
-  buyerPrefab: {fileID: 1941858322704892656, guid: bd382554806f92b45ae581624f777595, type: 3}
+  enumBuyerType: 5
+  buyerName: PELAJAR
+  buyerPrefab: {fileID: 5671149459682870745, guid: 35eeabcde57d1414286e2c3694c70c4b, type: 3}
   patienceDuration: 10
