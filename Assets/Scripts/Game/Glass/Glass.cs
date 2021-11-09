@@ -185,7 +185,6 @@ namespace Game
 
         private void animateGlass()=> LeanTween.scale(gameObject, new Vector2(.27f, .27f), .1f).setEase(LeanTweenType.easeInOutCirc).setLoopPingPong(1);
 
-
         #endregion
     }
 }
