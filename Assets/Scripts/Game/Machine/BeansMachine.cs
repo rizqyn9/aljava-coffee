@@ -10,6 +10,7 @@ namespace Game
 
         public void OnMouseDown()
         {
+            print("click");
             if (!isInteractable()) return;
             if (spawnOverlay)
             {
