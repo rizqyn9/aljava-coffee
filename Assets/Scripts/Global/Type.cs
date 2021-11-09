@@ -230,7 +230,9 @@ public enum enumBuyerType
     CEWEK,
     INDIE,
     OJOL_KANTORAN,
-    OJOL
+    OJOL,
+    PELAJAR
+
 }
 
 public enum BuyerState

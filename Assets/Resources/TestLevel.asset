@@ -18,7 +18,8 @@ MonoBehaviour:
   MenuTypeUnlock: 02
   BuyerTypeUnlock: 0000000001000000
   delayPerCustomer: 10
-  gameDuration: 10
+  healthTotal: 3
+  gameDuration: 999
   minPoint: 100
   minOrder: 10
   minBuyer: 10
