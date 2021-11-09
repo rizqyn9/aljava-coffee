@@ -9,6 +9,7 @@ public class GlobalController : Singleton<GlobalController>
     [Header("Properties")]
     public float countingBeforeStart = 3f;
     public float overCookDuration = 1f;
+    public float repairMachineDuration = 1f;
     public int minLevelRender = 9;
 }
 
