@@ -2738,10 +2738,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoffeeGrinder
       objectReference: {fileID: 0}
-    - target: {fileID: 5087018890259462266, guid: fc2df242307ad0247a544bbe56109bac, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7590811742463179453, guid: fc2df242307ad0247a544bbe56109bac, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -3828,10 +3824,6 @@ PrefabInstance:
     - target: {fileID: 4801058158668806679, guid: 9de2a1c8ca385f740a02fe295e708218, type: 3}
       propertyPath: m_Name
       value: SteamMilk
-      objectReference: {fileID: 0}
-    - target: {fileID: 4801058158668806679, guid: 9de2a1c8ca385f740a02fe295e708218, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9de2a1c8ca385f740a02fe295e708218, type: 3}
@@ -13725,10 +13717,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoffeeMakerr
       objectReference: {fileID: 0}
-    - target: {fileID: 6542655798869085815, guid: 15626d1785d6d0b40856911bb2410284, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8369244634766411403, guid: 15626d1785d6d0b40856911bb2410284, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -13829,10 +13817,6 @@ PrefabInstance:
     - target: {fileID: 4569972429428810359, guid: 271bed62044257841b13076661c2b526, type: 3}
       propertyPath: m_Name
       value: Blender
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569972429428810359, guid: 271bed62044257841b13076661c2b526, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 271bed62044257841b13076661c2b526, type: 3}
