@@ -18,6 +18,8 @@ namespace Game
         public MachineOverlay machineOverlay;
         public Transform radiusUI;
         public Transform capacityUI;
+        public GameObject PauseUI;
+        public bool gameIsPaused = false;
 
         [Header("Debug")]
         [SerializeField] bool timerIsRunning = false;
@@ -29,6 +31,11 @@ namespace Game
 
         private void OnEnable() => MainController.OnGameStateChanged += GameStateHandler;
         private void OnDisable() => MainController.OnGameStateChanged += GameStateHandler;
+
+        private void Start()
+        {
+            PauseUI.SetActive(false);
+        }
 
         public void GameStateHandler(GameState _gameState)
         {
@@ -64,6 +71,17 @@ namespace Game
         {
             initWinUI();
         }
+        #endregion
+
+        #region Pause Handler
+
+        public void Btn_Pause()
+        {
+            gameIsPaused = !gameIsPaused;
+            PauseUI.SetActive(gameIsPaused);
+            Time.timeScale = gameIsPaused ? 0f : 1f;
+        }
+
         #endregion
 
         #region Listen on Presence

@@ -707,6 +707,8 @@ MonoBehaviour:
   machineOverlay: {fileID: 1669209337}
   radiusUI: {fileID: 440649100}
   capacityUI: {fileID: 719936642}
+  PauseUI: {fileID: 1562762275}
+  gameIsPaused: 0
   timerIsRunning: 1
   basePos: {x: 0, y: 0}
   levelBase: {fileID: 0}
@@ -833,9 +835,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 193523283}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: OpenPause
+      - m_Target: {fileID: 100782316}
+        m_TargetAssemblyTypeName: Game.GameUIController, Assembly-CSharp
+        m_MethodName: Btn_Pause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
