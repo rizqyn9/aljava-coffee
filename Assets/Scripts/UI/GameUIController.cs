@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace Game
@@ -122,8 +123,8 @@ namespace Game
 
         private void spawnTopUI()
         {
-            TopBar.transform.LeanMoveLocalY(0, GlobalController.Instance.startingAnimLenght).setEaseInOutBounce();
-            PauseGO.transform.LeanMoveLocalX(360, GlobalController.Instance.startingAnimLenght).setEaseInOutBounce();
+            LeanTween.moveY(TopBar.GetComponent<RectTransform>(), 0, GlobalController.Instance.startingAnimLenght).setEaseOutBounce();
+            LeanTween.moveX(PauseGO.GetComponent<RectTransform>() , -30f, GlobalController.Instance.startingAnimLenght).setEaseInOutBounce();
         }
 
         string getText() => $"{MainController.RulesController.buyerSuccessTotal} / {targetCounter} buyer";
