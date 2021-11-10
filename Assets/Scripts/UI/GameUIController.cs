@@ -77,6 +77,11 @@ namespace Game
             PauseUI.SetActive(gameIsPaused);
             Time.timeScale = gameIsPaused ? 0f : 1f;
         }
+
+        public void Btn_BackHome()
+        {
+            GameManager.Instance.backToHome();
+        }
         #endregion
 
         #region Listen on Presence
