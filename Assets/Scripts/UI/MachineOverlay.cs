@@ -13,7 +13,7 @@ namespace Game
         [SerializeField] internal bool isOverlayActive = false;
         [SerializeField] List<MachineUI> listMachineUI = new List<MachineUI>();
 
-        private void OnEnable() => defaultPosition();
+        private void Start() => defaultPosition();
 
         public void defaultPosition()
         {

@@ -8193,13 +8193,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90036c0d8398e42b48057575e2c477a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDDOL: 1
+  isDDOL: 0
   levelBase: {fileID: 0}
   isDevMode: 0
   gameManager: {fileID: 0}
   useDummyData: 0
   dummyData:
-    machineLevels: []
+    machineLevels:
+    - machineIgrendient: 3
+      level: 1
+    - machineIgrendient: 4
+      level: 1
+  isProductionLevel: 0
+  levelTarget: 0
   gameState: 0
 --- !u!4 &1346968011
 Transform:

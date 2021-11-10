@@ -345,7 +345,7 @@ public abstract class Machine : MonoBehaviour, IGameState
     {
         if (
             !MainController.Instance.onUI
-            && gameState != GameState.START
+            && (gameState == GameState.FINISH || gameState == GameState.BEFORE_START)
             ) return false;
         else return true;
     }

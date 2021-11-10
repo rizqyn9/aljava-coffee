@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -18,12 +19,15 @@ namespace Game
         [SerializeField] RectTransform mainContainer;
         public Vector2 offset;
         public List<goStar> stars;
+        public List<Button> buttons;
 
         private void Start()
         {
             //testAnim(3);
             canvasGroup.alpha = 0;
             mainContainer.localScale = Vector2.zero;
+
+            buttons.ForEach(val => val.gameObject.SetActive(false));
 
             //init();
         }
@@ -65,6 +69,8 @@ namespace Game
                 yield return new WaitForSeconds(.5f);
                 total--;
             }
+            yield return new WaitForSeconds(1f);
+            buttons.ForEach(val => val.gameObject.SetActive(true));
             yield break;
         }
 
@@ -75,17 +81,17 @@ namespace Game
 
         public void Btn_Restart()
         {
-
+            GameManager.Instance.loadLevel(MainController.Instance.levelBase.level);
         }
 
         public void Btn_Next()
         {
-
+            GameManager.Instance.loadLevel(MainController.Instance.levelBase.level + 1);
         }
 
         public void Btn_Home()
         {
-
+            GameManager.Instance.backToHome();
         }
     }
 }

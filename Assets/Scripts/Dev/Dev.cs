@@ -78,4 +78,10 @@ public class Dev : Singleton<Dev>
             Debug.LogWarning("File not exist");
         }
     }
+
+    [ContextMenu("Init")]
+    public void testInit()
+    {
+        MainController.Instance.Init(ResourceManager.ListLevels()[0], dummyData);
+    }
 }

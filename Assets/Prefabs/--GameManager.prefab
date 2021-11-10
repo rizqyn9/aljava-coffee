@@ -47,8 +47,10 @@ MonoBehaviour:
   isDDOL: 1
   resourcePrefab: {fileID: 1082538355378788644, guid: a7ad6966c33374e629d9dd6287f92645, type: 3}
   gameScene: Game
+  homeScene: MainMenu
   saveData: {fileID: 7084329412336267765}
   resourceManager: {fileID: 0}
+  levelBase: {fileID: 0}
 --- !u!114 &7084329412336267765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,10 +66,14 @@ MonoBehaviour:
   saveFilePath: 
   userData:
     userName: 
+    point: 0
+    levelUserDatas:
+      machineLevels: []
     listLevels: []
   levelModel:
     isOpen: 0
     level: 0
+    stars: 0
     playerInstance: 0
-    score: 0
+    point: 0
     isWin: 0

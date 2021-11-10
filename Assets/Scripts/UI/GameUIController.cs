@@ -53,9 +53,6 @@ namespace Game
 
         public void OnGameBeforeStart()
         {
-            machineOverlay.defaultPosition();
-            machineOverlay.gameObject.SetActive(true);
-
             instanceHealth(levelBase.healthTotal);
 
             spawnTopUI();

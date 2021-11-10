@@ -42,7 +42,8 @@ namespace Game
 
         public void OnGameFinish() { }
 
-        public void OnGameInit() { }
+        public void OnGameInit()
+        { }
 
         #endregion
 

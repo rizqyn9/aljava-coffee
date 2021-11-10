@@ -24,14 +24,14 @@ namespace Game
 
         public void InstanceMachine(List<MachineData> _machineDatas)
         {
-            print("Additional Manager");
+            //print("Additional Manager");
             MachineDatas = _machineDatas;
             renderMachines();
         }
 
         private void renderMachines()
         {
-            print("Render Machine in Coffee Manager");
+            //print("Render Machine in Coffee Manager");
             foreach (MachineData _machine in MachineDatas)
             {
                 Machine resMachine;

@@ -42,6 +42,10 @@ namespace Game
         }
         #endregion
 
+        private void OnEnable()
+        {
+            Debug.LogWarning("Reinit");
+        }
 
         public void Init(LevelBase _levelBase, InLevelUserData _inLevelUserData)
         {
@@ -60,6 +64,7 @@ namespace Game
         IEnumerator IStartGame()
         {
             GameState = GameState.INIT;
+            yield return new WaitForSeconds(2f);
 
             GameState = GameState.BEFORE_START;
             if (Dev.Instance.isDevMode)

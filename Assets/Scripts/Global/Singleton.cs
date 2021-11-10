@@ -31,6 +31,12 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
     private void Awake()
     {
         _instance = this as T;
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+
         if (isDDOL)
         {
             DontDestroyOnLoad(this.gameObject);

@@ -18,7 +18,8 @@ namespace Game
                 spawnToGlass();
             }
             else
-                Debug.LogWarning("gak nemu");
+                //Debug.LogWarning("gak nemu");
+                return;
         }
 
         //FIXME

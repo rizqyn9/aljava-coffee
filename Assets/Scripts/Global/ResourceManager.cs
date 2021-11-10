@@ -110,7 +110,7 @@ public class ResourceManager : Singleton<ResourceManager>
         }
         if (!res)
         {
-            Debug.Log("Menu not Found");
+            //Debug.Log("Menu not Found");
         }
         return res;
     }
