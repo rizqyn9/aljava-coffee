@@ -34,11 +34,6 @@ public class SaveData : MonoBehaviour
         saveFilePath = Application.dataPath + "/Persistant/aljava.json";
     }
 
-    public void saveUserData()
-    {
-
-    }
-
     public LevelModel grabData()
     {
         return new LevelModel

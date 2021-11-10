@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082538355378788644}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -46,6 +46,8 @@ MonoBehaviour:
   isDDOL: 1
   Levels:
   - {fileID: 11400000, guid: 8c0cd825d45e444fbbe3dd4f88d43133, type: 2}
+  - {fileID: 11400000, guid: d47263576a7624c918a8c50ac0bc54b5, type: 2}
+  - {fileID: 11400000, guid: b967af5b7cf0540168646056b1a08a5a, type: 2}
   BuyerTypes:
   - {fileID: 11400000, guid: cb15ed2e980db48579ab82745cd71553, type: 2}
   - {fileID: 11400000, guid: 1b099d06ba321489ea97a3a18188419f, type: 2}

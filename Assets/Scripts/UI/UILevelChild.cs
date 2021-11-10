@@ -30,13 +30,26 @@ public class UILevelChild : MonoBehaviour
         } else
         {
             baseSprite.color = baseLocked;
-            text.color = new Color(0, 0, 0, .8f);
+            text.color = new Color(0, 1, 0, .5f);
             btn.interactable = false;
             Debug.LogWarning("Somenthing level have null");
             return;
         }
 
+        if (!checkIsOpen(_levelBase.level))
+        {
+            baseSprite.color = baseLocked;
+            text.color = new Color(0, 0, 0, .8f);
+            btn.interactable = false;
+            return;
+        }
+
         btn.onClick.AddListener(ClickHandle);       // Add Listener
+    }
+
+    bool checkIsOpen(int _level)
+    {
+        return GameManager.Instance.saveData.userData.listLevels.Find(val => val.level == _level).isOpen;
     }
 
     private void ClickHandle()
