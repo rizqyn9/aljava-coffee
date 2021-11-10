@@ -15,6 +15,7 @@ namespace Game
 
         public int menuInstanceTotal = 0;
         public int earnMoneyTotal = 0;
+        public int point;
 
         public int healthActive;
         public bool isTimeOut;
@@ -77,12 +78,32 @@ namespace Game
         void GameWin()
         {
             GameUIController.Instance.initWinUI();
+            GameManager.Instance.saveData.updateLevel(
+                getLevelModel(true)
+            );
         }
 
         void GameLose()
         {
             GameUIController.Instance.initLoseUI();
+            GameManager.Instance.saveData.updateLevel(
+                getLevelModel(false)
+            );
         }
+
+        private LevelModel getLevelModel(bool _isWin)
+        {
+            return new LevelModel
+            {
+                isOpen = true,
+                level = levelBase.level,
+                stars = starTotal,
+                playerInstance = buyerInstanceTotal,
+                point = point,
+                isWin = _isWin
+            };
+        }
+
         #endregion 
 
         public GameObject GetGameObject() => gameObject;

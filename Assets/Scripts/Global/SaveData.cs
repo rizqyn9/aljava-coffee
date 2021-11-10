@@ -8,8 +8,9 @@ public struct LevelModel
 {
     public bool isOpen;
     public int level;
+    public int stars;
     public int playerInstance;
-    public int score;
+    public int point;
     public bool isWin;
 }
 
@@ -17,6 +18,8 @@ public struct LevelModel
 public struct UserData
 {
     public string userName;
+    public int point;
+    public InLevelUserData levelUserDatas;
     public List<LevelModel> listLevels;
 }
 
@@ -59,14 +62,7 @@ public class SaveData : MonoBehaviour
         }
     }
 
-    [ContextMenu("Simulate Save data")]
-    public void simulateSaveData()
-    {
-        SaveIntoJson();
-    }
-
-    [ContextMenu("Get data")]
-    public void getData()
+    public void loadData()
     {
         if (File.Exists(saveFilePath))
         {
@@ -81,16 +77,31 @@ public class SaveData : MonoBehaviour
         }
     }
 
+    public void updateLevel(LevelModel _levelModel)
+    {
+        LevelModel _target = userData.listLevels.Find(val => val.level == _levelModel.level);
+        _target = _levelModel;
+        if (_levelModel.isWin)
+        {
+            LevelModel _next = userData.listLevels.Find(val => val.level == _levelModel.level);
+            _next.isOpen = true;
+        }
+        SaveIntoJson();
+    }
+
     public void createTemp()
     {
         userData = new UserData
         {
-            userName = "Temp"
+            userName = "Temp",
+            listLevels = new List<LevelModel>()
+            {
+                new LevelModel
+                {
+                    isOpen = true,
+                    level = 1,
+                },
+            }
         };
-    }
-
-    internal void loadUserData()
-    {
-        getData();
     }
 }

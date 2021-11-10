@@ -720,6 +720,7 @@ MonoBehaviour:
   _countDown: 0
   targetCounter: 0
   healths: []
+  healthActiveState: 0
 --- !u!1 &135687793
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +997,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838ad8e332d6e9444b4c6e1b3c4a01e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseUI: {fileID: 1562762275}
 --- !u!1 &233063207
 GameObject:
   m_ObjectHideFlags: 0
@@ -3729,6 +3729,7 @@ MonoBehaviour:
   startingAnimLenght: 0.1
   countingBeforeStart: 3
   overCookDuration: 3
+  repairMachineDuration: 2
   minLevelRender: 9
 --- !u!114 &1532892882
 MonoBehaviour:
@@ -3745,12 +3746,22 @@ MonoBehaviour:
   saveFilePath: 
   userData:
     userName: 
-    listLevels: []
+    point: 0
+    levelUserDatas:
+      machineLevels: []
+    listLevels:
+    - isOpen: 0
+      level: 0
+      stars: 0
+      playerInstance: 0
+      point: 0
+      isWin: 0
   levelModel:
     isOpen: 0
     level: 0
+    stars: 0
     playerInstance: 0
-    score: 0
+    point: 0
     isWin: 0
 --- !u!1 &1542160399
 GameObject:
@@ -4113,10 +4124,13 @@ MonoBehaviour:
   buyerRunOutTotal: 0
   menuInstanceTotal: 0
   earnMoneyTotal: 0
+  point: 0
+  healthActive: 0
+  isTimeOut: 0
   isWin: 0
+  starTotal: 0
   levelBase: {fileID: 0}
   gameState: 0
-  saveData: {fileID: 0}
 --- !u!1 &1648981621
 GameObject:
   m_ObjectHideFlags: 0

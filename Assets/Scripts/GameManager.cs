@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        saveData.loadUserData();   
+        saveData.loadData();   
     }
 
     public void loadLevel(int _level)
