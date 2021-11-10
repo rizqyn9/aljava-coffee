@@ -72,5 +72,20 @@ namespace Game
         {
             LeanTween.scale(stars[target - 1].go, new Vector2(1f, 1f), 1f).setEaseInBounce();
         }
+
+        public void Btn_Restart()
+        {
+
+        }
+
+        public void Btn_Next()
+        {
+
+        }
+
+        public void Btn_Home()
+        {
+
+        }
     }
 }

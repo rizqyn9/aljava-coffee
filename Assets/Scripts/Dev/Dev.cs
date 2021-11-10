@@ -13,6 +13,9 @@ public class Dev : Singleton<Dev>
     [SerializeField] bool useDummyData;
     public InLevelUserData dummyData;
 
+    public bool isProductionLevel;
+    public int levelTarget = 0;
+
     public void Start()
     {
         if (!isDevMode) return;
@@ -22,6 +25,11 @@ public class Dev : Singleton<Dev>
         } else
         {
             devHandleStart();
+        }
+        if (isProductionLevel)
+        {
+            levelTarget = levelTarget == 0 ? 1 : levelTarget;
+            MainController.Instance.Init(ResourceManager.ListLevels().Find(val => val.level == levelTarget), GameManager.Instance.saveData.userData.levelUserDatas);
         }
     }
 
@@ -41,6 +49,7 @@ public class Dev : Singleton<Dev>
             Instantiate(GameManager.Instance.resourcePrefab);
         }
         print("SUCCCES");
+        if (isProductionLevel) return;
         MainController.Instance.Init(levelBase, dummyData);
         //GameManager.Instance.loadLevel(1);
     }
